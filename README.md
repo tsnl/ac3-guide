@@ -10,7 +10,7 @@ A linear Ace Combat 3: Electrosphere (Japanese / fan-translated release) campaig
 - Browser autosave, undo, and JSON export/import
 - No runtime dependencies, analytics, accounts, or server-side progress storage
 
-Open `index.html` in a browser or use the GitHub Pages deployment. The checklist starts blank. Tick actions in order as you finish them and make the listed saves. Mission names link to their detailed A-rank requirements. Saved browser progress is restored on subsequent visits.
+Open [the published checklist](https://tsnl.github.io/ac3-guide/) or open `index.html` in a browser. The checklist starts blank. Tick actions in order as you finish them and make the listed saves. Mission names link to their detailed A-rank requirements. Saved browser progress is restored on subsequent visits.
 
 ## Minimal-replay route
 
