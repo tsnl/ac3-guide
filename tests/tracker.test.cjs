@@ -32,6 +32,9 @@ test('one mission box per attempt, six load boxes, five starred endings, only ne
  for(const card of d.querySelectorAll('.action:not(.load)'))assert.deepEqual([...card.querySelectorAll('dt')].map(x=>x.textContent),['Target time','Decision','Save after']);
  assert.equal(d.querySelector('#mission-detail'),null);
  assert.equal(d.querySelector('[data-tab]'),null);
+ for(const a of data.actions.filter(a=>a.type==='mission'))assert.ok(a.save && a.save.slot>=1 && a.save.slot<=6);
+ assert.equal(data.actions[0].save.slot,6);
+ assert.equal(data.actions[2].save.slot,1);
 });
 
 test('checkbox completion unlocks one next action; skipped future events cannot advance',t=>{
@@ -49,7 +52,7 @@ test('checkbox completion unlocks one next action; skipped future events cannot 
 });
 
 test('complete route covers 52 A ranks and valid saves; every load is an explicit gate',t=>{
- const {api,d,next}=app(t),data=api.getData(),slots={},best={},order=[];
+ const {api,d,next}=app(t),data=api.getData(),slots={},best={},order=[],fresh=[];
  for(const action of data.actions){
   assert.equal(next().dataset.action,action.id);
   if(action.type==='load'){
@@ -59,14 +62,20 @@ test('complete route covers 52 A ranks and valid saves; every load is an explici
   }else{
    order.push(action.mission);
    if(action.rank==='A')best[action.mission]='A';
-   if(action.save)slots[action.save.slot]=action.mission;
+   const slot=action.save.slot,mode=slot in slots?'overwrite':'fresh';
+   assert.equal(action.save.mode,mode);
+   const instruction=d.getElementById(action.id).querySelector('.field.save dd').textContent;
+   assert.ok(instruction.startsWith(mode==='fresh'?'Fresh save → Slot '+slot:'Overwrite Slot '+slot));
+   if(mode==='fresh')fresh.push([action.mission,slot]);
+   slots[slot]=action.mission;
   }
   next().click();
  }
  assert.equal(next(),null);
  assert.deepEqual(order,plain(data.sequence));
  assert.equal(Object.keys(best).length,52);
- assert.deepEqual(slots,{1:33,2:38,3:18,4:52,5:47,6:34});
+ assert.deepEqual(slots,{1:33,2:38,3:18,4:52,5:47,6:37});
+ assert.deepEqual(fresh,[[1,6],[3,1],[6,2],[18,3],[52,4],[47,5]]);
  assert.equal(d.getElementById('count').textContent,'67 / 67');
  assert.equal(d.getElementById('jump').disabled,true);
 });

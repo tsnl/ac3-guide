@@ -178,9 +178,9 @@ for leg, group in enumerate(groups):
         if (leg,n)==(8,20): target='Under 3:30 · initial targets'
         if (leg,n)==(12,34): target='Wait past 1:30 · from escaping-target update'
         rank='D' if n in P[leg]['lower'] else 'any' if (leg,n)==(8,20) else 'A'
-        save=None
+        save=dict(slot=6,after=n,label=f'Working: after {n:02d} {m["title"]}',ending=False,working=True)
         if n==group[-1]:
-            save=dict(slot=P[leg]['slot'],after=n,label=P[leg]['saveLabel'],ending=bool(m['ending']))
+            save=dict(slot=P[leg]['slot'],after=n,label=P[leg]['saveLabel'],ending=bool(m['ending']),working=P[leg]['slot']==6)
         actions.append(dict(id=f'mission-{n:02d}-{visits[n]}',type='mission',mission=n,
                             visit=visits[n],time=target,decision=decisions.get((leg,n),''),
                             rank=rank,save=save,ending=m['ending'],legacyLeg=leg))
@@ -188,16 +188,20 @@ for leg, group in enumerate(groups):
 assert [a['mission'] for a in actions if a['type']=='mission']==[1,2]+sequence
 assert len(actions)==67
 assert {a['mission'] for a in actions if a.get('rank')=='A'}==set(range(1,53))
-# Every load must point at the latest actual save in that slot.
+# Label the first use of each slot as fresh, and validate every later reload.
 slots={}
 for a in actions:
     if a['type']=='load': assert slots[a['slot']]==a['after']
-    elif a['save']: slots[a['save']['slot']]=a['mission']
-assert slots=={1:33,2:38,3:18,4:52,5:47,6:34}
+    else:
+        slot=a['save']['slot']
+        a['save']['mode']='overwrite' if slot in slots else 'fresh'
+        slots[slot]=a['mission']
+assert slots=={1:33,2:38,3:18,4:52,5:47,6:37}
 
 data=dict(missions=M,edges=E,actions=actions,sequence=[1,2]+sequence,
           researchDate='2026-10-06',schemaVersion=2)
-template=(ROOT/'template.html').read_text()
+theme=(ROOT/'theme.css').read_text()
+template=(ROOT/'template.html').read_text().replace('/*__THEME__*/',theme)
 out=ROOT.parent/'index.html'
 out.write_text(template.replace('/*__DATA__*/', 'const DATA='+json.dumps(data,ensure_ascii=False,separators=(',',':'))+';'))
 print(f'{out}: {out.stat().st_size:,} bytes; {len(M)} missions, {len(actions)} checklist actions')
@@ -205,9 +209,9 @@ print(f'{out}: {out.stat().st_size:,} bytes; {len(M)} missions, {len(actions)} c
 reference=[]
 for m in M:
     links=' · '.join(f'<a href="{escape(s["url"],quote=True)}" rel="noopener">{escape(s["label"])}</a>' for s in m['source'])
-    reference.append(f'<section id="mission-{m["id"]}"><h2>{m["id"]:02d} · {escape(m["title"])}</h2>'
+    reference.append(f'<section class="reference-section" id="mission-{m["id"]}"><h2>{m["id"]:02d} · {escape(m["title"])}</h2>'
                      f'<p><b>A rank:</b> {escape(m["rank"])}</p>'
                      f'<p><b>Clock:</b> {escape(m["timer"] or "No separate cutoff published")} · {escape(m["clock"])}</p>'
                      f'<p>{escape(m["note"])}</p><p class="sources">{links}</p></section>')
-ref_template=(ROOT/'reference.html').read_text()
+ref_template=(ROOT/'reference.html').read_text().replace('/*__THEME__*/',theme)
 (ROOT.parent/'ranks.html').write_text(ref_template.replace('<!--__MISSIONS__-->','\n'.join(reference)))
