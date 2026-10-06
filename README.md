@@ -1,15 +1,16 @@
 # AC3 Japanese campaign guide
 
-A self-contained Ace Combat 3: Electrosphere (Japanese / fan-translated release) campaign tracker. Covers all 52 missions at A rank and all five endings, using six normal in-game save slots.
+A linear Ace Combat 3: Electrosphere (Japanese / fan-translated release) campaign checklist. Covers all 52 missions at A rank and all five endings, using six normal in-game save slots.
 
-- Interactive mission graph with branch conditions
-- A-rank requirements, stage-specific timers, and per-mission sources
-- A route with 61 total mission entries, including nine repeated forks and six reloads
-- All checkpoints described **after** a completed mission
-- Browser autosave, mission notes, editable save-slot labels, undo, and JSON export/import
+- One checkbox for each of 61 mission attempts, plus six separate load-save boxes
+- Only the next unfinished action is enabled; later unchecked actions are greyed out
+- Each mission shows its name, target time, decision, and where to save **after** completion
+- Five gold ending boxes with stars
+- A-rank requirements and source links on a separate reference page
+- Browser autosave, undo, and JSON export/import
 - No runtime dependencies, analytics, accounts, or server-side progress storage
 
-Open `index.html` in a browser or use the GitHub Pages deployment. The tracker starts blank; fill in the ranks and progress you have earned. Saved browser progress is restored on subsequent visits.
+Open `index.html` in a browser or use the GitHub Pages deployment. The checklist starts blank. Tick actions in order as you finish them and make the listed saves. Mission names link to their detailed A-rank requirements. Saved browser progress is restored on subsequent visits.
 
 ## Minimal-replay route
 
@@ -31,13 +32,13 @@ From an A-rank clear of mission 02, **59 mission entries remain**, assuming miss
 | 12 | A-rank 34; save without playing 36 yet | 34 → S6 | S2 |
 | 13 | 34 let an escaping target survive the timer; A-rank 35–38 | 38 ending → S2 | — |
 
-07, 24, 34, and 39 require a lower-grade route visit as well as an A clear. The tracker retains the best recorded grade when a leg includes a lower-grade replay. Buttons only update this browser log; make the actual saves in the game.
+07, 24, 34, and 39 require a lower-grade route visit as well as an A clear. Each replay has its own checkbox and visit-specific decision; completing a lower-grade replay does not replace the earlier A-clear checkbox. Checkboxes only update this browser log; make the actual saves and loads in the game.
 
 Two live branch checkpoints suffice, alongside one working slot. The other slots retain completed endings. S1/S2 are overwritten only after their pending branches have been covered.
 
 ## Scope and sources
 
-The graph and A-rank data are paraphrased from the Japanese-version mission guides on [Ace Combat Wiki](https://acecombat.wiki.gg/wiki/List_of_missions_in_Ace_Combat_3_%28uncut%29), with individual links in every mission card. Save/rank persistence is described in the [RetroAchievements author discussion](https://retroachievements.org/forums/topic/17603); [Jerrold's Japanese walkthrough](https://gamefaqs.gamespot.com/ps/196536-ace-combat-3-electrosphere/faqs/5035) corroborates route and timing details. Research checked 6 October 2026.
+The graph and A-rank data are paraphrased from the Japanese-version mission guides on [Ace Combat Wiki](https://acecombat.wiki.gg/wiki/List_of_missions_in_Ace_Combat_3_%28uncut%29), with individual links in `ranks.html`. Save/rank persistence is described in the [RetroAchievements author discussion](https://retroachievements.org/forums/topic/17603); [Jerrold's Japanese walkthrough](https://gamefaqs.gamespot.com/ps/196536-ace-combat-3-electrosphere/faqs/5035) corroborates route and timing details. Research checked 6 October 2026.
 
 The minimum-entry route is a derived plan, not a quoted walkthrough. Mission 25's published 17-kill requirement does not fully reconcile with its listed enemy count; the app explicitly flags it for in-game confirmation. Aim below timer boundaries. A blank numeric timer means no separate threshold was published, not unlimited mission time.
 
@@ -45,7 +46,7 @@ Ordinary campaign completion and unlocks are covered. AppenDisc/deadcopy-only Ni
 
 ## Development
 
-Python 3 builds the standalone HTML. Node 22.12+ and npm are needed only for the DOM regression tests.
+Python 3 builds the checklist and the separate rank-reference HTML. Both use local styles and no external runtime scripts. Node 22.12+ and npm are needed only for the DOM regression tests.
 
 ```sh
 npm ci
@@ -53,8 +54,14 @@ npm run build
 npm test
 ```
 
-Edit `src/build.py` for mission data, graph edges, and the route. Edit `src/template.html` for presentation and behavior. Commit the regenerated `index.html` with source changes.
+Edit `src/build.py` for mission data and the ordered action list. Edit `src/template.html` for checklist presentation and behavior, and `src/reference.html` for the rank-reference page. Commit regenerated `index.html` and `ranks.html` with source changes.
 
-Tests exercise route coverage, checkpoint reloads, preservation of A ranks, JSON import/export, stored-state restoration, untrusted imported text, graph interaction, and unavailable local storage.
+Tests exercise mission-by-mission route coverage, valid checkpoint reloads, next-action locking, JSON import/export, migration from the original tracker, stored-state restoration, untrusted imported text, and unavailable local storage.
 
 For GitHub Pages, publish the `main` branch at `/ (root)`. `.nojekyll` keeps the self-contained file unchanged. Visitor progress is stored in localStorage under `ac3-jp-mission-tracker-v1`; JSON exports transfer it between origins, browsers, or devices.
+
+## Progress format
+
+Version 2 stores completed action IDs, so two visits to one mission remain distinct. Existing version 1 browser records and JSON backups migrate automatically: completed route legs map to their actions, and a best A rank marks only the first A-clear visit. Old notes, ranks, branch flags, and slot labels remain in the exported `legacy` object. Checked actions can be unchecked or undone; only the earliest unchecked action can be checked next.
+
+The tiles use mission numbers as icons. Mission screenshots were not available from a reliable retrievable source during this update.

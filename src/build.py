@@ -1,4 +1,5 @@
 import json
+from html import escape
 from pathlib import Path
 
 ROOT = Path(__file__).parent
@@ -117,8 +118,96 @@ assert set(sum([p['clears'] for p in P],[]))|{1,2}==set(range(1,53))
 assert len({(e['a'],e['b']) for e in E})==len(E)
 sequence=[3,4,5,6,7,*range(9,19),7,8,9,39,40,42,43,48,49,50,51,52,39,41,43,44,45,46,47,4,19,20,21,20,22,23,24,25,27,28,29,30,31,32,33,24,26,28,34,34,35,36,37,38]
 assert len(sequence)==59
-data=dict(missions=M,edges=E,plan=P,sequence=[1,2]+sequence,researchDate='2026-10-06',schemaVersion=1)
+groups = [
+    [1,2,3], [4,5,6], [7,*range(9,19)], [7,8,9],
+    [39,40,42,43,*range(48,53)], [39,41,43,*range(44,48)],
+    [4,19], [20,21], [20,22,23], [24,25,27,28,*range(29,34)],
+    [24,26,28], [34], [34,35,36,37,38],
+]
+reloads = {3:(2,6,''), 5:(2,9,'Neucom route'), 6:(1,3,''),
+           8:(2,19,''), 10:(2,23,''), 12:(2,28,'Ouroboros route')}
+time_targets = {
+    1:'Under 3:00 · first four targets', 2:'Under 4:00 · eight radars',
+    3:'—', 4:'Under 3:00 · first target group', 5:'Under 3:00 · first four fighters',
+    7:'First four: under 3:30 · finish: under 5:00',
+    8:'Under 0:30 · from hydrofoil appearance', 9:'Under 3:00 · first five fighters',
+    11:'Under 2:00 · ten Antlions', 19:'Under 3:00 · before takeoff',
+    20:'Under 0:45 · from hydrofoil appearance', 21:'Under 3:00 · all hangar photos',
+    25:'Under 1:30 · shuttle interception', 28:'Under 9:00 · before ships depart',
+    30:'Under 3:00 · from X-49 appearance', 33:'Under 5:00 · from aircraft-control change',
+    34:'Under 1:30 · from escaping-target update', 39:'Under 4:00 · first two RF-12A2s',
+    40:'Under 3:00 · first seven F-22Cs', 41:'Under 2:30 · all four satellites',
+    48:'Under 1:30 · from carrier update',
+}
+decisions = {
+    (1,4):'Stay with UPEO; follow Fiona.',
+    (1,6):'Follow the recon plane; discover and destroy the secret base.',
+    (2,7):'Follow Rena; finish the full combat for A.',
+    (2,9):'Stay with UPEO; obey orders.',
+    (3,7):'Return to base. A lower grade is intentional.',
+    (3,9):'Protect Fiona: shoot down the R-101U; join Neucom.',
+    (4,39):'Destroy all three oil tanks and all four radar sites.',
+    (4,43):'Stay with Fiona.',
+    (4,48):'Destroy all four carrier points within 1:30 to reach Radio Silence.',
+    (5,39):'Leave at least one oil tank or radar intact. Accept D.',
+    (5,43):'Follow Cynthia; join Ouroboros.',
+    (6,4):'Follow Dision; join General Resource.',
+    (7,20):'Keep an initial target alive until 3:30; then sink the target hydrofoil.',
+    (8,20):'Finish initial targets before 3:30 → Partners. Any rank; A is already saved.',
+    (9,24):'Save Keith: shoot his pursuing R-311. Accept D.',
+    (9,28):'Stay with Keith / General Resource.',
+    (9,30):'Damage the X-49 enough within 3:00 to reach Geofront Attack.',
+    (10,24):'Destroy all six R-531 Moburas; take the A route.',
+    (10,28):'Follow Dision; join Ouroboros.',
+    (11,34):'Destroy all three escaping V-22B targets within 1:30 for A.',
+    (12,34):'Leave an escaping target alive past 1:30. A lower grade is intentional.',
+}
+actions=[]
+visits={}
+lookup={m['id']:m for m in M}
+for leg, group in enumerate(groups):
+    if leg in reloads:
+        slot,after,route=reloads[leg]
+        actions.append(dict(id=f'load-{len([a for a in actions if a["type"]=="load"])+1}',
+                            type='load',slot=slot,after=after,route=route,legacyLeg=leg))
+    for n in group:
+        m=lookup[n]
+        visits[n]=visits.get(n,0)+1
+        target=time_targets.get(n, f'Under {m["timer"]} · whole mission' if m['timer'] else '—')
+        if (leg,n)==(3,7): target='— · return immediately'
+        if (leg,n)==(8,20): target='Under 3:30 · initial targets'
+        if (leg,n)==(12,34): target='Wait past 1:30 · from escaping-target update'
+        rank='D' if n in P[leg]['lower'] else 'any' if (leg,n)==(8,20) else 'A'
+        save=None
+        if n==group[-1]:
+            save=dict(slot=P[leg]['slot'],after=n,label=P[leg]['saveLabel'],ending=bool(m['ending']))
+        actions.append(dict(id=f'mission-{n:02d}-{visits[n]}',type='mission',mission=n,
+                            visit=visits[n],time=target,decision=decisions.get((leg,n),''),
+                            rank=rank,save=save,ending=m['ending'],legacyLeg=leg))
+
+assert [a['mission'] for a in actions if a['type']=='mission']==[1,2]+sequence
+assert len(actions)==67
+assert {a['mission'] for a in actions if a.get('rank')=='A'}==set(range(1,53))
+# Every load must point at the latest actual save in that slot.
+slots={}
+for a in actions:
+    if a['type']=='load': assert slots[a['slot']]==a['after']
+    elif a['save']: slots[a['save']['slot']]=a['mission']
+assert slots=={1:33,2:38,3:18,4:52,5:47,6:34}
+
+data=dict(missions=M,edges=E,actions=actions,sequence=[1,2]+sequence,
+          researchDate='2026-10-06',schemaVersion=2)
 template=(ROOT/'template.html').read_text()
 out=ROOT.parent/'index.html'
 out.write_text(template.replace('/*__DATA__*/', 'const DATA='+json.dumps(data,ensure_ascii=False,separators=(',',':'))+';'))
-print(f'{out}: {out.stat().st_size:,} bytes; {len(M)} missions, {len(E)} edges, {len(P)} plan steps')
+print(f'{out}: {out.stat().st_size:,} bytes; {len(M)} missions, {len(actions)} checklist actions')
+
+reference=[]
+for m in M:
+    links=' · '.join(f'<a href="{escape(s["url"],quote=True)}" rel="noopener">{escape(s["label"])}</a>' for s in m['source'])
+    reference.append(f'<section id="mission-{m["id"]}"><h2>{m["id"]:02d} · {escape(m["title"])}</h2>'
+                     f'<p><b>A rank:</b> {escape(m["rank"])}</p>'
+                     f'<p><b>Clock:</b> {escape(m["timer"] or "No separate cutoff published")} · {escape(m["clock"])}</p>'
+                     f'<p>{escape(m["note"])}</p><p class="sources">{links}</p></section>')
+ref_template=(ROOT/'reference.html').read_text()
+(ROOT.parent/'ranks.html').write_text(ref_template.replace('<!--__MISSIONS__-->','\n'.join(reference)))
