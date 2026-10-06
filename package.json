@@ -1,0 +1,14 @@
+{
+  "name": "ac3-guide",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ace Combat 3 JP campaign route and progress tracker",
+  "scripts": {
+    "build": "python3 src/build.py",
+    "test": "node --test tests/tracker.test.cjs"
+  },
+  "devDependencies": {
+    "jsdom": "30.1.1"
+  },
+  "engines": { "node": ">=22.12.0" }
+}
