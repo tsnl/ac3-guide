@@ -9,7 +9,7 @@ A self-contained Ace Combat 3: Electrosphere (Japanese / fan-translated release)
 - Browser autosave, mission notes, editable save-slot labels, undo, and JSON export/import
 - No runtime dependencies, analytics, accounts, or server-side progress storage
 
-Open `index.html` in a browser or use the GitHub Pages deployment. The default is a fresh campaign. `?start=after02` initializes a new browser record after mission 02 with A; mission 01 remains cleared with its rank unconfirmed. Existing saved progress takes precedence over the URL preset.
+Open `index.html` in a browser or use the GitHub Pages deployment. The tracker starts blank; fill in the ranks and progress you have earned. Saved browser progress is restored on subsequent visits.
 
 ## Minimal-replay route
 
@@ -17,7 +17,7 @@ From an A-rank clear of mission 02, **59 mission entries remain**, assuming miss
 
 | Leg | Missions and choices | Save after | Reload next |
 | --- | --- | --- | --- |
-| 1 | A-rank 01–03 (or just 03 from the after-02 preset) | 03 → S1 | — |
+| 1 | A-rank 01–03 | 03 → S1 | — |
 | 2 | 04 stay UPEO; A-rank 05–06 and destroy the secret base | 06 → S2 | — |
 | 3 | 07 follow Rena and A-rank combat; 09 stay UPEO; A-rank 09–18 | 18 ending → S3 | S2 |
 | 4 | 07 return to base; A-rank 08 and 09; protect Fiona in 09 | 09, Neucom side → S2 | — |

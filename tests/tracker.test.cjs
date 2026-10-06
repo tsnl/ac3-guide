@@ -29,17 +29,14 @@ function app(t, { start = '', saved, storageBlocked = false } = {}) {
 }
 const plain = x => JSON.parse(JSON.stringify(x));
 
-test('public fresh start and after-02 preset do not assume an unconfirmed A', t => {
-  const fresh = app(t);
-  assert.deepEqual(Object.keys(fresh.api.getState().missions), []);
-  assert.equal(fresh.d.querySelectorAll('.graph-node').length, 52);
-  const current = app(t, { start: '?start=after02' });
-  assert.equal(current.api.getState().missions[1].rank, '?');
-  assert.equal(current.api.getState().missions[2].rank, 'A');
-  current.click('[data-record="0"]');
-  assert.equal(current.api.getState().missions[1].rank, '?');
-  assert.equal(current.api.getState().missions[3].rank, 'A');
-  assert.equal(current.api.getState().slots[0].after, 3);
+test('fresh tracker is blank and URL parameters never pre-fill progress', t => {
+  for (const start of ['', '?start=after02']) {
+    const { api, d } = app(t, { start });
+    assert.deepEqual(Object.keys(api.getState().missions), []);
+    assert.equal(api.getState().selected, 1);
+    assert.equal(d.querySelectorAll('.graph-node').length, 52);
+    assert.equal(d.getElementById('start-after02'), null);
+  }
 });
 
 test('route legs cover every A rank and ending and preserve the six-slot plan', t => {
@@ -72,7 +69,7 @@ test('sequence has nine required repetitions and six checkpoint reloads', t => {
 });
 
 test('JSON round-trip preserves ranks, notes, route progress and slots across loads', t => {
-  const { api, w, d, click } = app(t, { start: '?start=after02' });
+  const { api, w, d, click } = app(t);
   click('[data-record="0"]');
   const notes = d.getElementById('mission-notes');
   notes.value = 'Use missiles <only> & preserve this note.';
