@@ -6,6 +6,7 @@ A linear Ace Combat 3: Electrosphere (Japanese / fan-translated release) campaig
 - Only the next unfinished action is enabled; later unchecked actions are greyed out
 - Each mission shows its name, target time, decision, and where to save **after** completion
 - Five gold ending boxes with stars
+- Data Swallow-inspired ivory, black, and amber menu theme
 - A-rank requirements and source links on a separate reference page
 - Browser autosave, undo, and JSON export/import
 - No runtime dependencies, analytics, accounts, or server-side progress storage
@@ -34,7 +35,7 @@ From an A-rank clear of mission 02, **59 mission entries remain**, assuming miss
 
 07, 24, 34, and 39 require a lower-grade route visit as well as an A clear. Each replay has its own checkbox and visit-specific decision; completing a lower-grade replay does not replace the earlier A-clear checkbox. Checkboxes only update this browser log; make the actual saves and loads in the game.
 
-Two live branch checkpoints suffice, alongside one working slot. The other slots retain completed endings. S1/S2 are overwritten only after their pending branches have been covered.
+Every mission names a save destination and explicitly says **Fresh save → Slot N** on the first use of that slot, or **Overwrite Slot N** on later uses. Fresh saves use S6 after 01, S1 after 03, S2 after 06, S3 after 18, S4 after 52, and S5 after 47. The plan assumes these slots are available at the start. Routine saves then overwrite S6; the listed branch checkpoints and ending saves use S1–S5. Two live branch checkpoints suffice, alongside the working slot. The other slots retain completed endings. S1/S2 are overwritten only after their pending branches have been covered.
 
 ## Scope and sources
 
@@ -54,7 +55,7 @@ npm run build
 npm test
 ```
 
-Edit `src/build.py` for mission data and the ordered action list. Edit `src/template.html` for checklist presentation and behavior, and `src/reference.html` for the rank-reference page. Commit regenerated `index.html` and `ranks.html` with source changes.
+Edit `src/build.py` for mission data and the ordered action list. Edit `src/template.html` for checklist presentation and behavior, `src/reference.html` for the rank-reference page, and `src/theme.css` for the shared menu theme. Styles are inlined by the build so each output page remains self-contained. Commit regenerated `index.html` and `ranks.html` with source changes.
 
 Tests exercise mission-by-mission route coverage, valid checkpoint reloads, next-action locking, JSON import/export, migration from the original tracker, stored-state restoration, untrusted imported text, and unavailable local storage.
 
