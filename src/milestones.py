@@ -2,7 +2,8 @@
 
 These compact checklist instructions do not promise an A rank. Full scoring,
 optional-target and protection criteria remain in the linked rank reference.
-All clocks are elapsed; N/A means no separate cutoff is cited.
+All clocks are elapsed; + denotes time from the named event, and N/A means
+no separate cutoff is cited.
 """
 
 
@@ -45,7 +46,7 @@ MILESTONES = {
     ],
     8: [
         step('During escort', '', 'Protect the airship; clear its path'),
-        step('< 0:30', 'from hydrofoil appearance', 'Destroy the hydrofoil'),
+        step('<+30s', 'from hydrofoil appearance', 'Destroy the hydrofoil'),
     ],
     9: [step('< 3:00', 'from mission start', '5 required fighters')],
     10: [step('< 2:00', 'from mission start', 'All required targets')],
@@ -63,7 +64,7 @@ MILESTONES = {
     19: [step('< 3:00', 'from mission start', 'All grounded required aircraft before takeoff')],
     20: [
         step('Until 3:30', 'from mission start', 'Keep 1 initial required target alive'),
-        step('< 0:45', 'from hydrofoil appearance', 'All required targets, including hydrofoil'),
+        step('<+45s', 'from hydrofoil appearance', 'All required targets, including hydrofoil'),
     ],
     21: [
         step('< 3:00', 'from mission start', 'Photograph all 4 hangars'),
@@ -85,14 +86,14 @@ MILESTONES = {
     29: [complete()],
     30: [
         step('Before update', '', 'All required carrier targets'),
-        step('< 3:00', 'from X-49 appearance', 'Damage the X-49 until mission clear'),
+        step('<+3m', 'from X-49 appearance', 'Damage the X-49 until mission clear'),
     ],
     31: [step('< 4:00', 'from mission start', 'All required targets')],
     32: [complete('Both required targets')],
-    33: [step('< 5:00', 'from aircraft-control change', 'All remaining required targets')],
+    33: [step('<+5m', 'from aircraft-control change', 'All remaining required targets')],
     34: [
         step('Before update', '', 'All required ground targets'),
-        step('< 1:30', 'from helicopter update', '3× V-22B'),
+        step('<+90s', 'from helicopter update', '3× V-22B'),
     ],
     35: [
         complete('All required submarine targets; protect the carrier'),
@@ -121,7 +122,7 @@ MILESTONES = {
     47: [step('< 5:30', 'from mission start', 'All required targets, including the generator')],
     48: [
         step('Before update', '', 'All initial required fighters'),
-        step('< 1:30', 'from carrier update', 'All 4 Sphyrna target points'),
+        step('<+90s', 'from carrier update', 'All 4 Sphyrna target points'),
     ],
     49: [step('< 4:00', 'from mission start', 'All required targets')],
     50: [complete('All required carrier targets')],
@@ -136,5 +137,5 @@ ROUTE_MILESTONES = {
     (5, 39): [MILESTONES[39][0], step('Before final TGT', '', 'All required targets; spare 1 oil tank or radar (D route)')],
     (8, 20): [step('< 3:30', 'from mission start', 'All initial required targets')],
     (9, 24): [step('Keith’s distress call', '', 'Destroy the R-311 pursuing Keith (D route)')],
-    (12, 34): [step('After 1:30', 'from helicopter update', 'Leave 1 escaping target alive')],
+    (12, 34): [step('>+90s', 'from helicopter update', 'Leave 1 escaping target alive')],
 }
