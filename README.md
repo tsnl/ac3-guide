@@ -9,8 +9,8 @@ A linear Ace Combat 3: Electrosphere (Japanese / fan-translated release) campaig
 - Five gold ending boxes with stars
 - Data Swallow-inspired ivory, black, and amber menu theme with an animated network-tunnel background, a pause control, and reduced-motion support
 - A-rank requirements and source links on a separate reference page
-- Browser autosave, undo, and JSON backups through Save / Load
-- Four circular controls in the original menu's low–high–low–high arrangement, with segmented concentric rings
+- Browser autosave and JSON backups through Save / Load
+- Four circular controls—Save, Load, Feedback, Credits—in the original menu's low–high–low–high arrangement, with segmented concentric rings. Feedback opens a new GitHub issue; Credits links to the source attributions
 - No runtime dependencies, analytics, accounts, or server-side progress storage
 
 Open [the published checklist](https://tsnl.github.io/ac3-guide/) or open `index.html` in a browser with its `assets` directory alongside it. The checklist starts blank. Tick actions in order as you finish them and make the listed saves. Mission names link to their detailed A-rank requirements. Saved browser progress is restored on subsequent visits.
@@ -67,6 +67,6 @@ For GitHub Pages, publish the `main` branch at `/ (root)`. `.nojekyll` serves th
 
 ## Progress format
 
-Version 2 stores completed action IDs, so two visits to one mission remain distinct. Existing version 1 browser records and JSON backups migrate automatically: completed route legs map to their actions, and a best A rank marks only the first A-clear visit. Old notes, ranks, branch flags, and slot labels remain in the exported `legacy` object. Checked actions can be unchecked or undone; only the earliest unchecked action can be checked next.
+Version 2 stores completed action IDs, so two visits to one mission remain distinct. Existing version 1 browser records and JSON backups migrate automatically: completed route legs map to their actions, and a best A rank marks only the first A-clear visit. Old notes, ranks, branch flags, and slot labels remain in the exported `legacy` object. Checked actions can be unchecked; only the earliest unchecked action can be checked next.
 
 See the public [Credits section](https://tsnl.github.io/ac3-guide/ranks.html#credits) for research and design sources, and [map image credits](assets/maps/SOURCES.md) for the original Namco guidebook, archive provenance, and a per-mission crop index. Original game and guidebook artwork remains © NAMCO LTD.
