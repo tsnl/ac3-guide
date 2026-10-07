@@ -1,0 +1,626 @@
+[
+  {
+    "mission": 1,
+    "page": 43,
+    "source": "043.jpg",
+    "crop": [
+      258,
+      318,
+      916,
+      973
+    ],
+    "asset": "01.webp"
+  },
+  {
+    "mission": 2,
+    "page": 45,
+    "source": "045.jpg",
+    "crop": [
+      172,
+      610,
+      548,
+      985
+    ],
+    "asset": "02.webp"
+  },
+  {
+    "mission": 3,
+    "page": 47,
+    "source": "047.jpg",
+    "crop": [
+      243,
+      326,
+      900,
+      982
+    ],
+    "asset": "03.webp"
+  },
+  {
+    "mission": 4,
+    "page": 49,
+    "source": "049.jpg",
+    "crop": [
+      575,
+      655,
+      901,
+      982
+    ],
+    "asset": "04.webp"
+  },
+  {
+    "mission": 5,
+    "page": 51,
+    "source": "051.jpg",
+    "crop": [
+      198,
+      600,
+      533,
+      1158
+    ],
+    "asset": "05.webp"
+  },
+  {
+    "mission": 6,
+    "page": 53,
+    "source": "053.jpg",
+    "crop": [
+      585,
+      329,
+      901,
+      1396
+    ],
+    "asset": "06.webp"
+  },
+  {
+    "mission": 7,
+    "page": 55,
+    "source": "055.jpg",
+    "crop": [
+      245,
+      324,
+      903,
+      973
+    ],
+    "asset": "07.webp"
+  },
+  {
+    "mission": 8,
+    "page": 57,
+    "source": "057.jpg",
+    "crop": [
+      234,
+      324,
+      891,
+      982
+    ],
+    "asset": "08.webp"
+  },
+  {
+    "mission": 9,
+    "page": 59,
+    "source": "059.jpg",
+    "crop": [
+      242,
+      321,
+      902,
+      973
+    ],
+    "asset": "09.webp"
+  },
+  {
+    "mission": 10,
+    "page": 61,
+    "source": "061.jpg",
+    "crop": [
+      240,
+      322,
+      897,
+      974
+    ],
+    "asset": "10.webp"
+  },
+  {
+    "mission": 11,
+    "page": 63,
+    "source": "063.jpg",
+    "crop": [
+      239,
+      322,
+      719,
+      802
+    ],
+    "asset": "11.webp"
+  },
+  {
+    "mission": 12,
+    "page": 65,
+    "source": "065.jpg",
+    "crop": [
+      289,
+      321,
+      893,
+      921
+    ],
+    "asset": "12.webp"
+  },
+  {
+    "mission": 13,
+    "page": 67,
+    "source": "067.jpg",
+    "crop": [
+      242,
+      316,
+      900,
+      967
+    ],
+    "asset": "13.webp"
+  },
+  {
+    "mission": 14,
+    "page": 69,
+    "source": "069.jpg",
+    "crop": [
+      238,
+      323,
+      889,
+      975
+    ],
+    "asset": "14.webp"
+  },
+  {
+    "mission": 15,
+    "page": 71,
+    "source": "071.jpg",
+    "crop": [
+      78,
+      435,
+      904,
+      976
+    ],
+    "asset": "15.webp"
+  },
+  {
+    "mission": 16,
+    "page": 73,
+    "source": "073.jpg",
+    "crop": [
+      240,
+      320,
+      901,
+      973
+    ],
+    "asset": "16.webp"
+  },
+  {
+    "mission": 17,
+    "page": 75,
+    "source": "075.jpg",
+    "crop": [
+      239,
+      321,
+      901,
+      975
+    ],
+    "asset": "17.webp"
+  },
+  {
+    "mission": 18,
+    "page": 77,
+    "source": "077.jpg",
+    "crop": [
+      238,
+      321,
+      896,
+      979
+    ],
+    "asset": "18.webp"
+  },
+  {
+    "mission": 19,
+    "page": 81,
+    "source": "081.jpg",
+    "crop": [
+      243,
+      315,
+      670,
+      751
+    ],
+    "asset": "19.webp"
+  },
+  {
+    "mission": 20,
+    "page": 83,
+    "source": "083.jpg",
+    "crop": [
+      452,
+      541,
+      892,
+      974
+    ],
+    "asset": "20.webp"
+  },
+  {
+    "mission": 21,
+    "page": 85,
+    "source": "085.jpg",
+    "crop": [
+      242,
+      321,
+      900,
+      978
+    ],
+    "asset": "21.webp"
+  },
+  {
+    "mission": 22,
+    "page": 87,
+    "source": "087.jpg",
+    "crop": [
+      425,
+      506,
+      903,
+      977
+    ],
+    "asset": "22.webp"
+  },
+  {
+    "mission": 23,
+    "page": 89,
+    "source": "089.jpg",
+    "crop": [
+      248,
+      319,
+      902,
+      978
+    ],
+    "asset": "23.webp"
+  },
+  {
+    "mission": 24,
+    "page": 91,
+    "source": "091.jpg",
+    "crop": [
+      244,
+      325,
+      902,
+      978
+    ],
+    "asset": "24.webp"
+  },
+  {
+    "mission": 25,
+    "page": 93,
+    "source": "093.jpg",
+    "crop": [
+      233,
+      314,
+      889,
+      974
+    ],
+    "asset": "25.webp"
+  },
+  {
+    "mission": 26,
+    "page": 95,
+    "source": "095.jpg",
+    "crop": [
+      231,
+      316,
+      891,
+      977
+    ],
+    "asset": "26.webp"
+  },
+  {
+    "mission": 27,
+    "page": 97,
+    "source": "097.jpg",
+    "crop": [
+      69,
+      579,
+      496,
+      1000
+    ],
+    "asset": "27.webp"
+  },
+  {
+    "mission": 28,
+    "page": 99,
+    "source": "099.jpg",
+    "crop": [
+      430,
+      604,
+      898,
+      1074
+    ],
+    "asset": "28.webp"
+  },
+  {
+    "mission": 29,
+    "page": 101,
+    "source": "101.jpg",
+    "crop": [
+      55,
+      542,
+      650,
+      1120
+    ],
+    "asset": "29.webp"
+  },
+  {
+    "mission": 30,
+    "page": 103,
+    "source": "103.jpg",
+    "crop": [
+      242,
+      318,
+      899,
+      972
+    ],
+    "asset": "30.webp"
+  },
+  {
+    "mission": 31,
+    "page": 105,
+    "source": "105.jpg",
+    "crop": [
+      240,
+      319,
+      894,
+      974
+    ],
+    "asset": "31.webp"
+  },
+  {
+    "mission": 32,
+    "page": 107,
+    "source": "107.jpg",
+    "crop": [
+      46,
+      423,
+      894,
+      974
+    ],
+    "asset": "32.webp"
+  },
+  {
+    "mission": 33,
+    "page": 109,
+    "source": "109.jpg",
+    "crop": [
+      45,
+      433,
+      897,
+      977
+    ],
+    "asset": "33.webp"
+  },
+  {
+    "mission": 34,
+    "page": 111,
+    "source": "111.jpg",
+    "crop": [
+      249,
+      409,
+      902,
+      855
+    ],
+    "asset": "34.webp"
+  },
+  {
+    "mission": 35,
+    "page": 113,
+    "source": "113.jpg",
+    "crop": [
+      356,
+      647,
+      899,
+      1185
+    ],
+    "asset": "35.webp"
+  },
+  {
+    "mission": 36,
+    "page": 115,
+    "source": "115.jpg",
+    "crop": [
+      289,
+      372,
+      905,
+      979
+    ],
+    "asset": "36.webp"
+  },
+  {
+    "mission": 37,
+    "page": 117,
+    "source": "117.jpg",
+    "crop": [
+      244,
+      321,
+      898,
+      975
+    ],
+    "asset": "37.webp"
+  },
+  {
+    "mission": 38,
+    "page": 119,
+    "source": "119.jpg",
+    "crop": [
+      239,
+      322,
+      897,
+      973
+    ],
+    "asset": "38.webp"
+  },
+  {
+    "mission": 39,
+    "page": 123,
+    "source": "123.jpg",
+    "crop": [
+      240,
+      325,
+      586,
+      667
+    ],
+    "asset": "39.webp"
+  },
+  {
+    "mission": 40,
+    "page": 125,
+    "source": "125.jpg",
+    "crop": [
+      245,
+      323,
+      905,
+      973
+    ],
+    "asset": "40.webp"
+  },
+  {
+    "mission": 41,
+    "page": 127,
+    "source": "127.jpg",
+    "crop": [
+      237,
+      324,
+      892,
+      978
+    ],
+    "asset": "41.webp"
+  },
+  {
+    "mission": 42,
+    "page": 129,
+    "source": "129.jpg",
+    "crop": [
+      230,
+      320,
+      888,
+      975
+    ],
+    "asset": "42.webp"
+  },
+  {
+    "mission": 43,
+    "page": 131,
+    "source": "131.jpg",
+    "crop": [
+      400,
+      503,
+      893,
+      973
+    ],
+    "asset": "43.webp"
+  },
+  {
+    "mission": 44,
+    "page": 133,
+    "source": "133.jpg",
+    "crop": [
+      241,
+      324,
+      904,
+      976
+    ],
+    "asset": "44.webp"
+  },
+  {
+    "mission": 45,
+    "page": 135,
+    "source": "135.jpg",
+    "crop": [
+      242,
+      323,
+      902,
+      974
+    ],
+    "asset": "45.webp"
+  },
+  {
+    "mission": 46,
+    "page": 137,
+    "source": "137.jpg",
+    "crop": [
+      237,
+      319,
+      891,
+      973
+    ],
+    "asset": "46.webp"
+  },
+  {
+    "mission": 47,
+    "page": 139,
+    "source": "139.jpg",
+    "crop": [
+      61,
+      447,
+      888,
+      979
+    ],
+    "asset": "47.webp"
+  },
+  {
+    "mission": 48,
+    "page": 141,
+    "source": "141.jpg",
+    "crop": [
+      44,
+      435,
+      886,
+      974
+    ],
+    "asset": "48.webp"
+  },
+  {
+    "mission": 49,
+    "page": 143,
+    "source": "143.jpg",
+    "crop": [
+      239,
+      323,
+      892,
+      977
+    ],
+    "asset": "49.webp"
+  },
+  {
+    "mission": 50,
+    "page": 145,
+    "source": "145.jpg",
+    "crop": [
+      238,
+      320,
+      891,
+      973
+    ],
+    "asset": "50.webp"
+  },
+  {
+    "mission": 51,
+    "page": 147,
+    "source": "147.jpg",
+    "crop": [
+      1099,
+      434,
+      1173,
+      1307
+    ],
+    "asset": "51.webp"
+  },
+  {
+    "mission": 52,
+    "page": 147,
+    "source": "147.jpg",
+    "crop": [
+      310,
+      427,
+      1074,
+      1198
+    ],
+    "asset": "52.webp"
+  }
+]

@@ -74,7 +74,7 @@ for id,title,rank,timer,clock,note in rows:
     domain='acecombat.fandom.com' if id in [44] else 'acecombat.wiki.gg'
     sources=[{'label':'JP mission guide','url':f'https://{domain}/wiki/{slug}'}]
     if id in [2,25,28]:sources.append({'label':'Jerrold’s JP walkthrough','url':'https://gamefaqs.gamespot.com/ps/196536-ace-combat-3-electrosphere/faqs/5035'})
-    M.append(dict(id=id,title=title,faction=faction,rank=rank,timer=timer,clock=clock,note=note,source=sources,x=positions[id][0],y=positions[id][1],ending=endings.get(id),checkpoint=checkpoints.get(id),caution=(id==25)))
+    M.append(dict(id=id,title=title,map=f'assets/maps/{id:02}.webp',faction=faction,rank=rank,timer=timer,clock=clock,note=note,source=sources,x=positions[id][0],y=positions[id][1],ending=endings.get(id),checkpoint=checkpoints.get(id),caution=(id==25)))
 
 E=[]
 def edge(a,b,label='',skip=False):E.append(dict(a=a,b=b,label=label,skip=skip))

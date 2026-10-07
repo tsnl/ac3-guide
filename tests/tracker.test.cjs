@@ -134,7 +134,7 @@ test('storage denial still allows checklist and JSON export',t=>{
 test('all mission names link to a matching separate A-rank reference entry',t=>{
  const {d}=app(t),reference=fs.readFileSync(path.join(__dirname,'..','ranks.html'),'utf8');
  const doc=new JSDOM(reference);t.after(()=>doc.window.close());
- assert.equal(doc.window.document.querySelectorAll('section').length,52);
+ assert.equal(doc.window.document.querySelectorAll('section[id^="mission-"]').length,52);
  for(const link of d.querySelectorAll('.mission-title a')){
   const id=link.getAttribute('href').split('#')[1];assert.ok(doc.window.document.getElementById(id));
  }
