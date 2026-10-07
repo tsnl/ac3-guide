@@ -122,13 +122,15 @@ h1 { font-size: 34px; font-weight: 900; letter-spacing: -.045em; line-height: 1.
 .field.save dd { color: #865800; font-weight: 700; }
 .field.save dt { align-self: center; }
 .save-slots { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; width: min(100%, 294px); }
-.save-slot { position: relative; display: grid; place-items: center; height: 38px; border: 2px solid; border-radius: 7px; font: bold 15px/1 var(--mono); }
-.save-slot.unused { background: #daddd4; border-color: #b4bca9; color: #79836d; }
-.save-slot.occupied { background: #59644e; border-color: #39432f; color: #f8f9ed; }
-.save-slot.is-target { border-width: 3px; box-shadow: 0 0 0 1px var(--panel); }
-.save-slot.fresh { background: #b6d9c9; border-color: #2d674f; color: #163a2a; }
-.save-slot.overwrite { background: #efb333; border-color: #745007; color: #2d2108; }
-.slot-mark { position: absolute; top: 2px; right: 3px; font: bold 12px/1 var(--mono); }
+.save-slot { --slot-frame: #39432f; --slot-face: #e8eddf; --slot-ink: #253019; position: relative; display: grid; grid-template-rows: 13px 1fr; justify-items: stretch; align-items: center; height: 64px; border: 3px solid var(--slot-frame); border-radius: 10px; background: var(--slot-face); color: var(--slot-ink); }
+.save-slot.unused { --slot-frame: #a6af9d; --slot-face: #daddd4; --slot-ink: #98a18c; }
+.save-slot.is-target { box-shadow: 0 0 0 1px var(--panel), 0 0 0 2px var(--slot-frame); }
+.save-slot.fresh { --slot-frame: #2d674f; --slot-face: #b6d9c9; --slot-ink: #163a2a; }
+.save-slot.overwrite { --slot-frame: #745007; --slot-face: #efb333; --slot-ink: #2d2108; }
+.slot-file { align-self: stretch; margin: -1px -1px 0; border-radius: 6px 6px 0 0; background: var(--slot-frame); color: #f3f5e9; text-align: center; font: bold 9px/13px var(--mono); letter-spacing: .015em; }
+.slot-number { text-align: center; font: 900 38px/.95 Impact, "Arial Black", Arial, sans-serif; transform: scaleX(.82); }
+.slot-mark { position: absolute; bottom: -4px; right: -4px; display: grid; place-items: center; width: 17px; height: 17px; border: 1px solid var(--slot-frame); border-radius: 50%; background: var(--slot-face); color: var(--slot-ink); font: bold 12px/1 var(--mono); }
+.save-slot:not(.is-target) .slot-mark { background: #f1d482; color: #5f480d; }
 .save-note { display: block; margin-top: 6px; color: var(--muted); font-size: 10px; font-weight: 400; }
 .save-key { display: flex; gap: 14px; margin: -12px 0 22px; font: 10px var(--mono); color: var(--muted); }
 .save-key span { display: inline-flex; align-items: center; gap: 5px; }

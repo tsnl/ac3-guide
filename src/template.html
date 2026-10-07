@@ -76,7 +76,7 @@ function saveSlots(a){
   const slot=i+1,target=slot===a.save.slot,saved=byId[mission];
   const label=target?(a.save.mode==='fresh'?'Fresh save → Slot ':'Overwrite Slot ')+slot+' · '+saved.title:saved?'Slot '+slot+' · '+saved.title+(saved.ending?' · Ending':''):'Unused Slot '+slot;
   const mark=target?(a.save.mode==='fresh'?'+':'↻'):saved?.ending?'★':'';
-  return `<span class="save-slot ${saved?'occupied':'unused'}${target?' is-target '+a.save.mode:''}" role="img" aria-label="${esc(label)}" title="${esc(label)}" data-slot="${slot}"><span class="slot-number" aria-hidden="true">${slot}</span>${mark?`<span class="slot-mark" aria-hidden="true">${mark}</span>`:''}</span>`;
+  return `<span class="save-slot ${saved?'occupied':'unused'}${target?' is-target '+a.save.mode:''}" role="img" aria-label="${esc(label)}" title="${esc(label)}" data-slot="${slot}"><span class="slot-file" aria-hidden="true">FILE</span><span class="slot-number" aria-hidden="true">${slot}</span>${mark?`<span class="slot-mark" aria-hidden="true">${mark}</span>`:''}</span>`;
  }).join('')}</div>${a.ending?'<small class="save-note">After credits, including system data</small>':''}`;
 }
 function renderActions(){
