@@ -44,7 +44,7 @@ header::before { content: ''; position: absolute; bottom: 100%; left: 0; right: 
 .system-brand { color: #f3f5db; font-size: 13px; font-weight: bold; font-style: italic; letter-spacing: .12em; }
 .title-row, .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
 .eyebrow { font: bold 10px var(--mono); letter-spacing: .1em; color: var(--amber); text-transform: uppercase; }
-h1 { font-size: 34px; font-weight: 900; letter-spacing: -.045em; line-height: 1.1; text-transform: uppercase; margin: 7px 0; }
+h1 { font-size: 34px; font-weight: 900; letter-spacing: -.045em; line-height: 1.1; text-transform: uppercase; text-wrap: balance; margin: 7px 0; }
 .subtitle { font: 11px var(--mono); color: #bec7b3; margin: 0; }
 .count {
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
