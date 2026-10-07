@@ -4,7 +4,7 @@ A linear Ace Combat 3: Electrosphere (Japanese / fan-translated release) campaig
 
 - One checkbox for each of 61 mission attempts, plus six separate load-save boxes
 - Only the next unfinished action is enabled; later unchecked actions are greyed out
-- Each mission shows its name, target time, and where to save **after** completion; a bold highlighted decision appears only where applicable
+- Each mission shows its name, target time, and where to save **after** completion; a bold highlighted Decision appears only at story forks
 - Five gold ending boxes with stars
 - Data Swallow-inspired ivory, black, and amber menu theme with an animated network-tunnel background, a pause control, and reduced-motion support
 - A-rank requirements and source links on a separate reference page
@@ -33,7 +33,7 @@ From an A-rank clear of mission 02, **59 mission entries remain**, assuming miss
 | 12 | A-rank 34; save without playing 36 yet | Fresh S6 after 34 | S1 after 28 |
 | 13 | 34 let an escaping target survive the timer; A-rank 35–38 | Overwrite S1; keep ending | — |
 
-07, 24, 34, and 39 require a lower-grade route visit as well as an A clear. Each replay has its own checkbox and visit-specific decision; completing a lower-grade replay does not replace the earlier A-clear checkbox. Checkboxes only update this browser log; make the actual saves and loads in the game.
+07, 24, 34, and 39 require a lower-grade route visit as well as an A clear. Each replay has its own checkbox and visit-specific instructions; completing a lower-grade replay does not replace the earlier A-clear checkbox. Only narrative choices use the Decision highlight. Timed route requirements stay beside the target time, and ordinary objectives such as following the spy plane remain in the full mission guidance. Checkboxes only update this browser log; make the actual saves and loads in the game.
 
 Every mission names a save destination and explicitly says **Fresh save → Slot N** on the first use of that slot, or **Overwrite Slot N** on later uses. Saves start **1, 1, 1, 2, 2, 2, 3…**: advance to another slot to preserve a pending branch checkpoint, and reuse the previous slot on its last remaining branch. There is no dedicated temporary slot. The six slots are first used in numerical order, and all five ending saves remain intact at the end. The plan assumes these slots are available at the start.
 
