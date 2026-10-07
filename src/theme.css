@@ -97,6 +97,17 @@ h1 { font-size: 34px; font-weight: 900; letter-spacing: -.045em; line-height: 1.
 .mission-title a { text-decoration: none; }
 .mission-title a:hover { text-decoration: underline; }
 .next .mission-title { padding: 6px 13px; margin-top: -3px; border: 0; border-radius: 18px 0 0 18px; background: #151c0f; color: #fffbe5; }
+.milestones { width: 100%; border-collapse: collapse; table-layout: fixed; margin: 0 0 14px; font-size: 12px; line-height: 1.5; }
+.milestones thead th { text-align: left; padding: 0 0 6px; border-bottom: 2px solid #adb69e; color: var(--muted); font: bold 10px var(--mono); text-transform: uppercase; letter-spacing: .04em; }
+.milestones th:first-child { width: 120px; padding-right: 12px; }
+.milestones tbody th, .milestones td { padding: 9px 0; border-bottom: 1px solid #c6ceb9; text-align: left; vertical-align: top; }
+.milestones tbody th { font-weight: 700; }
+.milestones th small { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; font-weight: 400; line-height: 1.4; }
+.milestones td div + div { margin-top: 4px; }
+.milestones td b { font-weight: 700; }
+.kill-total { color: #76500a; }
+.locked .kill-total { color: var(--ink); }
+.locked .milestones thead th, .locked .milestones tbody th, .locked .milestones td { border-color: #bdc5b3; }
 .fields { margin: 0; display: grid; gap: 7px; font-size: 13px; }
 .field { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 8px; }
 .field dt { color: var(--muted); font: bold 10px/1.95 var(--mono); text-transform: uppercase; letter-spacing: .04em; }
@@ -149,6 +160,13 @@ footer button:hover { color: #764d00; }
   .action { padding: 17px 12px; grid-template-columns: 22px 56px minmax(0, 1fr); gap: 10px; border-radius: 0 18px 0 0; }
   .action.next { padding: 16px 11px; }
   .icon { width: 42px; height: 42px; font-size: 17px; border-width: 4px; }
+  .action:not(.load) .mission-body { display: contents; }
+  .action:not(.load) .mission-title { grid-column: 3; grid-row: 1; align-self: center; }
+  .action:not(.load) .mission-map { grid-column: 2; grid-row: 1; }
+  .action:not(.load) input { grid-column: 1; grid-row: 1; }
+  .milestones { grid-column: 1 / -1; grid-row: 2; margin: 2px 0 3px; font-size: 12px; }
+  .milestones th:first-child { width: 94px; padding-right: 10px; }
+  .action:not(.load) .fields { grid-column: 1 / -1; grid-row: 3; }
   .mission-map { width: 56px; height: 56px; border-radius: 0 9px 0 0; }
   .mission-title { font-size: 15px; margin-bottom: 10px; }
   .next .mission-title { padding: 6px 10px; }

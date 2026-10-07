@@ -1,13 +1,14 @@
 import json
 from html import escape
 from pathlib import Path
+from milestones import MILESTONES, ROUTE_MILESTONES
 
 ROOT = Path(__file__).parent
 # Rank requirements are paraphrased from the linked Japanese-version mission articles.
 # A missing numeric timer means that the source does not publish a separate cutoff.
 rows = [
  (1,'Awakening','10+ aircraft; unlock and complete the second wave.','3:00','Initial targets','Finish the four R-501 targets before 3:00 to trigger reinforcements. Take optional kills before the last red target.'),
- (2,'Bravado','23+ enemies, including the mission-update targets.','4:00','Initial radar sites','Destroy all eight radars by 3:59 to trigger the base targets. Optional aircraft and defenses count toward the total.'),
+ (2,'Bravado','23+ enemies, including the mission-update targets.','4:00','Initial radar sites','Before the last radar, destroy at least ten of the eleven optional aircraft / GUN / MSSL units; finish all eight radars by 3:59. Then destroy the four bases and bridge for at least 23 total. The optional-kill budget is derived from the official guidebook unit list.'),
  (3,'Enter Dision','5,000+ training points before the mission update.','','Score based','The six practice targets give 1,800 points; earn at least 3,200 by following Dision closely. Then complete the container interception.'),
  (4,'Paper Tiger','23+ enemies and trigger the mission update.','3:00','Initial targets','Finish the first target group by 2:59. The faction decision occurs before the next normal save opportunity.'),
  (5,'Broken Truce','11+ enemies and complete the reinforcement phase.','3:00','Initial fighters','Destroy all four target F-15s by 2:59 to spawn the bombers. Slower completion gives Mission Over / D.'),
@@ -73,6 +74,7 @@ for id,title,rank,timer,clock,note in rows:
     slug={20:'Megafloat_(mission)',33:'Geopelia_(mission)',38:'Electrosphere_(mission)',48:'Resistance_(AC3)'}.get(id,title.replace(' ','_'))
     domain='acecombat.fandom.com' if id in [44] else 'acecombat.wiki.gg'
     sources=[{'label':'JP mission guide','url':f'https://{domain}/wiki/{slug}'}]
+    if id == 2:sources.append({'label':'Optional-target timing clarification','url':'https://retroachievements.org/game/11308/comments'})
     if id in [2,25,28]:sources.append({'label':'Jerrold’s JP walkthrough','url':'https://gamefaqs.gamespot.com/ps/196536-ace-combat-3-electrosphere/faqs/5035'})
     M.append(dict(id=id,title=title,map=f'assets/maps/{id:02}.webp',faction=faction,rank=rank,timer=timer,clock=clock,note=note,source=sources,x=positions[id][0],y=positions[id][1],ending=endings.get(id),checkpoint=checkpoints.get(id),caution=(id==25)))
 
@@ -144,8 +146,8 @@ time_targets = {
 story_decisions = {
     (1,4):'FIONA',
     (2,7):'RENA',
-    (2,9):'RENA',
-    (3,9):'FIONA',
+    (2,9):'SHOOT FIONA',
+    (3,9):'SHOOT R101U',
     (4,43):'FIONA',
     (5,43):'CYNTHIA',
     (6,4):'DISION',
@@ -184,11 +186,13 @@ for leg, group in enumerate(groups):
         if n==group[-1]:
             save=dict(slot=P[leg]['slot'],after=n,label=P[leg]['saveLabel'],ending=bool(m['ending']))
         actions.append(dict(id=f'mission-{n:02d}-{visits[n]}',type='mission',mission=n,
-                            visit=visits[n],time=target,decision=story_decisions.get((leg,n),''),
+                            visit=visits[n],time=target,milestones=ROUTE_MILESTONES.get((leg,n),MILESTONES[n]),decision=story_decisions.get((leg,n),''),
                             rank=rank,save=save,ending=m['ending'],legacyLeg=leg))
 
 assert [a['mission'] for a in actions if a['type']=='mission']==[1,2]+sequence
 assert len(actions)==67
+assert set(MILESTONES)==set(range(1,53))
+assert all(a['milestones'] for a in actions if a['type']=='mission')
 assert {a['mission'] for a in actions if a.get('rank')=='A'}==set(range(1,53))
 # Label the first use of each slot as fresh, and validate every later reload.
 slots={}

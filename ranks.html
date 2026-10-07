@@ -105,6 +105,17 @@ h1 { font-size: 34px; font-weight: 900; letter-spacing: -.045em; line-height: 1.
 .mission-title a { text-decoration: none; }
 .mission-title a:hover { text-decoration: underline; }
 .next .mission-title { padding: 6px 13px; margin-top: -3px; border: 0; border-radius: 18px 0 0 18px; background: #151c0f; color: #fffbe5; }
+.milestones { width: 100%; border-collapse: collapse; table-layout: fixed; margin: 0 0 14px; font-size: 12px; line-height: 1.5; }
+.milestones thead th { text-align: left; padding: 0 0 6px; border-bottom: 2px solid #adb69e; color: var(--muted); font: bold 10px var(--mono); text-transform: uppercase; letter-spacing: .04em; }
+.milestones th:first-child { width: 120px; padding-right: 12px; }
+.milestones tbody th, .milestones td { padding: 9px 0; border-bottom: 1px solid #c6ceb9; text-align: left; vertical-align: top; }
+.milestones tbody th { font-weight: 700; }
+.milestones th small { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; font-weight: 400; line-height: 1.4; }
+.milestones td div + div { margin-top: 4px; }
+.milestones td b { font-weight: 700; }
+.kill-total { color: #76500a; }
+.locked .kill-total { color: var(--ink); }
+.locked .milestones thead th, .locked .milestones tbody th, .locked .milestones td { border-color: #bdc5b3; }
 .fields { margin: 0; display: grid; gap: 7px; font-size: 13px; }
 .field { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 8px; }
 .field dt { color: var(--muted); font: bold 10px/1.95 var(--mono); text-transform: uppercase; letter-spacing: .04em; }
@@ -157,6 +168,13 @@ footer button:hover { color: #764d00; }
   .action { padding: 17px 12px; grid-template-columns: 22px 56px minmax(0, 1fr); gap: 10px; border-radius: 0 18px 0 0; }
   .action.next { padding: 16px 11px; }
   .icon { width: 42px; height: 42px; font-size: 17px; border-width: 4px; }
+  .action:not(.load) .mission-body { display: contents; }
+  .action:not(.load) .mission-title { grid-column: 3; grid-row: 1; align-self: center; }
+  .action:not(.load) .mission-map { grid-column: 2; grid-row: 1; }
+  .action:not(.load) input { grid-column: 1; grid-row: 1; }
+  .milestones { grid-column: 1 / -1; grid-row: 2; margin: 2px 0 3px; font-size: 12px; }
+  .milestones th:first-child { width: 94px; padding-right: 10px; }
+  .action:not(.load) .fields { grid-column: 1 / -1; grid-row: 3; }
   .mission-map { width: 56px; height: 56px; border-radius: 0 9px 0 0; }
   .mission-title { font-size: 15px; margin-bottom: 10px; }
   .next .mission-title { padding: 6px 10px; }
@@ -194,7 +212,7 @@ footer button:hover { color: #764d00; }
 <header><div class="wrap header-inner"><h1>A-rank reference</h1><a class="back-link" href="index.html">← Campaign checklist</a></div></header>
 <main class="wrap"><p class="reference-intro">Japanese version. Times are elapsed and phase-specific; aim below the threshold. A missing time means no separate cutoff was published, not an unlimited mission timer.</p>
 <section class="reference-section" id="mission-1"><h2>01 · Awakening</h2><p><b>A rank:</b> 10+ aircraft; unlock and complete the second wave.</p><p><b>Clock:</b> 3:00 · Initial targets</p><p>Finish the four R-501 targets before 3:00 to trigger reinforcements. Take optional kills before the last red target.</p><p class="sources"><a href="https://acecombat.wiki.gg/wiki/Awakening" rel="noopener">JP mission guide</a></p></section>
-<section class="reference-section" id="mission-2"><h2>02 · Bravado</h2><p><b>A rank:</b> 23+ enemies, including the mission-update targets.</p><p><b>Clock:</b> 4:00 · Initial radar sites</p><p>Destroy all eight radars by 3:59 to trigger the base targets. Optional aircraft and defenses count toward the total.</p><p class="sources"><a href="https://acecombat.wiki.gg/wiki/Bravado" rel="noopener">JP mission guide</a> · <a href="https://gamefaqs.gamespot.com/ps/196536-ace-combat-3-electrosphere/faqs/5035" rel="noopener">Jerrold’s JP walkthrough</a></p></section>
+<section class="reference-section" id="mission-2"><h2>02 · Bravado</h2><p><b>A rank:</b> 23+ enemies, including the mission-update targets.</p><p><b>Clock:</b> 4:00 · Initial radar sites</p><p>Before the last radar, destroy at least ten of the eleven optional aircraft / GUN / MSSL units; finish all eight radars by 3:59. Then destroy the four bases and bridge for at least 23 total. The optional-kill budget is derived from the official guidebook unit list.</p><p class="sources"><a href="https://acecombat.wiki.gg/wiki/Bravado" rel="noopener">JP mission guide</a> · <a href="https://retroachievements.org/game/11308/comments" rel="noopener">Optional-target timing clarification</a> · <a href="https://gamefaqs.gamespot.com/ps/196536-ace-combat-3-electrosphere/faqs/5035" rel="noopener">Jerrold’s JP walkthrough</a></p></section>
 <section class="reference-section" id="mission-3"><h2>03 · Enter Dision</h2><p><b>A rank:</b> 5,000+ training points before the mission update.</p><p><b>Clock:</b> No separate cutoff published · Score based</p><p>The six practice targets give 1,800 points; earn at least 3,200 by following Dision closely. Then complete the container interception.</p><p class="sources"><a href="https://acecombat.wiki.gg/wiki/Enter_Dision" rel="noopener">JP mission guide</a></p></section>
 <section class="reference-section" id="mission-4"><h2>04 · Paper Tiger</h2><p><b>A rank:</b> 23+ enemies and trigger the mission update.</p><p><b>Clock:</b> 3:00 · Initial targets</p><p>Finish the first target group by 2:59. The faction decision occurs before the next normal save opportunity.</p><p class="sources"><a href="https://acecombat.wiki.gg/wiki/Paper_Tiger" rel="noopener">JP mission guide</a></p></section>
 <section class="reference-section" id="mission-5"><h2>05 · Broken Truce</h2><p><b>A rank:</b> 11+ enemies and complete the reinforcement phase.</p><p><b>Clock:</b> 3:00 · Initial fighters</p><p>Destroy all four target F-15s by 2:59 to spawn the bombers. Slower completion gives Mission Over / D.</p><p class="sources"><a href="https://acecombat.wiki.gg/wiki/Broken_Truce" rel="noopener">JP mission guide</a></p></section>
@@ -249,7 +267,7 @@ footer button:hover { color: #764d00; }
 <h2 id="credits-heading">Credits</h2>
 <p><b>Game and map artwork.</b> © NAMCO LTD. Mission thumbnails are cropped from <i>Namco Official Guide Book: Ace Combat 3 — Electrosphere</i>, published by Namco on 27 May 1999, with editorial cooperation by Q-BIST. The maps come from its “Map Guidance” pages 43–147. <a href="https://github.com/tsnl/ac3-guide/blob/main/assets/maps/SOURCES.md">Full map credits and per-mission source index</a>.</p>
 <p><b>Guidebook scans.</b> The archive was shared by u/superleshman in <a href="https://www.reddit.com/r/acecombat/comments/1rgge4w/ace_combat_3_electrosphere_official_guidebook_1999/">VictorFortesque’s r/acecombat guidebook discussion</a>. The original scanner was not identified. These thumbnails come from that guidebook archive, not the wiki.</p>
-<p><b>Mission routes and A ranks.</b> <a href="https://acecombat.wiki.gg/wiki/List_of_missions_in_Ace_Combat_3_(uncut)">Ace Combat Wiki contributors</a> and <a href="https://gamefaqs.gamespot.com/ps/196536-ace-combat-3-electrosphere/faqs/5035">Jerrold’s Japanese-version walkthrough</a>. Individual mission articles are linked above. Requirements are paraphrased; the save-slot itinerary was devised for this guide.</p>
+<p><b>Mission routes and A ranks.</b> <a href="https://acecombat.wiki.gg/wiki/List_of_missions_in_Ace_Combat_3_(uncut)">Ace Combat Wiki contributors</a> and <a href="https://gamefaqs.gamespot.com/ps/196536-ace-combat-3-electrosphere/faqs/5035">Jerrold’s Japanese-version walkthrough</a>. Individual mission articles are linked above. Requirements are paraphrased; the save-slot itinerary and phase-by-phase play plan were devised for this guide. Initial-wave optional-kill budgets for Awakening, Bravado and Broken Truce are derived from the published A totals and the official guidebook’s unit lists on pages 42, 44 and 50. <a href="https://retroachievements.org/game/11308/comments">SlyCooperFan1’s Bravado clarification</a> explains why optional cleanup belongs before the radar update.</p>
 <p><b>Dialogue and save behavior.</b> The <a href="https://w.atwiki.jp/acacac/pages/4.html">Ace Combat dialogue archive contributors</a> supplied the Japanese dialogue reference for character choices. The <a href="https://retroachievements.org/forums/topic/17603">RetroAchievements author discussion</a> informed the shared system-data and rank-persistence guidance.</p>
 <p><b>Menu and animation references.</b> Namco’s original game UI, gameplay photographs and video supplied by this project’s maintainer, and the development interview in <a href="https://www.bandainamcoent.co.jp/corporate/bnours/nours/vol24/pdf/24_32-34.pdf"><i>NOURS</i>, volume 24, pages 32–34</a>. The menu controls and animated tunnel are recreated in code.</p>
 </section>

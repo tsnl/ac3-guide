@@ -31,7 +31,7 @@ test('one mission box per attempt, six load boxes, five starred endings, only ne
  assert.equal(next().dataset.action,'mission-01-1');
  for(const a of data.actions.filter(a=>a.type==='mission')){
   const card=d.getElementById(a.id);
-  assert.deepEqual([...card.querySelectorAll('dt')].map(x=>x.textContent),a.decision?['Target time','Decision','Save after']:['Target time','Save after']);
+  assert.deepEqual([...card.querySelectorAll('dt')].map(x=>x.textContent),a.decision?['Decision','Save after']:['Save after']);
   assert.equal(card.querySelector('.decision strong')?.textContent||'',a.decision);
  }
  assert.equal(d.querySelector('#mission-detail'),null);
