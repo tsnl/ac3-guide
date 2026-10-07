@@ -2,7 +2,7 @@
 
 These compact checklist instructions do not promise an A rank. Full scoring,
 optional-target and protection criteria remain in the linked rank reference.
-All clocks are elapsed; a blank numeric time means no separate cutoff is cited.
+All clocks are elapsed; N/A means no separate cutoff is cited.
 """
 
 
@@ -11,7 +11,7 @@ def step(time, clock, requirements):
 
 
 def complete(requirements='All required targets'):
-    return step('By completion', '', requirements)
+    return step('N/A', '', requirements)
 
 
 MILESTONES = {
