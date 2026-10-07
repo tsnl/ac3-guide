@@ -1,11 +1,11 @@
 # AC3 Japanese campaign guide
 
-A linear Ace Combat 3: Electrosphere (Japanese / fan-translated release) campaign checklist. Covers all 52 missions at A rank and all five endings, using six normal in-game save slots.
+A linear Ace Combat 3: Electrosphere (Japanese / fan-translated release) campaign checklist. Covers all 52 missions and all five endings, using six normal in-game save slots. The checklist focuses on timing and route objectives; the separate rank reference covers the extra requirements for all A ranks.
 
 - One checkbox for each of 61 mission attempts, plus six separate load-save boxes
 - Only the next unfinished action is enabled; later unchecked actions are greyed out
 - Each mission shows its name, a **Time / Requirements** milestone table, and where to save **after** completion; a bold highlighted Decision appears only at story forks and uses a character name, except Scylla and Charybdis: **SHOOT FIONA** / **SHOOT R101U**
-- Original guidebook map thumbnails for all 52 missions; artwork, scan, and research attribution in a separate Credits section
+- Guidebook map thumbnails for all 52 missions; exact briefing-menu replacements are pending source images. Artwork, scan, and research attribution is in a separate Credits section
 - Five gold ending boxes with stars
 - Data Swallow-inspired ivory, black, and amber menu theme with an animated network-tunnel background, a pause control, and reduced-motion support
 - A-rank requirements and source links on a separate reference page
@@ -35,7 +35,7 @@ From an A-rank clear of mission 02, **59 mission entries remain**, assuming miss
 | 12 | A-rank 34; save without playing 36 yet | Fresh S6 after 34 | S1 after 28 |
 | 13 | 34 let an escaping target survive the timer; A-rank 35–38 | Overwrite S1; keep ending | — |
 
-07, 24, 34, and 39 require a lower-grade route visit as well as an A clear. Each replay has its own checkbox and visit-specific instructions; completing a lower-grade replay does not replace the earlier A-clear checkbox. Only narrative choices use the Decision highlight. Timed route requirements and ordinary objectives such as following the spy plane appear in the milestone table. Each row names its clock and separates required objectives from optional cleanup. Kill totals include required and optional enemies combined; deliberate lower-grade replays replace the A-rank table with their route requirements. Checkboxes only update this browser log; make the actual saves and loads in the game.
+07, 24, 34, and 39 require a lower-grade route visit as well as an A clear. Each replay has its own checkbox and visit-specific instructions; completing a lower-grade replay does not replace the earlier A-clear checkbox. Only narrative choices use the Decision highlight. Timed route requirements and ordinary objectives such as following the spy plane appear in the milestone table. Each row gives a timing goal and a short essential objective. Optional-kill totals and score requirements are kept on the linked A-rank reference page; meeting a time alone does not guarantee A. Deliberate lower-grade visits retain their distinct route requirements. Checkboxes only update this browser log; make the actual saves and loads in the game.
 
 Every mission names a save destination and explicitly says **Fresh save → Slot N** on the first use of that slot, or **Overwrite Slot N** on later uses. Saves start **1, 1, 1, 2, 2, 2, 3…**: advance to another slot to preserve a pending branch checkpoint, and reuse the previous slot on its last remaining branch. There is no dedicated temporary slot. The six slots are first used in numerical order, and all five ending saves remain intact at the end. The plan assumes these slots are available at the start.
 
@@ -43,7 +43,7 @@ Every mission names a save destination and explicitly says **Fresh save → Slot
 
 The graph and A-rank data are paraphrased from the Japanese-version mission guides on [Ace Combat Wiki](https://acecombat.wiki.gg/wiki/List_of_missions_in_Ace_Combat_3_%28uncut%29), with individual links in `ranks.html`. Save/rank persistence is described in the [RetroAchievements author discussion](https://retroachievements.org/forums/topic/17603); [Jerrold's Japanese walkthrough](https://gamefaqs.gamespot.com/ps/196536-ace-combat-3-electrosphere/faqs/5035) corroborates route and timing details. Research checked 6 October 2026.
 
-The minimum-entry route is a derived plan, not a quoted walkthrough. Mission 25's published 17-kill requirement does not fully reconcile with its listed enemy count; the app explicitly flags it for in-game confirmation. Aim below timer boundaries. A blank numeric timer means no separate threshold was published, not unlimited mission time.
+The minimum-entry route is a derived all-A plan, not a quoted walkthrough. The checklist itself tracks actions, not achieved ranks; use the full reference if pursuing every A rank. Mission 25's published 17-kill requirement does not fully reconcile with its listed enemy count; the rank reference flags it for in-game confirmation. Reaching for Stars is also checked against Mission & World View, p. 86: the 13 required kills give C; A needs at least five optional kills too. Aim below timer boundaries. A blank numeric timer means no separate threshold was published, not unlimited mission time.
 
 Ordinary campaign completion and unlocks are covered. AppenDisc/deadcopy-only Night Raven availability and external achievement sets are outside scope. Mechanical route spoilers are visible, but the app does not summarize endings.
 
