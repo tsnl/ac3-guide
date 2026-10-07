@@ -100,14 +100,14 @@ plans=[
  ('Finish UPEO directly','In 07, follow Rena and A-rank the full combat. You proceed directly to 09. Stay with UPEO there; A-rank 09–18. Save the ending to S3. Keep S1 and S2. Mission 08 comes on the next leg.',18,3,'Completed UPEO ending',[7,*range(9,19)],[],['7-9','9-10']),
  ('Reload S2: visit Fragile Cargo, then join Neucom','Load S2 (after 06). In 07, return to base; this lower-rank replay is intentional. A-rank 08 and 09; in 09 protect Fiona by shooting the R-101U. Overwrite S2 after 09, on the Neucom route.',9,2,'After 09 · Neucom → Power for Life',[8,9],[7],['7-8','9-39']),
  ('Finish Neucom’s ending','A-rank 39 by destroying all 3 oil tanks + 4 radar sites. Continue 40 → 42 → 43; stay with Fiona in 43. A-rank 48–52, meeting the 90-second carrier gate in 48 to include 49. Save the ending to S4; keep S2.',52,4,'Completed Neucom ending',[39,40,42,43,48,49,50,51,52],[],['39-40','43-48','48-49']),
- ('Reload S2: visit space, then finish Neucom → Ouroboros','Load S2 (after 09). In 39, leave at least one oil tank / radar intact for the deliberate D route. A-rank 41, then 43 and follow Cynthia. A-rank 44–47. Save the ending to S5; S2 is now reusable.',47,5,'Completed Ouroboros · via Neucom ending',[41,43,44,45,46,47],[39],['39-41','43-44']),
- ('Reload S1: switch to General Resource','Load S1 (after 03). Replay 04 and follow Dision. A-rank 19; save after Soldier of Fortune to S2. You may now reuse S1 for a finished ending later.',19,2,'After 19 → Megafloat',[4,19],[],['4-19']),
- ('Visit Target Acquisition','In 20, keep an initial target alive until 3:30, then sink the target hydrofoil within 45 seconds; get 24+ kills for A. A-rank 21. Save the results after Target Acquisition to S6 before reloading.',21,6,'Rolling: after 21 → Tainted Peace',[20,21],[],['20-21']),
- ('Reload S2: visit Partners','Load S2 (after 19). Finish 20 before 3:30 to reach 22. Letting the hydrofoil escape also works; A is already recorded. A-rank 22 and 23, then overwrite S2 after Tainted Peace.',23,2,'After 23 → Stratosphere',[22,23],[],['20-22']),
- ('Help Keith; finish General Resource','In 24, shoot down the R-311 attacking Keith and accept D. A-rank 25 → 27 → 28; stay with Keith in 28. A-rank 29–33, meeting the three-minute X-49 damage gate in 30 to include 31. Save the ending to S1. Keep S2.',33,1,'Completed General Resource ending',[25,27,28,29,30,31,32,33],[24],['24-25','28-29','30-31']),
- ('Reload S2: bank Stratosphere A, then join Ouroboros','Load S2 (after 23). A-rank 24 by destroying the Moburas plus two other enemies. A-rank 26 and 28; follow Dision in 28. Overwrite S2 after Dilemma, now on the Ouroboros side.',28,2,'After 28 · Ouroboros → The Orientation',[24,26,28],[],['24-26','28-34']),
+ ('Reload S2: visit space, then finish Neucom → Ouroboros','Load S2 (after 09). In 39, leave at least one oil tank / radar intact for the deliberate D route. A-rank 41, then 43 and follow Cynthia. A-rank 44–47. Overwrite S2 throughout this last branch, keeping its ending there.',47,2,'Completed Ouroboros · via Neucom ending',[41,43,44,45,46,47],[39],['39-41','43-44']),
+ ('Reload S1: switch to General Resource','Load S1 (after 03). Replay 04 and follow Dision. A-rank 19; overwrite S1 after each mission. Keep the after-19 checkpoint for the Megafloat fork.',19,1,'After 19 → Megafloat',[4,19],[],['4-19']),
+ ('Visit Target Acquisition','In 20, keep an initial target alive until 3:30, then sink the target hydrofoil within 45 seconds; get 24+ kills for A. Save to S5. A-rank 21 and overwrite S5 before reloading.',21,5,'After 21 → Tainted Peace',[20,21],[],['20-21']),
+ ('Reload S1: visit Partners','Load S1 (after 19). Finish 20 before 3:30 to reach 22. Letting the hydrofoil escape also works; A is already recorded. A-rank 22 and 23, overwriting S1 after each mission.',23,1,'After 23 → Stratosphere',[22,23],[],['20-22']),
+ ('Help Keith; finish General Resource','In 24, shoot down the R-311 attacking Keith and accept D. A-rank 25 → 27 → 28; stay with Keith in 28. A-rank 29–33, meeting the three-minute X-49 damage gate in 30 to include 31. Overwrite S5 after every mission, keeping the ending there. Keep S1.',33,5,'Completed General Resource ending',[25,27,28,29,30,31,32,33],[24],['24-25','28-29','30-31']),
+ ('Reload S1: bank Stratosphere A, then join Ouroboros','Load S1 (after 23). A-rank 24 by destroying the Moburas plus two other enemies. A-rank 26 and 28; follow Dision in 28. Overwrite S1 after each mission, ending on the Ouroboros side.',28,1,'After 28 · Ouroboros → The Orientation',[24,26,28],[],['24-26','28-34']),
  ('Bank The Orientation’s A rank','In 34, destroy 29+ enemies and all three escaping target V-22Bs within 90 seconds of the update. Save after 34 to S6. Do not fly 36 yet: the reload next will bring you back to it.',34,6,'Rolling: after 34 → Archnemesis',[34],[],['34-36']),
- ('Reload S2: visit Liquidation and finish','Load S2 (after 28). Replay 34, leaving an escaping target alive past 90 seconds. A-rank 35–38. Save the ending over S2, including the post-credits system save. All five endings and all 52 A ranks are now covered, provided 01 was also A.',38,2,'Completed Ouroboros · via General ending',[35,36,37,38],[34],['34-35']),
+ ('Reload S1: visit Liquidation and finish','Load S1 (after 28). Replay 34, leaving an escaping target alive past 90 seconds. A-rank 35–38. Overwrite S1 after each mission, including the post-credits system save. All five endings and all 52 A ranks are now covered, provided 01 was also A.',38,1,'Completed Ouroboros · via General ending',[35,36,37,38],[34],['34-35']),
 ]
 P=[]
 for i,(title,body,after,slot,label,clears,lower,branches) in enumerate(plans):
@@ -125,7 +125,7 @@ groups = [
     [24,26,28], [34], [34,35,36,37,38],
 ]
 reloads = {3:(2,6,''), 5:(2,9,'Neucom route'), 6:(1,3,''),
-           8:(2,19,''), 10:(2,23,''), 12:(2,28,'Ouroboros route')}
+           8:(1,19,''), 10:(1,23,''), 12:(1,28,'Ouroboros route')}
 time_targets = {
     1:'Under 3:00 · first four targets', 2:'Under 4:00 · eight radars',
     3:'—', 4:'Under 3:00 · first target group', 5:'Under 3:00 · first four fighters',
@@ -178,9 +178,9 @@ for leg, group in enumerate(groups):
         if (leg,n)==(8,20): target='Under 3:30 · initial targets'
         if (leg,n)==(12,34): target='Wait past 1:30 · from escaping-target update'
         rank='D' if n in P[leg]['lower'] else 'any' if (leg,n)==(8,20) else 'A'
-        save=dict(slot=6,after=n,label=f'Working: after {n:02d} {m["title"]}',ending=False,working=True)
+        save=dict(slot=P[leg]['slot'],after=n,label=f'After {n:02d} {m["title"]}',ending=False)
         if n==group[-1]:
-            save=dict(slot=P[leg]['slot'],after=n,label=P[leg]['saveLabel'],ending=bool(m['ending']),working=P[leg]['slot']==6)
+            save=dict(slot=P[leg]['slot'],after=n,label=P[leg]['saveLabel'],ending=bool(m['ending']))
         actions.append(dict(id=f'mission-{n:02d}-{visits[n]}',type='mission',mission=n,
                             visit=visits[n],time=target,decision=decisions.get((leg,n),''),
                             rank=rank,save=save,ending=m['ending'],legacyLeg=leg))
@@ -196,12 +196,15 @@ for a in actions:
         slot=a['save']['slot']
         a['save']['mode']='overwrite' if slot in slots else 'fresh'
         slots[slot]=a['mission']
-assert slots=={1:33,2:38,3:18,4:52,5:47,6:37}
+assert slots=={1:38,2:47,3:18,4:52,5:33,6:34}
 
 data=dict(missions=M,edges=E,actions=actions,sequence=[1,2]+sequence,
           researchDate='2026-10-06',schemaVersion=2)
 theme=(ROOT/'theme.css').read_text()
-template=(ROOT/'template.html').read_text().replace('/*__THEME__*/',theme)
+background=(ROOT/'background.js').read_text()
+def themed(name):
+    return (ROOT/name).read_text().replace('/*__THEME__*/',theme).replace('/*__BACKGROUND__*/',background)
+template=themed('template.html')
 out=ROOT.parent/'index.html'
 out.write_text(template.replace('/*__DATA__*/', 'const DATA='+json.dumps(data,ensure_ascii=False,separators=(',',':'))+';'))
 print(f'{out}: {out.stat().st_size:,} bytes; {len(M)} missions, {len(actions)} checklist actions')
@@ -213,5 +216,5 @@ for m in M:
                      f'<p><b>A rank:</b> {escape(m["rank"])}</p>'
                      f'<p><b>Clock:</b> {escape(m["timer"] or "No separate cutoff published")} · {escape(m["clock"])}</p>'
                      f'<p>{escape(m["note"])}</p><p class="sources">{links}</p></section>')
-ref_template=(ROOT/'reference.html').read_text().replace('/*__THEME__*/',theme)
+ref_template=themed('reference.html')
 (ROOT.parent/'ranks.html').write_text(ref_template.replace('<!--__MISSIONS__-->','\n'.join(reference)))

@@ -19,7 +19,8 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--ink); line-height: 1.5; }
+body { margin: 0; background: var(--bg); color: var(--ink); line-height: 1.5; isolation: isolate; }
+#electrosphere { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: .8; }
 a { color: inherit; text-underline-offset: 3px; }
 button, input { font: inherit; }
 button, a, input { touch-action: manipulation; }
@@ -89,12 +90,16 @@ h1 { font-size: 34px; font-weight: 900; letter-spacing: -.045em; line-height: 1.
 .field { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 8px; }
 .field dt { color: var(--muted); font: bold 10px/1.95 var(--mono); text-transform: uppercase; letter-spacing: .04em; }
 .field dd { margin: 0; color: var(--ink); }
-.field.decision dd { font-weight: 600; }
+.field.decision { margin: 3px -2px; padding: 8px 10px; background: #f8e6b4; border-left: 4px solid #ad7410; }
+.field.decision dt { color: #805500; font-weight: 900; }
+.field.decision dd, .field.decision strong { font-weight: 800; }
 .field.save dd { color: #865800; font-weight: 700; }
 .field.empty dd { color: var(--muted); }
 .action.locked { --ink: #676f5e; --muted: #79816f; background: #e1e5d9; border-color: #b4bdab; box-shadow: none; }
 .locked .icon { background: #d0d7c7; border-color: #929e85; color: #6c785f; }
 .locked .field.save dd { color: #747c65; }
+.locked .field.decision { background: #e7e2cc; border-color: #b4a779; }
+.locked .field.decision dt { color: #827b5e; }
 .locked .mission-title { border-color: #c0c8b6; }
 .ending { background: #fff1bd; border-color: #9c741d; }
 .ending .icon { color: #775200; background: #f2d985; border-color: #98731e; }
@@ -149,7 +154,7 @@ footer button:hover { color: #764d00; }
 }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
 @media print {
-  header .toolbar, .intro, footer, .toast, .warning, .system-line { display: none !important; }
+  header .toolbar, .intro, footer, .toast, .warning, .system-line, #electrosphere { display: none !important; }
   body, header { background: white; color: black; }
   header { border: 0; }
   .action, .action.locked, .action.done { opacity: 1; background: white; color: black; border: 1px solid #aaa; break-inside: avoid; box-shadow: none; }
@@ -163,6 +168,7 @@ footer button:hover { color: #764d00; }
 </style>
 </head>
 <body>
+<canvas id="electrosphere" aria-hidden="true"></canvas>
 <header><div class="wrap header-inner"><div class="system-line"><span class="system-brand">DATA SWALLOW</span><span>AC3 / ELECTROSPHERE</span></div><div class="eyebrow">Japanese campaign · mission archive</div><h1>A-rank reference</h1><a class="back-link" href="index.html">← Campaign checklist</a></div></header>
 <main class="wrap"><p class="reference-intro">Japanese version. Times are elapsed and phase-specific; aim below the threshold. A missing time means no separate cutoff was published, not an unlimited mission timer.</p>
 <section class="reference-section" id="mission-1"><h2>01 · Awakening</h2><p><b>A rank:</b> 10+ aircraft; unlock and complete the second wave.</p><p><b>Clock:</b> 3:00 · Initial targets</p><p>Finish the four R-501 targets before 3:00 to trigger reinforcements. Take optional kills before the last red target.</p><p class="sources"><a href="https://acecombat.wiki.gg/wiki/Awakening" rel="noopener">JP mission guide</a></p></section>
@@ -217,6 +223,108 @@ footer button:hover { color: #764d00; }
 <section class="reference-section" id="mission-50"><h2>50 · Revenge</h2><p><b>A rank:</b> Destroy all eleven enemies and complete the mission.</p><p><b>Clock:</b> No separate cutoff published · Kill based</p><p>Clear the optional aircraft before the carrier’s last target point.</p><p class="sources"><a href="https://acecombat.wiki.gg/wiki/Revenge" rel="noopener">JP mission guide</a></p></section>
 <section class="reference-section" id="mission-51"><h2>51 · Tunnel Vision</h2><p><b>A rank:</b> Reach the end of the tunnel.</p><p><b>Clock:</b> 4:00 · Whole mission</p><p>Complete the tunnel flight within four minutes. There are no hostile targets to farm.</p><p class="sources"><a href="https://acecombat.wiki.gg/wiki/Tunnel_Vision" rel="noopener">JP mission guide</a></p></section>
 <section class="reference-section" id="mission-52"><h2>52 · Sole Survivor</h2><p><b>A rank:</b> Complete both main targets.</p><p><b>Clock:</b> 9:00 · Whole mission</p><p>Finish under nine minutes.</p><p class="sources"><a href="https://acecombat.wiki.gg/wiki/Sole_Survivor" rel="noopener">JP mission guide</a></p></section>
-<footer>Checked 6 October 2026. <a href="https://retroachievements.org/forums/topic/17603">Save/rank persistence</a> · <a href="https://github.com/tsnl/ac3-guide/issues">Report a correction</a></footer></main>
+<footer>Checked 6 October 2026. <a href="https://retroachievements.org/forums/topic/17603">Save/rank persistence</a> · <a href="https://github.com/tsnl/ac3-guide/issues">Report a correction</a><button id="motion" aria-pressed="false" hidden>Pause background</button></footer></main>
+<script>// A procedural Data Swallow-inspired network tunnel; no game footage or assets.
+(() => {
+  'use strict';
+  const canvas = document.getElementById('electrosphere');
+  const toggle = document.getElementById('motion');
+  if (!canvas || !window.CanvasRenderingContext2D) return;
+  const ctx = canvas.getContext('2d', {alpha: false});
+  if (!ctx) return;
+  const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const storageKey = 'ac3-jp-background-motion';
+  let paused = preference.matches;
+  try { paused ||= localStorage.getItem(storageKey) === 'paused'; } catch (_) {}
+  let width = 0, height = 0, elapsed = 0, request = 0, previous = 0;
+  const sides = 16, depth = 34, spacing = 1.25;
+
+  function ring(z, distance) {
+    const scale = Math.min(width, height) * .93 / (z + .8);
+    const bendX = (Math.sin(distance * .16) - Math.sin((distance-z) * .16)) * 1.4;
+    const bendY = (Math.cos(distance * .12) - Math.cos((distance-z) * .12)) * .9;
+    const twist = Math.sin(distance * .08) * .18;
+    return Array.from({length: sides}, (_, i) => {
+      const angle = i * Math.PI * 2 / sides + twist;
+      return [width * .63 + (Math.cos(angle) * 3.4 + bendX) * scale,
+              height * .58 + (Math.sin(angle) * 3.4 + bendY) * scale];
+    });
+  }
+
+  function draw() {
+    ctx.fillStyle = '#e5e7dc';
+    ctx.fillRect(0, 0, width, height);
+    const travel = elapsed * .65, phase = travel % spacing;
+    let far = ring(depth * spacing - phase, depth * spacing + travel - phase);
+    for (let j = depth-1; j >= 0; j--) {
+      const z = j * spacing - phase;
+      if (z < .15) continue;
+      const near = ring(z, z + travel);
+      for (let i = 0; i < sides; i++) {
+        const k = (i+1) % sides;
+        const points = [near[i], near[k], far[k], far[i]];
+        if (points.every(p => p[0] < 0) || points.every(p => p[0] > width) ||
+            points.every(p => p[1] < 0) || points.every(p => p[1] > height)) continue;
+        const band = (j + Math.floor(travel/spacing)) % 4 === 0 ? -1.6 : 0;
+        const light = 85 + Math.cos(i * Math.PI * 2 / sides - .6) * 5 + j/depth * 5 + band;
+        ctx.beginPath();
+        points.forEach((p, index) => index ? ctx.lineTo(...p) : ctx.moveTo(...p));
+        ctx.closePath();
+        ctx.fillStyle = `hsl(62 24% ${light}%)`;
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(100,108,64,.12)';
+        ctx.lineWidth = .7;
+        ctx.stroke();
+      }
+      far = near;
+    }
+  }
+
+  function frame(stamp) {
+    request = 0;
+    if (paused || document.hidden) return;
+    if (!previous) previous = stamp;
+    if (stamp-previous >= 1000/30) {
+      elapsed += Math.min((stamp-previous)/1000, .1);
+      previous = stamp;
+      draw();
+    }
+    request = requestAnimationFrame(frame);
+  }
+
+  function sync() {
+    cancelAnimationFrame(request);
+    previous = 0;
+    canvas.dataset.motion = paused ? 'paused' : 'running';
+    if (toggle) {
+      toggle.hidden = false;
+      toggle.textContent = paused ? 'Play background' : 'Pause background';
+      toggle.setAttribute('aria-pressed', String(paused));
+    }
+    if (!paused && !document.hidden) request = requestAnimationFrame(frame);
+  }
+
+  function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
+    canvas.width = Math.round(width * ratio);
+    canvas.height = Math.round(height * ratio);
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    draw();
+  }
+
+  toggle?.addEventListener('click', () => {
+    paused = !paused;
+    try { localStorage.setItem(storageKey, paused ? 'paused' : 'running'); } catch (_) {}
+    sync();
+  });
+  preference.addEventListener('change', event => { paused = event.matches; sync(); });
+  document.addEventListener('visibilitychange', sync);
+  window.addEventListener('resize', resize, {passive: true});
+  resize();
+  sync();
+})();
+</script>
 </body>
 </html>

@@ -29,12 +29,15 @@ test('one mission box per attempt, six load boxes, five starred endings, only ne
  assert.equal(d.querySelectorAll('input[data-action]:checked').length,0);
  assert.equal(d.querySelectorAll('input[data-action]:disabled').length,66);
  assert.equal(next().dataset.action,'mission-01-1');
- for(const card of d.querySelectorAll('.action:not(.load)'))assert.deepEqual([...card.querySelectorAll('dt')].map(x=>x.textContent),['Target time','Decision','Save after']);
+ for(const a of data.actions.filter(a=>a.type==='mission')){
+  const card=d.getElementById(a.id);
+  assert.deepEqual([...card.querySelectorAll('dt')].map(x=>x.textContent),a.decision?['Target time','Decision','Save after']:['Target time','Save after']);
+  assert.equal(card.querySelector('.decision strong')?.textContent||'',a.decision);
+ }
  assert.equal(d.querySelector('#mission-detail'),null);
  assert.equal(d.querySelector('[data-tab]'),null);
  for(const a of data.actions.filter(a=>a.type==='mission'))assert.ok(a.save && a.save.slot>=1 && a.save.slot<=6);
- assert.equal(data.actions[0].save.slot,6);
- assert.equal(data.actions[2].save.slot,1);
+ assert.deepEqual(plain(data.actions.slice(0,6).map(a=>a.save.slot)),[1,1,1,2,2,2]);
 });
 
 test('checkbox completion unlocks one next action; skipped future events cannot advance',t=>{
@@ -52,7 +55,7 @@ test('checkbox completion unlocks one next action; skipped future events cannot 
 });
 
 test('complete route covers 52 A ranks and valid saves; every load is an explicit gate',t=>{
- const {api,d,next}=app(t),data=api.getData(),slots={},best={},order=[],fresh=[];
+ const {api,d,next}=app(t),data=api.getData(),slots={},best={},order=[],fresh=[],endingSlots=new Set();
  for(const action of data.actions){
   assert.equal(next().dataset.action,action.id);
   if(action.type==='load'){
@@ -63,19 +66,22 @@ test('complete route covers 52 A ranks and valid saves; every load is an explici
    order.push(action.mission);
    if(action.rank==='A')best[action.mission]='A';
    const slot=action.save.slot,mode=slot in slots?'overwrite':'fresh';
+   assert.equal(endingSlots.has(slot),false,'A completed ending must remain saved.');
    assert.equal(action.save.mode,mode);
    const instruction=d.getElementById(action.id).querySelector('.field.save dd').textContent;
    assert.ok(instruction.startsWith(mode==='fresh'?'Fresh save → Slot '+slot:'Overwrite Slot '+slot));
    if(mode==='fresh')fresh.push([action.mission,slot]);
    slots[slot]=action.mission;
+   if(action.ending)endingSlots.add(slot);
   }
   next().click();
  }
  assert.equal(next(),null);
  assert.deepEqual(order,plain(data.sequence));
  assert.equal(Object.keys(best).length,52);
- assert.deepEqual(slots,{1:33,2:38,3:18,4:52,5:47,6:37});
- assert.deepEqual(fresh,[[1,6],[3,1],[6,2],[18,3],[52,4],[47,5]]);
+ assert.deepEqual(slots,{1:38,2:47,3:18,4:52,5:33,6:34});
+ assert.deepEqual(fresh,[[1,1],[4,2],[7,3],[39,4],[20,5],[34,6]]);
+ assert.equal(endingSlots.size,5);
  assert.equal(d.getElementById('count').textContent,'67 / 67');
  assert.equal(d.getElementById('jump').disabled,true);
 });
