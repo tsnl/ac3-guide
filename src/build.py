@@ -139,28 +139,30 @@ time_targets = {
     40:'Under 3:00 · first seven F-22Cs', 41:'Under 2:30 · all four satellites',
     48:'Under 1:30 · from carrier update',
 }
-decisions = {
+# Reserve the Decision callout for narrative choices. Performance gates and
+# objective instructions stay in the time target or the A-rank reference.
+story_decisions = {
     (1,4):'Stay with UPEO; follow Fiona.',
-    (1,6):'Follow the recon plane; discover and destroy the secret base.',
     (2,7):'Follow Rena; finish the full combat for A.',
     (2,9):'Stay with UPEO; obey orders.',
     (3,7):'Return to base. A lower grade is intentional.',
     (3,9):'Protect Fiona: shoot down the R-101U; join Neucom.',
-    (4,39):'Destroy all three oil tanks and all four radar sites.',
     (4,43):'Stay with Fiona.',
-    (4,48):'Destroy all four carrier points within 1:30 to reach Radio Silence.',
-    (5,39):'Leave at least one oil tank or radar intact. Accept D.',
     (5,43):'Follow Cynthia; join Ouroboros.',
     (6,4):'Follow Dision; join General Resource.',
-    (7,20):'Keep an initial target alive until 3:30; then sink the target hydrofoil.',
-    (8,20):'Finish initial targets before 3:30 → Partners. Any rank; A is already saved.',
     (9,24):'Save Keith: shoot his pursuing R-311. Accept D.',
     (9,28):'Stay with Keith / General Resource.',
-    (9,30):'Damage the X-49 enough within 3:00 to reach Geofront Attack.',
     (10,24):'Destroy all six R-531 Moburas; take the A route.',
     (10,28):'Follow Dision; join Ouroboros.',
-    (11,34):'Destroy all three escaping V-22B targets within 1:30 for A.',
-    (12,34):'Leave an escaping target alive past 1:30. A lower grade is intentional.',
+}
+route_targets = {
+    (3,7):'— · return immediately',
+    (4,39):'Under 4:00 · first two RF-12A2s; destroy all three oil tanks and four radars',
+    (5,39):'Under 4:00 · first two RF-12A2s; leave an oil tank or radar intact (D)',
+    (7,20):'Wait until 3:30 with an initial target alive; then sink the hydrofoil within 0:45',
+    (8,20):'Under 3:30 · initial targets; any rank (A already saved)',
+    (11,34):'Under 1:30 · destroy all three escaping targets after the update',
+    (12,34):'Wait past 1:30 · leave an escaping target alive (lower grade intended)',
 }
 actions=[]
 visits={}
@@ -174,15 +176,13 @@ for leg, group in enumerate(groups):
         m=lookup[n]
         visits[n]=visits.get(n,0)+1
         target=time_targets.get(n, f'Under {m["timer"]} · whole mission' if m['timer'] else '—')
-        if (leg,n)==(3,7): target='— · return immediately'
-        if (leg,n)==(8,20): target='Under 3:30 · initial targets'
-        if (leg,n)==(12,34): target='Wait past 1:30 · from escaping-target update'
+        target=route_targets.get((leg,n),target)
         rank='D' if n in P[leg]['lower'] else 'any' if (leg,n)==(8,20) else 'A'
         save=dict(slot=P[leg]['slot'],after=n,label=f'After {n:02d} {m["title"]}',ending=False)
         if n==group[-1]:
             save=dict(slot=P[leg]['slot'],after=n,label=P[leg]['saveLabel'],ending=bool(m['ending']))
         actions.append(dict(id=f'mission-{n:02d}-{visits[n]}',type='mission',mission=n,
-                            visit=visits[n],time=target,decision=decisions.get((leg,n),''),
+                            visit=visits[n],time=target,decision=story_decisions.get((leg,n),''),
                             rank=rank,save=save,ending=m['ending'],legacyLeg=leg))
 
 assert [a['mission'] for a in actions if a['type']=='mission']==[1,2]+sequence
