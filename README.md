@@ -4,7 +4,7 @@ A linear Ace Combat 3: Electrosphere (Japanese / fan-translated release) campaig
 
 - One checkbox for each of 61 mission attempts, plus six separate load-save boxes
 - Only the next unfinished action is enabled; later unchecked actions are greyed out
-- Each mission shows its name, target time, and where to save **after** completion; a bold highlighted Decision appears only at story forks and contains only a character name
+- Each mission shows its name, a **Time / Requirements** milestone table, and where to save **after** completion; a bold highlighted Decision appears only at story forks and uses a character name, except Scylla and Charybdis: **SHOOT FIONA** / **SHOOT R101U**
 - Original guidebook map thumbnails for all 52 missions; artwork, scan, and research attribution in a separate Credits section
 - Five gold ending boxes with stars
 - Data Swallow-inspired ivory, black, and amber menu theme with an animated network-tunnel background, a pause control, and reduced-motion support
@@ -35,7 +35,7 @@ From an A-rank clear of mission 02, **59 mission entries remain**, assuming miss
 | 12 | A-rank 34; save without playing 36 yet | Fresh S6 after 34 | S1 after 28 |
 | 13 | 34 let an escaping target survive the timer; A-rank 35–38 | Overwrite S1; keep ending | — |
 
-07, 24, 34, and 39 require a lower-grade route visit as well as an A clear. Each replay has its own checkbox and visit-specific instructions; completing a lower-grade replay does not replace the earlier A-clear checkbox. Only narrative choices use the Decision highlight. Timed route requirements stay beside the target time, and ordinary objectives such as following the spy plane remain in the full mission guidance. Checkboxes only update this browser log; make the actual saves and loads in the game.
+07, 24, 34, and 39 require a lower-grade route visit as well as an A clear. Each replay has its own checkbox and visit-specific instructions; completing a lower-grade replay does not replace the earlier A-clear checkbox. Only narrative choices use the Decision highlight. Timed route requirements and ordinary objectives such as following the spy plane appear in the milestone table. Each row names its clock and separates required objectives from optional cleanup. Kill totals include required and optional enemies combined; deliberate lower-grade replays replace the A-rank table with their route requirements. Checkboxes only update this browser log; make the actual saves and loads in the game.
 
 Every mission names a save destination and explicitly says **Fresh save → Slot N** on the first use of that slot, or **Overwrite Slot N** on later uses. Saves start **1, 1, 1, 2, 2, 2, 3…**: advance to another slot to preserve a pending branch checkpoint, and reuse the previous slot on its last remaining branch. There is no dedicated temporary slot. The six slots are first used in numerical order, and all five ending saves remain intact at the end. The plan assumes these slots are available at the start.
 
@@ -57,7 +57,7 @@ npm run build
 npm test
 ```
 
-Edit `src/build.py` for mission data and the ordered action list. Edit `src/template.html` for checklist presentation and behavior, `src/reference.html` for the rank-reference page, `src/theme.css` for the shared menu theme, and `src/background.js` for the procedural animation. Styles and background code are inlined by the build. Mission maps are local assets under `assets/maps`; their source pages and crop coordinates are recorded in that directory. Commit regenerated `index.html` and `ranks.html` with source changes.
+Edit `src/build.py` for mission data and the ordered action list, and `src/milestones.py` for time/requirements pairs and visit-specific overrides. Edit `src/template.html` for checklist presentation and behavior, `src/reference.html` for the rank-reference page, `src/theme.css` for the shared menu theme, and `src/background.js` for the procedural animation. Styles and background code are inlined by the build. Mission maps are local assets under `assets/maps`; their source pages and crop coordinates are recorded in that directory. Commit regenerated `index.html` and `ranks.html` with source changes.
 
 The background follows the network-as-tubes concept described by designer Minoru Sashida in [Namco's 1999 NOURS interview](https://www.bandainamcoent.co.jp/corporate/bnours/nours/vol24/pdf/24_32-34.pdf). Its oval cross-section, pale facets, olive center, and circular menu controls were refined against a supplied recording of the game UI; the recording itself is not included. Fixed tunnel rings advance toward the viewer at a constant speed measured in world units per second, with a stationary vanishing point. Animation time is independent of scrolling and render frequency. The canvas is pinned to the viewport and uses a stable large viewport height so mobile toolbar changes during scroll do not resize the scene. The black header extends above the document for top overscroll. The tunnel is drawn locally, capped at 30 fps, pauses while the page is hidden, and defaults to still imagery when reduced motion is requested. The pause preference is stored separately from checklist progress.
 
