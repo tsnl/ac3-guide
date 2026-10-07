@@ -8,7 +8,8 @@ A linear Ace Combat 3: Electrosphere (Japanese / fan-translated release) campaig
 - Five gold ending boxes with stars
 - Data Swallow-inspired ivory, black, and amber menu theme with an animated network-tunnel background, a pause control, and reduced-motion support
 - A-rank requirements and source links on a separate reference page
-- Browser autosave, undo, and JSON export/import
+- Browser autosave, undo, and JSON backups through Save / Load
+- Four circular controls in the original menu's low–high–low–high arrangement, with segmented concentric rings
 - No runtime dependencies, analytics, accounts, or server-side progress storage
 
 Open [the published checklist](https://tsnl.github.io/ac3-guide/) or open `index.html` in a browser. The checklist starts blank. Tick actions in order as you finish them and make the listed saves. Mission names link to their detailed A-rank requirements. Saved browser progress is restored on subsequent visits.
@@ -57,7 +58,7 @@ npm test
 
 Edit `src/build.py` for mission data and the ordered action list. Edit `src/template.html` for checklist presentation and behavior, `src/reference.html` for the rank-reference page, `src/theme.css` for the shared menu theme, and `src/background.js` for the procedural animation. Styles and background code are inlined by the build so each output page remains self-contained. Commit regenerated `index.html` and `ranks.html` with source changes.
 
-The background follows the network-as-tubes concept described by designer Minoru Sashida in [Namco's 1999 NOURS interview](https://www.bandainamcoent.co.jp/corporate/bnours/nours/vol24/pdf/24_32-34.pdf). It is drawn locally in canvas, capped at 30 fps, pauses while the page is hidden, and defaults to still imagery when reduced motion is requested. The pause preference is stored separately from checklist progress.
+The background follows the network-as-tubes concept described by designer Minoru Sashida in [Namco's 1999 NOURS interview](https://www.bandainamcoent.co.jp/corporate/bnours/nours/vol24/pdf/24_32-34.pdf). Its oval cross-section, pale facets, olive center, and circular menu controls were refined against a supplied recording of the game UI; the recording itself is not included. Fixed tunnel rings advance toward the viewer at a constant speed measured in world units per second, with a stationary vanishing point. Animation time is independent of scrolling and render frequency. The canvas is pinned to the viewport and uses a stable large viewport height so mobile toolbar changes during scroll do not resize the scene. The black header extends above the document for top overscroll. The tunnel is drawn locally, capped at 30 fps, pauses while the page is hidden, and defaults to still imagery when reduced motion is requested. The pause preference is stored separately from checklist progress.
 
 Tests exercise mission-by-mission route coverage, valid checkpoint reloads, next-action locking, JSON import/export, migration from the original tracker, stored-state restoration, untrusted imported text, and unavailable local storage.
 
