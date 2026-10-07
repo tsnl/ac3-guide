@@ -46,7 +46,7 @@ rows = [
  (37,'Memory Error','Destroy all ten optional fighter targets and complete the main objectives.','','Kill based','The optional group is three R-103s, two Su-43s, and five XFA-36As.'),
  (38,'Electrosphere','Complete both phases of the mission.','3:00','Mission completion','The guide lists a three-minute completion threshold. Do not confuse this with the five-minute export-version requirement.'),
  (39,'Power for Life','21+ enemies, including all three oil tanks and four radar sites.','4:00','Initial RF-12A2 phase','Clear the initial pair in under four minutes. Destroy every oil tank and radar before the last main target for Guardian Angel. Leaving any of the seven intact produces D and opens Zero Gravity.'),
- (40,'Guardian Angel','Protect the shuttle and shoot down the first two fighter squadrons.','3:00','Initial seven F-22Cs','All seven initial fighters must be down in under three minutes for A. Four minutes is the separate mission-update boundary.'),
+ (40,'Guardian Angel','Protect the shuttle and destroy all seven F-22Cs.','3:00','From mission start','Destroy all seven F-22Cs in under three minutes for A; no follow-up combat is required. Reinforcements appear only if targets remain at four minutes.'),
  (41,'Zero Gravity','Destroy all four satellites.','2:30','Whole combat phase','A-rank cutoff: 2:30. Hard failure occurs at 3:00. Complete the re-entry alignment afterward.'),
  (42,'The Prize','24+ enemies; at least one original recovery unit must survive.','','Escort / arrival based','Keep the enemy ships away from the satellite and preserve part of the first recovery squadron.'),
  (43,'Utopian Dreams','12+ enemies and remain undetected by radar.','','Kill / stealth based','Stay below the stated radar ceiling; collect optional ground targets before the last radar. The final decision chooses Fiona or Cynthia.'),
@@ -138,7 +138,7 @@ time_targets = {
     25:'Under 1:30 · shuttle interception', 28:'Under 9:00 · before ships depart',
     30:'Under 3:00 · from X-49 appearance', 33:'Under 5:00 · from aircraft-control change',
     34:'Under 1:30 · from escaping-target update', 39:'Under 4:00 · first two RF-12A2s',
-    40:'Under 3:00 · first seven F-22Cs', 41:'Under 2:30 · all four satellites',
+    40:'Under 3:00 · all seven F-22Cs', 41:'Under 2:30 · all four satellites',
     48:'Under 1:30 · from carrier update',
 }
 # Reserve the Decision callout for narrative choices. Performance gates and

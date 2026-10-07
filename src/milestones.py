@@ -106,10 +106,7 @@ MILESTONES = {
         step('< 4:00', 'from mission start', '2× RF-12A2'),
         complete('All required targets + 3 oil tanks + 4 radars'),
     ],
-    40: [
-        step('< 3:00', 'from mission start', '7× F-22C; protect the shuttle'),
-        step('After update', '', 'All required fighters; protect the shuttle'),
-    ],
+    40: [step('< 3:00', 'from mission start', '7× F-22C; protect the shuttle')],
     41: [
         step('< 2:30', 'combat clock', 'All 4 satellites'),
         step('After combat', '', 'Complete re-entry alignment'),
