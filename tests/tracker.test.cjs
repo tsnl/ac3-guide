@@ -20,14 +20,15 @@ function app(t,{saved,blocked=false}={}){
  return{w,d,api,click,next};
 }
 
-test('one mission box per attempt, six load boxes, five starred endings, only next enabled',t=>{
+test('one mission box per attempt, six load boxes, five starred endings, next highlighted',t=>{
  const {d,api,next}=app(t),data=api.getData();
  assert.equal(data.actions.length,67);
  assert.equal(d.querySelectorAll('.action:not(.load)').length,61);
  assert.equal(d.querySelectorAll('.load').length,6);
  assert.equal(d.querySelectorAll('.ending .star').length,5);
  assert.equal(d.querySelectorAll('input[data-action]:checked').length,0);
- assert.equal(d.querySelectorAll('input[data-action]:disabled').length,66);
+ assert.equal(d.querySelectorAll('input[data-action]:disabled').length,0);
+ assert.equal(d.querySelectorAll('[aria-current="step"]').length,1);
  assert.equal(next().dataset.action,'mission-01-1');
  assert.deepEqual([...d.querySelectorAll('.tools .menu-button')].map(x=>x.textContent),['Save','Load','Feedback','Credits']);
  assert.equal(d.getElementById('feedback').href,'https://github.com/tsnl/ac3-guide/issues/new');
@@ -43,38 +44,81 @@ test('one mission box per attempt, six load boxes, five starred endings, only ne
  assert.deepEqual(plain(data.actions.slice(0,6).map(a=>a.save.slot)),[1,1,1,2,2,2]);
 });
 
-test('checkbox completion unlocks one next action; skipped future events cannot advance',t=>{
+test('checking ahead confirms and fills earlier actions; unchecking clears every later action',t=>{
  const {d,w,api,next,click}=app(t);
- const future=d.querySelector('[data-action="mission-03-1"]');
- future.checked=true;future.dispatchEvent(new w.Event('change',{bubbles:true}));
- assert.equal(api.getState().done['mission-03-1'],undefined);
- assert.equal(future.checked,false);
- next().click();assert.equal(next().dataset.action,'mission-02-1');
- next().click();assert.equal(next().dataset.action,'mission-03-1');
- assert.equal(d.querySelectorAll('input[data-action]:not(:checked):not(:disabled)').length,1);
+ const prompts=[];w.confirm=msg=>{prompts.push(msg);return true;};
+ click('[data-action="mission-05-1"]');
+ assert.deepEqual(Object.keys(api.getState().done),['mission-01-1','mission-02-1','mission-03-1','mission-04-1','mission-05-1']);
+ assert.equal(d.querySelectorAll('input[data-action]:checked').length,5);
+ assert.equal(next().dataset.action,'mission-06-1');
+ assert.equal(prompts.length,1);assert.match(prompts[0],/Broken Truce.*4 earlier unfinished actions/);
  click('[data-action="mission-02-1"]');assert.equal(next().dataset.action,'mission-02-1');
+ assert.deepEqual(Object.keys(api.getState().done),['mission-01-1']);
+ assert.equal(d.querySelectorAll('input[data-action]:checked').length,1);
+ assert.equal(d.getElementById('mission-02-1').getAttribute('aria-current'),'step');
  click('[data-action="mission-01-1"]');assert.equal(next().dataset.action,'mission-01-1');
- assert.equal(d.querySelector('[data-action="mission-02-1"]').disabled,true);
+ assert.deepEqual(Object.keys(api.getState().done),[]);
+ next().click();assert.equal(next().dataset.action,'mission-02-1');
+ assert.equal(prompts.length,1,'Sequential completion and unchecking need no confirmation.');
 });
 
-test('complete route covers 52 A ranks and valid saves; every load is an explicit gate',t=>{
+test('cancelling a forward jump preserves both browser progress and checkbox state',t=>{
+ const {d,w,api,next,click}=app(t);
+ next().click();
+ const before=plain(api.getState()),saved=w.localStorage.getItem(KEY);
+ w.confirm=msg=>{assert.match(msg,/Enter Dision.*1 earlier unfinished action/);return false;};
+ click('[data-action="mission-03-1"]');
+ assert.deepEqual(plain(api.getState()),before);
+ assert.equal(w.localStorage.getItem(KEY),saved);
+ assert.equal(d.querySelector('[data-action="mission-03-1"]').checked,false);
+ assert.equal(next().dataset.action,'mission-02-1');
+});
+
+test('progress advances and rewinds across reloads and repeated mission visits',t=>{
+ const {d,api,next,click}=app(t);
+ click('[data-action="mission-07-2"]');
+ assert.equal(api.getState().done['mission-18-1'],true);
+ assert.equal(api.getState().done['load-1'],true);
+ assert.equal(api.getState().done['mission-07-2'],true);
+ assert.equal(next().dataset.action,'mission-08-1');
+ click('[data-action="load-1"]');
+ assert.equal(api.getState().done['mission-18-1'],true);
+ assert.equal(api.getState().done['load-1'],undefined);
+ assert.equal(api.getState().done['mission-07-2'],undefined);
+ assert.equal(next().dataset.action,'load-1');
+ assert.equal(d.querySelector('[data-action="mission-07-1"]').checked,true);
+});
+
+test('complete route covers 52 A ranks and valid saves; pictograms preserve all six files',t=>{
  const {api,d,next}=app(t),data=api.getData(),slots={},best={},order=[],fresh=[],endingSlots=new Set();
  for(const action of data.actions){
   assert.equal(next().dataset.action,action.id);
   if(action.type==='load'){
    assert.equal(slots[action.slot],action.after);
    const i=data.actions.findIndex(a=>a.id===action.id),following=data.actions[i+1];
-   assert.equal(d.querySelector('[data-action="'+following.id+'"]').disabled,true);
+   assert.equal(d.querySelector('[data-action="'+following.id+'"]').checked,false);
   }else{
    order.push(action.mission);
    if(action.rank==='A')best[action.mission]='A';
    const slot=action.save.slot,mode=slot in slots?'overwrite':'fresh';
    assert.equal(endingSlots.has(slot),false,'A completed ending must remain saved.');
    assert.equal(action.save.mode,mode);
-   const instruction=d.getElementById(action.id).querySelector('.field.save dd').textContent;
+   const icons=[...d.getElementById(action.id).querySelectorAll('.save-slot')];
+   assert.equal(icons.length,6);
+   const targets=icons.filter(icon=>icon.classList.contains('is-target'));
+   assert.equal(targets.length,1);
+   assert.equal(targets[0].dataset.slot,String(slot));
+   assert.equal(targets[0].classList.contains(mode),true);
+   assert.equal(targets[0].querySelector('.slot-mark').textContent,mode==='fresh'?'+':'↻');
+   const instruction=targets[0].getAttribute('aria-label');
    assert.ok(instruction.startsWith(mode==='fresh'?'Fresh save → Slot '+slot:'Overwrite Slot '+slot));
    if(mode==='fresh')fresh.push([action.mission,slot]);
    slots[slot]=action.mission;
+   assert.deepEqual(plain(action.save.slots),Array.from({length:6},(_,i)=>slots[i+1]||null));
+   for(let i=0;i<6;i++){
+    assert.equal(icons[i].classList.contains('unused'),!(i+1 in slots));
+    if(i+1!==slot&&endingSlots.has(i+1))assert.equal(icons[i].querySelector('.slot-mark').textContent,'★');
+   }
    if(action.ending)endingSlots.add(slot);
   }
   next().click();
@@ -89,7 +133,7 @@ test('complete route covers 52 A ranks and valid saves; every load is an explici
  assert.equal(d.getElementById('progress').style.width,'100%');
 });
 
-test('JSON and browser reload preserve completion and next-action locking',t=>{
+test('JSON and browser reload preserve contiguous completion and the next action',t=>{
  const first=app(t);for(let i=0;i<20;i++)first.next().click();
  const exported=first.api.exportJSON(),validated=first.api.validate(JSON.parse(exported));
  assert.deepEqual(plain(validated),plain(first.api.getState()));
@@ -98,19 +142,30 @@ test('JSON and browser reload preserve completion and next-action locking',t=>{
  assert.equal(restored.next().dataset.action,first.next().dataset.action);
 });
 
-test('v1 migration preserves notes and completed legs without marking every replay',t=>{
+test('old browser records and JSON with gaps resume at the first unfinished action',t=>{
+ const old={version:2,game:'ac3-jp',done:{'mission-01-1':true,'mission-03-1':true,'mission-07-2':true}};
+ const {api,d,next}=app(t,{saved:JSON.stringify(old)});
+ assert.deepEqual(Object.keys(api.getState().done),['mission-01-1']);
+ assert.equal(d.querySelectorAll('input[data-action]:checked').length,1);
+ assert.equal(next().dataset.action,'mission-02-1');
+ assert.deepEqual(Object.keys(api.validate({state:old}).done),['mission-01-1']);
+ assert.deepEqual(Object.keys(api.validate({...old,done:{'mission-03-1':true}}).done),[]);
+});
+
+test('v1 migration preserves legacy notes and ranks while repairing progress gaps',t=>{
  const old={version:1,game:'ac3-jp',missions:{1:{rank:'A',notes:'Keep this note'},7:{rank:'A',notes:''}},steps:{0:true},slots:[{after:3,label:'Root checkpoint'}],branches:{'6-7':true}};
  const {api,d}=app(t,{saved:JSON.stringify(old)}),s=api.getState();
  assert.equal(s.version,2);
  assert.equal(s.done['mission-01-1'],true);
  assert.equal(s.done['mission-02-1'],true);
  assert.equal(s.done['mission-03-1'],true);
- assert.equal(s.done['mission-07-1'],true);
+ assert.equal(s.done['mission-07-1'],undefined);
  assert.equal(s.done['mission-07-2'],undefined);
  assert.equal(s.done['load-1'],undefined);
  assert.equal(s.legacy.missions[1].notes,'Keep this note');
+ assert.equal(s.legacy.missions[7].rank,'A');
  assert.equal(s.legacy.slots[0].after,3);
- assert.equal(d.querySelectorAll('input[data-action]:not(:checked):not(:disabled)').length,1);
+ assert.equal(d.querySelectorAll('input[data-action]:checked').length,3);
 });
 
 test('JSON import validates structure, retains old notes as data, and allows unchecking',async t=>{

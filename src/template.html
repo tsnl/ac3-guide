@@ -13,7 +13,7 @@
 <body>
 <canvas id="electrosphere" aria-hidden="true"></canvas>
 <header><div class="wrap header-inner"><h1>ACE COMBAT 3: ELECTROSPHERE (JP) 100% GUIDE</h1><span class="sr-only" id="count" aria-label="Completed actions" aria-live="polite">0 / 67</span><div class="toolbar"><div class="tools" role="group" aria-label="Checklist controls"><button id="export" class="menu-button" aria-label="Save" title="Save progress to a JSON file"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Save</span></button><button id="import" class="menu-button" aria-label="Load" title="Load progress from a JSON file"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Load</span></button><a id="feedback" class="menu-button" href="https://github.com/tsnl/ac3-guide/issues/new" aria-label="Feedback" title="Create a GitHub issue"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Feedback</span></a><a id="credits" class="menu-button" href="ranks.html#credits" aria-label="Credits" title="Sources and credits"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Credits</span></a><input type="file" id="import-file" accept=".json,application/json" hidden></div><div class="toolbar-side"><button id="motion" aria-pressed="false" hidden>Pause background</button><span id="storage-status">Saves in this browser</span></div></div></div><div class="progress-track"><div id="progress"></div></div></header>
-<main class="wrap"><p class="intro">Follow the timing goals and route objectives; check each box after saving. Time alone does not guarantee A—open a mission name for its full rank requirements.</p><div id="storage-warning" class="warning hidden" role="alert"></div><noscript><p>Enable JavaScript to use the checklist and save progress.</p></noscript><ol class="checklist" id="checklist" aria-label="Campaign actions in play order"></ol><footer><a href="ranks.html">A-rank requirements</a><a href="ranks.html#credits">Credits</a><a href="https://github.com/tsnl/ac3-guide">Source code</a><span>Save after every mission to the numbered slot. All five ending saves are kept.</span><button id="reset">Reset progress</button></footer></main>
+<main class="wrap"><p class="intro">Check after saving. Jumping ahead asks for confirmation and includes earlier actions; unchecking clears that action and everything after it. Time alone does not guarantee A—open a mission name for its full rank requirements.</p><p class="save-key" aria-label="Save slot legend"><span><i class="fresh-key" aria-hidden="true">+</i>Fresh</span><span><i class="overwrite-key" aria-hidden="true">↻</i>Overwrite</span><span><i class="unused-key" aria-hidden="true"></i>Unused</span></p><div id="storage-warning" class="warning hidden" role="alert"></div><noscript><p>Enable JavaScript to use the checklist and save progress.</p></noscript><ol class="checklist" id="checklist" aria-label="Campaign actions in play order"></ol><footer><a href="ranks.html">A-rank requirements</a><a href="ranks.html#credits">Credits</a><a href="https://github.com/tsnl/ac3-guide">Source code</a><span>Save after every mission to the numbered slot. All five ending saves are kept.</span><button id="reset">Reset progress</button></footer></main>
 <div id="toast" class="toast hidden" role="status"></div>
 <script>
 'use strict';
@@ -25,6 +25,7 @@ const $=id=>document.getElementById(id);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const pad=n=>String(n).padStart(2,'0');
 const initial=()=>({version:2,game:'ac3-jp',done:{},legacy:null,updatedAt:null});
+const completedThrough=index=>Object.fromEntries(ACTIONS.slice(0,index+1).map(a=>[a.id,true]));
 let state=initial(),toastTimer,storageOK=true;
 function legacyState(raw){
  if(!raw||raw.version!==1||raw.game!=='ac3-jp'||!raw.missions||typeof raw.missions!=='object')throw Error('Not an AC3 progress file.');
@@ -54,6 +55,10 @@ function clean(input){
   for(const a of ACTIONS)if(raw.done[a.id]===true)s.done[a.id]=true;
   if(raw.legacy)s.legacy=legacyState(raw.legacy);
  }
+ // Older records may contain gaps from unchecking a single action. Resume at
+ // the first gap instead of assuming those earlier actions were completed.
+ const firstGap=ACTIONS.findIndex(a=>!s.done[a.id]);
+ if(firstGap!==-1)s.done=completedThrough(firstGap-1);
  s.updatedAt=typeof raw.updatedAt==='string'?raw.updatedAt:null;
  return s;
 }
@@ -66,18 +71,25 @@ function commit(fn){fn();persist();refresh();}
 function milestoneTable(a,m){
  return `<table class="milestones" aria-label="${esc(m.title)} time and objectives"><thead><tr><th scope="col">Time</th><th scope="col">Requirements</th></tr></thead><tbody>${a.milestones.map(s=>`<tr><th scope="row"><span>${esc(s.time)}</span>${s.clock?`<small>${esc(s.clock)}</small>`:''}</th><td>${esc(s.requirements)}</td></tr>`).join('')}</tbody></table>`;
 }
+function saveSlots(a){
+ return `<div class="save-slots" role="group" aria-label="Save slots after this mission">${a.save.slots.map((mission,i)=>{
+  const slot=i+1,target=slot===a.save.slot,saved=byId[mission];
+  const label=target?(a.save.mode==='fresh'?'Fresh save → Slot ':'Overwrite Slot ')+slot+' · '+saved.title:saved?'Slot '+slot+' · '+saved.title+(saved.ending?' · Ending':''):'Unused Slot '+slot;
+  const mark=target?(a.save.mode==='fresh'?'+':'↻'):saved?.ending?'★':'';
+  return `<span class="save-slot ${saved?'occupied':'unused'}${target?' is-target '+a.save.mode:''}" role="img" aria-label="${esc(label)}" title="${esc(label)}" data-slot="${slot}"><span class="slot-number" aria-hidden="true">${slot}</span>${mark?`<span class="slot-mark" aria-hidden="true">${mark}</span>`:''}</span>`;
+ }).join('')}</div>${a.ending?'<small class="save-note">After credits, including system data</small>':''}`;
+}
 function renderActions(){
  $('checklist').innerHTML=ACTIONS.map(a=>{
   if(a.type==='load')return `<li class="action load" id="${a.id}"><input type="checkbox" data-action="${a.id}" aria-label="Confirm loading Slot ${a.slot}, after ${pad(a.after)} ${esc(byId[a.after].title)}"><span class="icon" aria-hidden="true">↶</span><div><h2 class="mission-title">Load Slot ${a.slot}</h2><p>After ${pad(a.after)} · ${esc(byId[a.after].title)}${a.route?' · '+esc(a.route):''}</p></div></li>`;
   const m=byId[a.mission];
-  const save=(a.save.mode==='fresh'?'Fresh save → Slot ':'Overwrite Slot ')+a.save.slot+(a.ending?' · after credits, including system data':'');
-  return `<li class="action${a.ending?' ending':''}" id="${a.id}"><input type="checkbox" data-action="${a.id}" aria-label="Complete ${pad(m.id)} ${esc(m.title)}, visit ${a.visit}"><img class="mission-map" src="${esc(m.map)}" alt="" width="88" height="88" loading="${a.mission===1?'eager':'lazy'}" decoding="async"><div class="mission-body"><h2 class="mission-title">${a.ending?'<span class="star" aria-label="Ending">★</span>':''}<a href="ranks.html#mission-${m.id}">${esc(m.title)}</a></h2>${milestoneTable(a,m)}<dl class="fields">${a.decision?`<div class="field decision"><dt>Decision</dt><dd><strong>${esc(a.decision)}</strong></dd></div>`:''}<div class="field${a.save?' save':' empty'}"><dt>Save after</dt><dd>${esc(save)}</dd></div></dl></div></li>`;
+  return `<li class="action${a.ending?' ending':''}" id="${a.id}"><input type="checkbox" data-action="${a.id}" aria-label="Complete ${pad(m.id)} ${esc(m.title)}, visit ${a.visit}"><img class="mission-map" src="${esc(m.map)}" alt="" width="88" height="88" loading="${a.mission===1?'eager':'lazy'}" decoding="async"><div class="mission-body"><h2 class="mission-title">${a.ending?'<span class="star" aria-label="Ending">★</span>':''}<a href="ranks.html#mission-${m.id}">${esc(m.title)}</a></h2>${milestoneTable(a,m)}<dl class="fields">${a.decision?`<div class="field decision"><dt>Decision</dt><dd><strong>${esc(a.decision)}</strong></dd></div>`:''}<div class="field save"><dt>Save after</dt><dd>${saveSlots(a)}</dd></div></dl></div></li>`;
  }).join('');
 }
 function refresh(){
  const next=nextAction();
  for(const a of ACTIONS){const row=$(a.id),input=row.querySelector('input'),done=!!state.done[a.id],current=a.id===next?.id;
-  input.checked=done;input.disabled=!done&&!current;
+  input.checked=done;
   row.classList.toggle('done',done);row.classList.toggle('next',current);row.classList.toggle('locked',!done&&!current);
   if(current)row.setAttribute('aria-current','step');else row.removeAttribute('aria-current');
  }
@@ -87,8 +99,14 @@ function refresh(){
 }
 $('checklist').addEventListener('change',ev=>{
  const id=ev.target.dataset.action;if(!ids.has(id))return;
- if(ev.target.checked&&!state.done[id]&&nextAction()?.id!==id){refresh();return;}
- const checked=ev.target.checked;commit(()=>{if(checked)state.done[id]=true;else delete state.done[id];});
+ const index=ACTIONS.findIndex(a=>a.id===id);
+ if(ev.target.checked){
+  const skipped=ACTIONS.slice(0,index).filter(a=>!state.done[a.id]).length;
+  const action=ACTIONS[index],label=action.type==='load'?'Load Slot '+action.slot:byId[action.mission].title;
+  if(skipped&&!confirm(`Mark “${label}” and ${skipped} earlier unfinished action${skipped===1?'':'s'} as complete?`)){refresh();return;}
+ }
+ const through=ev.target.checked?index:index-1;
+ commit(()=>{state.done=completedThrough(through);});
 });
 function exportText(){return JSON.stringify({format:'ac3-jp-progress',version:2,exportedAt:new Date().toISOString(),state},null,2);}
 $('export').addEventListener('click',()=>{const blob=new Blob([exportText()],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ac3-checklist-'+new Date().toISOString().slice(0,10)+'.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('JSON backup prepared.');});

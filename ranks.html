@@ -120,6 +120,22 @@ h1 { font-size: 34px; font-weight: 900; letter-spacing: -.045em; line-height: 1.
 .field.decision dt { color: #805500; font-weight: 900; }
 .field.decision dd, .field.decision strong { font-weight: 800; }
 .field.save dd { color: #865800; font-weight: 700; }
+.field.save dt { align-self: center; }
+.save-slots { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; width: min(100%, 294px); }
+.save-slot { position: relative; display: grid; place-items: center; height: 38px; border: 2px solid; border-radius: 7px; font: bold 15px/1 var(--mono); }
+.save-slot.unused { background: #daddd4; border-color: #b4bca9; color: #79836d; }
+.save-slot.occupied { background: #59644e; border-color: #39432f; color: #f8f9ed; }
+.save-slot.is-target { border-width: 3px; box-shadow: 0 0 0 1px var(--panel); }
+.save-slot.fresh { background: #b6d9c9; border-color: #2d674f; color: #163a2a; }
+.save-slot.overwrite { background: #efb333; border-color: #745007; color: #2d2108; }
+.slot-mark { position: absolute; top: 2px; right: 3px; font: bold 12px/1 var(--mono); }
+.save-note { display: block; margin-top: 6px; color: var(--muted); font-size: 10px; font-weight: 400; }
+.save-key { display: flex; gap: 14px; margin: -12px 0 22px; font: 10px var(--mono); color: var(--muted); }
+.save-key span { display: inline-flex; align-items: center; gap: 5px; }
+.save-key i { display: inline-grid; place-items: center; width: 22px; height: 16px; border: 1px solid; border-radius: 4px; font-style: normal; font-weight: bold; }
+.save-key .fresh-key { color: #2d674f; background: #b6d9c9; }
+.save-key .overwrite-key { color: #745007; background: #efb333; }
+.save-key .unused-key { color: #79836d; background: #daddd4; border-color: #b4bca9; }
 .field.empty dd { color: var(--muted); }
 .action.locked { --ink: #676f5e; --muted: #79816f; background: #e1e5d9; border-color: #b4bdab; box-shadow: none; }
 .locked .icon { background: #d0d7c7; border-color: #929e85; color: #6c785f; }

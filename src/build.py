@@ -202,6 +202,8 @@ for a in actions:
         slot=a['save']['slot']
         a['save']['mode']='overwrite' if slot in slots else 'fresh'
         slots[slot]=a['mission']
+        # Planned contents after this save, including preserved branch/ending files.
+        a['save']['slots']=[slots.get(n) for n in range(1,7)]
 assert slots=={1:38,2:47,3:18,4:52,5:33,6:34}
 
 data=dict(missions=M,edges=E,actions=actions,sequence=[1,2]+sequence,
