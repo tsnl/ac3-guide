@@ -80,8 +80,11 @@ function saveSlots(a){
  }).join('')}</div>${a.ending?'<small class="save-note">After credits, including system data</small>':''}`;
 }
 function renderActions(){
- $('checklist').innerHTML=ACTIONS.map(a=>{
-  if(a.type==='load')return `<li class="action load" id="${a.id}"><input type="checkbox" data-action="${a.id}" aria-label="Confirm loading Slot ${a.slot}, after ${pad(a.after)} ${esc(byId[a.after].title)}"><span class="icon" aria-hidden="true">↶</span><div><h2 class="mission-title">Load Slot ${a.slot}</h2><p>After ${pad(a.after)} · ${esc(byId[a.after].title)}${a.route?' · '+esc(a.route):''}</p></div></li>`;
+ $('checklist').innerHTML=ACTIONS.map((a,index)=>{
+  if(a.type==='load'){
+   const next=byId[ACTIONS[index+1].mission];
+   return `<li class="action load" id="${a.id}"><input type="checkbox" data-action="${a.id}" aria-label="Confirm loading Slot ${a.slot}, ${esc(next.title)}"><span class="icon" aria-hidden="true">↶</span><div><h2 class="mission-title">Load Slot ${a.slot}</h2><p>${esc(next.title)}${a.route?' · '+esc(a.route):''}</p></div></li>`;
+  }
   const m=byId[a.mission];
   return `<li class="action${a.ending?' ending':''}" id="${a.id}"><input type="checkbox" data-action="${a.id}" aria-label="Complete ${pad(m.id)} ${esc(m.title)}, visit ${a.visit}"><img class="mission-map" src="${esc(m.map)}" alt="" width="88" height="88" loading="${a.mission===1?'eager':'lazy'}" decoding="async"><div class="mission-body"><h2 class="mission-title">${a.ending?'<span class="star" aria-label="Ending">★</span>':''}<a href="ranks.html#mission-${m.id}">${esc(m.title)}</a></h2>${milestoneTable(a,m)}<dl class="fields">${a.decision?`<div class="field decision"><dt>Decision</dt><dd><strong>${esc(a.decision)}</strong></dd></div>`:''}<div class="field save"><dt>Save after</dt><dd>${saveSlots(a)}</dd></div></dl></div></li>`;
  }).join('');
