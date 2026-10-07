@@ -4,7 +4,8 @@ A linear Ace Combat 3: Electrosphere (Japanese / fan-translated release) campaig
 
 - One checkbox for each of 61 mission attempts, plus six separate load-save boxes
 - Only the next unfinished action is enabled; later unchecked actions are greyed out
-- Each mission shows its name, target time, and where to save **after** completion; a bold highlighted Decision appears only at story forks
+- Each mission shows its name, target time, and where to save **after** completion; a bold highlighted Decision appears only at story forks and contains only a character name
+- Original guidebook map thumbnails for all 52 missions; artwork, scan, and research attribution in a separate Credits section
 - Five gold ending boxes with stars
 - Data Swallow-inspired ivory, black, and amber menu theme with an animated network-tunnel background, a pause control, and reduced-motion support
 - A-rank requirements and source links on a separate reference page
@@ -12,7 +13,7 @@ A linear Ace Combat 3: Electrosphere (Japanese / fan-translated release) campaig
 - Four circular controls in the original menu's low–high–low–high arrangement, with segmented concentric rings
 - No runtime dependencies, analytics, accounts, or server-side progress storage
 
-Open [the published checklist](https://tsnl.github.io/ac3-guide/) or open `index.html` in a browser. The checklist starts blank. Tick actions in order as you finish them and make the listed saves. Mission names link to their detailed A-rank requirements. Saved browser progress is restored on subsequent visits.
+Open [the published checklist](https://tsnl.github.io/ac3-guide/) or open `index.html` in a browser with its `assets` directory alongside it. The checklist starts blank. Tick actions in order as you finish them and make the listed saves. Mission names link to their detailed A-rank requirements. Saved browser progress is restored on subsequent visits.
 
 ## Minimal-replay route
 
@@ -56,16 +57,16 @@ npm run build
 npm test
 ```
 
-Edit `src/build.py` for mission data and the ordered action list. Edit `src/template.html` for checklist presentation and behavior, `src/reference.html` for the rank-reference page, `src/theme.css` for the shared menu theme, and `src/background.js` for the procedural animation. Styles and background code are inlined by the build so each output page remains self-contained. Commit regenerated `index.html` and `ranks.html` with source changes.
+Edit `src/build.py` for mission data and the ordered action list. Edit `src/template.html` for checklist presentation and behavior, `src/reference.html` for the rank-reference page, `src/theme.css` for the shared menu theme, and `src/background.js` for the procedural animation. Styles and background code are inlined by the build. Mission maps are local assets under `assets/maps`; their source pages and crop coordinates are recorded in that directory. Commit regenerated `index.html` and `ranks.html` with source changes.
 
 The background follows the network-as-tubes concept described by designer Minoru Sashida in [Namco's 1999 NOURS interview](https://www.bandainamcoent.co.jp/corporate/bnours/nours/vol24/pdf/24_32-34.pdf). Its oval cross-section, pale facets, olive center, and circular menu controls were refined against a supplied recording of the game UI; the recording itself is not included. Fixed tunnel rings advance toward the viewer at a constant speed measured in world units per second, with a stationary vanishing point. Animation time is independent of scrolling and render frequency. The canvas is pinned to the viewport and uses a stable large viewport height so mobile toolbar changes during scroll do not resize the scene. The black header extends above the document for top overscroll. The tunnel is drawn locally, capped at 30 fps, pauses while the page is hidden, and defaults to still imagery when reduced motion is requested. The pause preference is stored separately from checklist progress.
 
 Tests exercise mission-by-mission route coverage, valid checkpoint reloads, next-action locking, JSON import/export, migration from the original tracker, stored-state restoration, untrusted imported text, and unavailable local storage.
 
-For GitHub Pages, publish the `main` branch at `/ (root)`. `.nojekyll` keeps the self-contained file unchanged. Visitor progress is stored in localStorage under `ac3-jp-mission-tracker-v1`; JSON exports transfer it between origins, browsers, or devices.
+For GitHub Pages, publish the `main` branch at `/ (root)`. `.nojekyll` serves the generated HTML and map assets directly. Visitor progress is stored in localStorage under `ac3-jp-mission-tracker-v1`; JSON exports transfer it between origins, browsers, or devices.
 
 ## Progress format
 
 Version 2 stores completed action IDs, so two visits to one mission remain distinct. Existing version 1 browser records and JSON backups migrate automatically: completed route legs map to their actions, and a best A rank marks only the first A-clear visit. Old notes, ranks, branch flags, and slot labels remain in the exported `legacy` object. Checked actions can be unchecked or undone; only the earliest unchecked action can be checked next.
 
-The tiles use mission numbers as icons. Mission screenshots were not available from a reliable retrievable source during this update.
+See the public [Credits section](https://tsnl.github.io/ac3-guide/ranks.html#credits) for research and design sources, and [map image credits](assets/maps/SOURCES.md) for the original Namco guidebook, archive provenance, and a per-mission crop index. Original game and guidebook artwork remains © NAMCO LTD.
