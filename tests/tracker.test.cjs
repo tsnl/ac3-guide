@@ -29,6 +29,9 @@ test('one mission box per attempt, six load boxes, five starred endings, only ne
  assert.equal(d.querySelectorAll('input[data-action]:checked').length,0);
  assert.equal(d.querySelectorAll('input[data-action]:disabled').length,66);
  assert.equal(next().dataset.action,'mission-01-1');
+ assert.deepEqual([...d.querySelectorAll('.tools .menu-button')].map(x=>x.textContent),['Save','Load','Feedback','Credits']);
+ assert.equal(d.getElementById('feedback').href,'https://github.com/tsnl/ac3-guide/issues/new');
+ assert.equal(d.getElementById('credits').getAttribute('href'),'ranks.html#credits');
  for(const a of data.actions.filter(a=>a.type==='mission')){
   const card=d.getElementById(a.id);
   assert.deepEqual([...card.querySelectorAll('dt')].map(x=>x.textContent),a.decision?['Decision','Save after']:['Save after']);
@@ -49,7 +52,7 @@ test('checkbox completion unlocks one next action; skipped future events cannot 
  next().click();assert.equal(next().dataset.action,'mission-02-1');
  next().click();assert.equal(next().dataset.action,'mission-03-1');
  assert.equal(d.querySelectorAll('input[data-action]:not(:checked):not(:disabled)').length,1);
- click('#undo');assert.equal(next().dataset.action,'mission-02-1');
+ click('[data-action="mission-02-1"]');assert.equal(next().dataset.action,'mission-02-1');
  click('[data-action="mission-01-1"]');assert.equal(next().dataset.action,'mission-01-1');
  assert.equal(d.querySelector('[data-action="mission-02-1"]').disabled,true);
 });
@@ -83,7 +86,7 @@ test('complete route covers 52 A ranks and valid saves; every load is an explici
  assert.deepEqual(fresh,[[1,1],[4,2],[7,3],[39,4],[20,5],[34,6]]);
  assert.equal(endingSlots.size,5);
  assert.equal(d.getElementById('count').textContent,'67 / 67');
- assert.equal(d.getElementById('jump').disabled,true);
+ assert.equal(d.getElementById('progress').style.width,'100%');
 });
 
 test('JSON and browser reload preserve completion and next-action locking',t=>{
@@ -110,7 +113,7 @@ test('v1 migration preserves notes and completed legs without marking every repl
  assert.equal(d.querySelectorAll('input[data-action]:not(:checked):not(:disabled)').length,1);
 });
 
-test('JSON import validates structure, retains old notes as data, and can be undone',async t=>{
+test('JSON import validates structure, retains old notes as data, and allows unchecking',async t=>{
  const {api,w,d,click}=app(t);
  assert.throws(()=>api.validate({version:9,game:'ac3-jp'}),/supported/);
  assert.throws(()=>api.validate({version:2,game:'ac3-jp',done:[]}),/Invalid/);
@@ -122,7 +125,7 @@ test('JSON import validates structure, retains old notes as data, and can be und
  assert.equal(api.getState().done['mission-01-1'],true);
  assert.equal(d.getElementById('injected'),null);
  assert.equal(JSON.parse(api.exportJSON()).state.legacy.missions[1].notes,raw.missions[1].notes);
- click('#undo');assert.deepEqual(Object.keys(api.getState().done),[]);
+ click('[data-action="mission-01-1"]');assert.deepEqual(Object.keys(api.getState().done),[]);
 });
 
 test('storage denial still allows checklist and JSON export',t=>{

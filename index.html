@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#10140e">
-<meta name="description" content="A linear Ace Combat 3 Japanese campaign checklist: every mission, decision, checkpoint, and reload in order.">
-<title>ACE COMBAT 3 (JP) 100% GUIDE</title>
+<meta name="description" content="Ace Combat 3: Electrosphere Japanese campaign guide. Explore all 52 missions and five endings with six save slots, timed objectives, and a progress checklist.">
+<title>ACE COMBAT 3: ELECTROSPHERE (JP) 100% GUIDE</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2310120f'/%3E%3Ccircle cx='16' cy='16' r='11' fill='%23efb233'/%3E%3Cpath d='m9 16 5 5L24 10' fill='none' stroke='%2310120f' stroke-width='3'/%3E%3C/svg%3E">
 <style>:root {
   color-scheme: light;
@@ -64,14 +64,14 @@ h1 { font-size: 34px; font-weight: 900; letter-spacing: -.045em; line-height: 1.
 }
 .toolbar { margin-top: 19px; flex-wrap: wrap; gap: 8px; }
 .tools { --menu-size: 84px; display: grid; grid-template-columns: repeat(3, calc(var(--menu-size) * .82)) var(--menu-size); grid-template-rows: calc(var(--menu-size) * 1.42); align-items: start; flex-shrink: 0; }
-.tools .menu-button { position: relative; display: grid; place-items: center; width: var(--menu-size); height: var(--menu-size); min-height: 0; padding: 0; border: 0; border-radius: 50%; background: transparent; box-shadow: none; color: #11150e; letter-spacing: -.03em; }
-.tools .menu-button:nth-of-type(odd) { align-self: end; }
+.tools .menu-button { position: relative; display: grid; place-items: center; width: var(--menu-size); height: var(--menu-size); min-height: 0; padding: 0; border: 0; border-radius: 50%; background: transparent; box-shadow: none; color: #11150e; font: bold 11px var(--mono); letter-spacing: -.03em; text-transform: uppercase; text-decoration: none; }
+.tools .menu-button:nth-child(odd) { align-self: end; }
 .menu-button svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .menu-button span { position: relative; font-size: 11px; font-weight: 900; }
 .menu-button .menu-face { fill: #e1e5d9; }
 .menu-button:hover .menu-face { fill: #f3f6e9; }
-.menu-button#jump .menu-face { fill: var(--amber); }
-.menu-button#jump:hover .menu-face { fill: #ffc854; }
+.menu-button#export .menu-face { fill: var(--amber); }
+.menu-button#export:hover .menu-face { fill: #ffc854; }
 .toolbar-side { display: grid; gap: 9px; justify-items: end; }
 .toolbar-side button { min-height: 28px; padding: 0; border: 0; box-shadow: none; background: transparent; color: #bec7b3; font-size: 10px; }
 #storage-status { font: 10px var(--mono); color: #bec7b3; }
@@ -185,6 +185,7 @@ footer button:hover { color: #764d00; }
   #storage-status { display: none; }
   .tools { --menu-size: 64px; }
   .menu-button span { font-size: 10px; }
+  .menu-button#feedback span { font-size: 9px; }
   .toolbar-side button { font-size: 9px; }
   button { padding: 7px 10px; font-size: 10px; }
   .intro { font-size: 12px; }
@@ -207,7 +208,7 @@ footer button:hover { color: #764d00; }
 </head>
 <body>
 <canvas id="electrosphere" aria-hidden="true"></canvas>
-<header><div class="wrap header-inner"><h1>ACE COMBAT 3 (JP) 100% GUIDE</h1><span class="sr-only" id="count" aria-label="Completed actions" aria-live="polite">0 / 67</span><div class="toolbar"><div class="tools" role="group" aria-label="Checklist controls"><button id="jump" class="menu-button" aria-label="Next action" title="Go to the next unfinished action"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Next</span></button><button id="undo" class="menu-button" aria-label="Undo" title="Undo the last progress change"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Undo</span></button><button id="export" class="menu-button" aria-label="Save" title="Save progress to a JSON file"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Save</span></button><button id="import" class="menu-button" aria-label="Load" title="Load progress from a JSON file"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Load</span></button><input type="file" id="import-file" accept=".json,application/json" hidden></div><div class="toolbar-side"><button id="motion" aria-pressed="false" hidden>Pause background</button><span id="storage-status">Saves in this browser</span></div></div></div><div class="progress-track"><div id="progress"></div></div></header>
+<header><div class="wrap header-inner"><h1>ACE COMBAT 3: ELECTROSPHERE (JP) 100% GUIDE</h1><span class="sr-only" id="count" aria-label="Completed actions" aria-live="polite">0 / 67</span><div class="toolbar"><div class="tools" role="group" aria-label="Checklist controls"><button id="export" class="menu-button" aria-label="Save" title="Save progress to a JSON file"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Save</span></button><button id="import" class="menu-button" aria-label="Load" title="Load progress from a JSON file"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Load</span></button><a id="feedback" class="menu-button" href="https://github.com/tsnl/ac3-guide/issues/new" aria-label="Feedback" title="Create a GitHub issue"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Feedback</span></a><a id="credits" class="menu-button" href="ranks.html#credits" aria-label="Credits" title="Sources and credits"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Credits</span></a><input type="file" id="import-file" accept=".json,application/json" hidden></div><div class="toolbar-side"><button id="motion" aria-pressed="false" hidden>Pause background</button><span id="storage-status">Saves in this browser</span></div></div></div><div class="progress-track"><div id="progress"></div></div></header>
 <main class="wrap"><p class="intro">Follow the timing goals and route objectives; check each box after saving. Time alone does not guarantee A—open a mission name for its full rank requirements.</p><div id="storage-warning" class="warning hidden" role="alert"></div><noscript><p>Enable JavaScript to use the checklist and save progress.</p></noscript><ol class="checklist" id="checklist" aria-label="Campaign actions in play order"></ol><footer><a href="ranks.html">A-rank requirements</a><a href="ranks.html#credits">Credits</a><a href="https://github.com/tsnl/ac3-guide">Source code</a><span>Save after every mission to the numbered slot. All five ending saves are kept.</span><button id="reset">Reset progress</button></footer></main>
 <div id="toast" class="toast hidden" role="status"></div>
 <script>
@@ -220,7 +221,7 @@ const $=id=>document.getElementById(id);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const pad=n=>String(n).padStart(2,'0');
 const initial=()=>({version:2,game:'ac3-jp',done:{},legacy:null,updatedAt:null});
-let state=initial(),undoStack=[],toastTimer,storageOK=true;
+let state=initial(),toastTimer,storageOK=true;
 function legacyState(raw){
  if(!raw||raw.version!==1||raw.game!=='ac3-jp'||!raw.missions||typeof raw.missions!=='object')throw Error('Not an AC3 progress file.');
  const s={version:1,game:'ac3-jp',missions:{},steps:{},branches:{},slots:[]};
@@ -257,7 +258,7 @@ try{const saved=localStorage.getItem(KEY);if(saved)state=clean(JSON.parse(saved)
 function persist(){state.updatedAt=new Date().toISOString();try{localStorage.setItem(KEY,JSON.stringify(state));storageOK=true;}catch(e){storageOK=false;warn('Automatic saving is unavailable. Use Save before closing.');}$('storage-status').textContent=storageOK?'Saved in this browser':'Use Save for a backup';}
 function toast(message){clearTimeout(toastTimer);$('toast').textContent=message;$('toast').classList.remove('hidden');toastTimer=setTimeout(()=>$('toast').classList.add('hidden'),3500);}
 function nextAction(){return ACTIONS.find(a=>!state.done[a.id]);}
-function commit(fn){undoStack.push(JSON.stringify(state));if(undoStack.length>40)undoStack.shift();fn();persist();refresh();}
+function commit(fn){fn();persist();refresh();}
 function milestoneTable(a,m){
  return `<table class="milestones" aria-label="${esc(m.title)} time and objectives"><thead><tr><th scope="col">Time</th><th scope="col">Requirements</th></tr></thead><tbody>${a.milestones.map(s=>`<tr><th scope="row"><span>${esc(s.time)}</span>${s.clock?`<small>${esc(s.clock)}</small>`:''}</th><td>${esc(s.requirements)}</td></tr>`).join('')}</tbody></table>`;
 }
@@ -279,21 +280,16 @@ function refresh(){
  const count=ACTIONS.filter(a=>state.done[a.id]).length;
  $('count').textContent=count+' / '+ACTIONS.length;
  $('progress').style.width=100*count/ACTIONS.length+'%';
- $('jump').disabled=!next;$('jump').querySelector('span').textContent=next?'Next':'Done';
- $('jump').setAttribute('aria-label',next?'Next action':'Checklist complete');
- $('undo').disabled=!undoStack.length;
 }
 $('checklist').addEventListener('change',ev=>{
  const id=ev.target.dataset.action;if(!ids.has(id))return;
  if(ev.target.checked&&!state.done[id]&&nextAction()?.id!==id){refresh();return;}
  const checked=ev.target.checked;commit(()=>{if(checked)state.done[id]=true;else delete state.done[id];});
 });
-$('jump').addEventListener('click',()=>{const next=nextAction();if(next){$(next.id).scrollIntoView({behavior:'smooth',block:'center'});$(next.id).querySelector('input').focus({preventScroll:true});}});
-$('undo').addEventListener('click',()=>{if(!undoStack.length)return;state=JSON.parse(undoStack.pop());persist();refresh();});
 function exportText(){return JSON.stringify({format:'ac3-jp-progress',version:2,exportedAt:new Date().toISOString(),state},null,2);}
 $('export').addEventListener('click',()=>{const blob=new Blob([exportText()],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ac3-checklist-'+new Date().toISOString().slice(0,10)+'.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('JSON backup prepared.');});
 $('import').addEventListener('click',()=>$('import-file').click());
-$('import-file').addEventListener('change',async ev=>{const file=ev.target.files?.[0];if(!file)return;try{if(file.size>2*1024*1024)throw Error('Maximum file size is 2 MB.');const restored=clean(JSON.parse(await file.text()));if(confirm('Replace this checklist with the JSON backup? Undo remains available.')){commit(()=>state=restored);toast('Progress restored.');}}catch(e){toast('Load failed: '+e.message);}ev.target.value='';});
+$('import-file').addEventListener('change',async ev=>{const file=ev.target.files?.[0];if(!file)return;try{if(file.size>2*1024*1024)throw Error('Maximum file size is 2 MB.');const restored=clean(JSON.parse(await file.text()));if(confirm('Replace this checklist with the JSON backup? Use Save first to keep the current progress.')){commit(()=>state=restored);toast('Progress restored.');}}catch(e){toast('Load failed: '+e.message);}ev.target.value='';});
 $('reset').addEventListener('click',()=>{if(confirm('Clear the checklist? Use Save first if you want a backup.')){commit(()=>state=initial());toast('Checklist reset.');}});
 renderActions();refresh();
 if(state.updatedAt)$('storage-status').textContent=storageOK?'Progress restored':'Use Save for a backup';
