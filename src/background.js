@@ -12,7 +12,7 @@
   try { paused ||= localStorage.getItem(storageKey) === 'paused'; } catch (_) {}
   let width = 0, height = 0, ratio = 0, elapsed = 0, request = 0;
   let previous = null, lastDraw = 0;
-  const sides = 24, depth = 34, spacing = 1.25, speed = 2.5;
+  const sides = 24, depth = 34, spacing = 1.25, speed = 7.5;
 
   function ring(z) {
     const scale = Math.min(width, height) * .93 / (z + .8);
