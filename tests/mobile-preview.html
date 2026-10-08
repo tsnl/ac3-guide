@@ -26,9 +26,9 @@
   <option value="mission-45-1">Counterrevolution — long title</option>
 </select></label>
 <div class="previews">
-  <section><h2>320 px</h2><iframe title="320 px guide" width="320" src="../index.html"></iframe><output>Loading…</output></section>
-  <section><h2>375 px</h2><iframe title="375 px guide" width="375" src="../index.html"></iframe><output>Loading…</output></section>
-  <section><h2>430 px</h2><iframe title="430 px guide" width="430" src="../index.html"></iframe><output>Loading…</output></section>
+  <section><h2>320 px</h2><iframe title="320 px guide" width="320"></iframe><output>Loading…</output></section>
+  <section><h2>375 px</h2><iframe title="375 px guide" width="375"></iframe><output>Loading…</output></section>
+  <section><h2>430 px</h2><iframe title="430 px guide" width="430"></iframe><output>Loading…</output></section>
 </div>
 <script>
 const picker=document.getElementById('mission');
@@ -52,7 +52,12 @@ function inspect(frame){
   output.textContent=pass?'PASS — ordered rows; no overflow':
     `FAIL — fits:${fits} order:${ordered} badge:${badgeFits} viewport:${viewportFits}`;
 }
-for(const frame of frames)frame.addEventListener('load',()=>inspect(frame));
+// Avoid validating a cached page from the deployment immediately before this one.
+const previewVersion=Date.now();
+for(const frame of frames){
+  frame.addEventListener('load',()=>inspect(frame));
+  frame.src=`../index.html?layout-check=${previewVersion}`;
+}
 picker.addEventListener('change',()=>frames.forEach(inspect));
 </script>
 </html>
