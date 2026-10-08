@@ -97,6 +97,8 @@ test('repeats waive A only after an earlier planned A, and keep required branch 
  assert.deepEqual(plain(repeats.filter(a=>a.rank==='A').map(a=>a.id)),['mission-24-2']);
  for(const a of data.actions.filter(a=>a.type==='mission')){
   const card=d.getElementById(a.id),note=card.querySelector('.repeat-note');
+  assert.equal(!!card.querySelector('.milestones'),a.rank==='A');
+  if(a.routeNote)assert.equal(card.querySelector('.route-note').textContent,'Route '+a.routeNote);
   if(a.visit>1){
    assert.equal(note.textContent,priorA.has(a.mission)?'Repeat · A not needed':'Repeat · Get A this time');
    assert.equal(card.querySelector('input').getAttribute('aria-describedby'),note.id);
@@ -108,8 +110,8 @@ test('repeats waive A only after an earlier planned A, and keep required branch 
  for(const id of ['mission-07-2','mission-39-2','mission-34-2']){
   assert.equal(data.actions.find(a=>a.id===id).rank,'D');
  }
- assert.match(d.querySelector('#mission-39-2 .milestones').textContent,/spare 1 oil tank or radar/);
- assert.match(d.querySelector('#mission-34-2 .milestones').textContent,/>\+90s.*Leave 1 escaping target alive/);
+ assert.match(d.querySelector('#mission-39-2 .route-note').textContent,/Leave 1 oil tank or radar intact/);
+ assert.match(d.querySelector('#mission-34-2 .route-note').textContent,/Leave 1 escaping target alive.*>\+90s/);
 });
 
 test('complete route covers 52 A ranks and valid saves; pictograms preserve all six files',t=>{

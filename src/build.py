@@ -1,7 +1,7 @@
 import json
 from html import escape
 from pathlib import Path
-from milestones import MILESTONES, ROUTE_MILESTONES
+from milestones import MILESTONES, ROUTE_MILESTONES, ROUTE_NOTES
 from tunnel import markup as tunnel_markup
 
 ROOT = Path(__file__).parent
@@ -197,7 +197,7 @@ for leg, group in enumerate(groups):
             save=dict(slot=P[leg]['slot'],after=n,label=P[leg]['saveLabel'],ending=bool(m['ending']))
         actions.append(dict(id=f'mission-{n:02d}-{visits[n]}',type='mission',mission=n,
                             visit=visits[n],time=target,milestones=ROUTE_MILESTONES.get((leg,n),MILESTONES[n]),decision=story_decisions.get((leg,n),''),
-                            rank=rank,save=save,ending=m['ending'],legacyLeg=leg))
+                            rank=rank,routeNote=ROUTE_NOTES.get((leg,n),''),save=save,ending=m['ending'],legacyLeg=leg))
 
 assert [a['mission'] for a in actions if a['type']=='mission']==[1,2]+sequence
 assert len(actions)==67

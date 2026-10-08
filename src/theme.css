@@ -133,6 +133,8 @@ h1 { font-size: 34px; font-weight: 900; letter-spacing: -.045em; line-height: 1.
 .repeat-note { display: inline-block; max-width: 100%; margin: -3px 0 12px; padding: 4px 7px; border: 1px solid #a1b094; border-radius: 3px; background: #e4ebdc; color: #43573a; font: bold 10px/1.5 var(--mono); text-transform: uppercase; letter-spacing: .025em; }
 .repeat-note.needs-a { border-color: #b28b3b; background: #f8e6b4; color: #654500; }
 .locked .repeat-note { background: transparent; border-color: #b4bdab; color: var(--muted); }
+.route-note { margin: 0 0 14px; font-size: 12px; }
+.route-note b { margin-right: 6px; color: var(--muted); font: bold 10px var(--mono); text-transform: uppercase; letter-spacing: .04em; }
 .milestones { width: 100%; border-collapse: collapse; table-layout: fixed; margin: 0 0 14px; font-size: 12px; line-height: 1.5; }
 .milestones thead th { text-align: left; padding: 0 0 6px; border-bottom: 2px solid #adb69e; color: var(--muted); font: bold 10px var(--mono); text-transform: uppercase; letter-spacing: .04em; }
 .milestones th:first-child { width: 120px; padding-right: 12px; }
