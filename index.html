@@ -56,9 +56,6 @@ body { margin: 0; background: var(--bg); color: var(--ink); line-height: 1.5; is
 /* Four bays repeat over 50px. Moving at 75px/s preserves the 7.5-unit/s flight speed. */
 @keyframes tunnel-flight { from { transform: translateZ(0); } to { transform: translateZ(50px); } }
 @media (prefers-reduced-motion: no-preference) { .tunnel-flight { animation-play-state: running; } }
-#electrosphere[data-motion="running"] .tunnel-flight { animation-play-state: running; }
-#electrosphere[data-motion="paused"] .tunnel-flight,
-#electrosphere[data-hidden="true"] .tunnel-flight { animation-play-state: paused; }
 a { color: inherit; text-underline-offset: 3px; }
 button, input { font: inherit; }
 button, a, input { touch-action: manipulation; }
@@ -107,7 +104,6 @@ h1 { font-size: 34px; font-weight: 900; letter-spacing: -.045em; line-height: 1.
 .menu-button#export .menu-face { fill: var(--amber); }
 .menu-button#export:hover .menu-face { fill: #ffc854; }
 .toolbar-side { display: grid; gap: 9px; justify-items: end; }
-.toolbar-side button { min-height: 28px; padding: 0; border: 0; box-shadow: none; background: transparent; color: #bec7b3; font-size: 10px; }
 #storage-status { font: 10px var(--mono); color: #bec7b3; }
 .intro { margin: 24px 0 22px; padding-left: 12px; border-left: 3px solid var(--ink); font-size: 12px; color: #525b49; max-width: 710px; }
 .progress-track { height: 3px; background: transparent; margin-right: 64px; overflow: hidden; }
@@ -239,7 +235,6 @@ footer button:hover { color: #764d00; }
   .tools { --menu-size: 64px; }
   .menu-button span { font-size: 10px; }
   .menu-button#feedback span { font-size: 9px; }
-  .toolbar-side button { font-size: 9px; }
   button { padding: 7px 10px; font-size: 10px; }
   .intro { font-size: 12px; }
   .checklist { gap: 13px; }
@@ -261,7 +256,7 @@ footer button:hover { color: #764d00; }
 </head>
 <body>
 <div id="electrosphere" aria-hidden="true"><div class="tunnel-camera"><div class="tunnel-flight"><div class="tunnel-wall" style="--x:42.780000;--y:0.000000;--width:7.366712;--angle:101.412761deg;--light:87.4760%"></div><div class="tunnel-wall" style="--x:41.322307;--y:7.221051;--width:7.971424;--angle:122.420752deg;--light:87.8301%"></div><div class="tunnel-wall" style="--x:37.048567;--y:13.950000;--width:8.922367;--angle:139.637806deg;--light:87.9912%"></div><div class="tunnel-wall" style="--x:30.250028;--y:19.728279;--width:9.907519;--angle:153.415213deg;--light:87.9486%"></div><div class="tunnel-wall" style="--x:21.390000;--y:24.162109;--width:10.687562;--angle:164.882987deg;--light:87.7050%"></div><div class="tunnel-wall" style="--x:11.072279;--y:26.949331;--width:11.113016;--angle:175.092601deg;--light:87.2770%"></div><div class="tunnel-wall" style="--x:0.000000;--y:27.900000;--width:11.113016;--angle:-175.092601deg;--light:86.6939%"></div><div class="tunnel-wall" style="--x:-11.072279;--y:26.949331;--width:10.687562;--angle:-164.882987deg;--light:85.9954%"></div><div class="tunnel-wall" style="--x:-21.390000;--y:24.162109;--width:9.907519;--angle:-153.415213deg;--light:85.2290%"></div><div class="tunnel-wall" style="--x:-30.250028;--y:19.728279;--width:8.922367;--angle:-139.637806deg;--light:84.4470%"></div><div class="tunnel-wall" style="--x:-37.048567;--y:13.950000;--width:7.971424;--angle:-122.420752deg;--light:83.7027%"></div><div class="tunnel-wall" style="--x:-41.322307;--y:7.221051;--width:7.366712;--angle:-101.412761deg;--light:83.0468%"></div><div class="tunnel-wall" style="--x:-42.780000;--y:0.000000;--width:7.366712;--angle:-78.587239deg;--light:82.5240%"></div><div class="tunnel-wall" style="--x:-41.322307;--y:-7.221051;--width:7.971424;--angle:-57.579248deg;--light:82.1699%"></div><div class="tunnel-wall" style="--x:-37.048567;--y:-13.950000;--width:8.922367;--angle:-40.362194deg;--light:82.0088%"></div><div class="tunnel-wall" style="--x:-30.250028;--y:-19.728279;--width:9.907519;--angle:-26.584787deg;--light:82.0514%"></div><div class="tunnel-wall" style="--x:-21.390000;--y:-24.162109;--width:10.687562;--angle:-15.117013deg;--light:82.2950%"></div><div class="tunnel-wall" style="--x:-11.072279;--y:-26.949331;--width:11.113016;--angle:-4.907399deg;--light:82.7230%"></div><div class="tunnel-wall" style="--x:-0.000000;--y:-27.900000;--width:11.113016;--angle:4.907399deg;--light:83.3061%"></div><div class="tunnel-wall" style="--x:11.072279;--y:-26.949331;--width:10.687562;--angle:15.117013deg;--light:84.0046%"></div><div class="tunnel-wall" style="--x:21.390000;--y:-24.162109;--width:9.907519;--angle:26.584787deg;--light:84.7710%"></div><div class="tunnel-wall" style="--x:30.250028;--y:-19.728279;--width:8.922367;--angle:40.362194deg;--light:85.5530%"></div><div class="tunnel-wall" style="--x:37.048567;--y:-13.950000;--width:7.971424;--angle:57.579248deg;--light:86.2973%"></div><div class="tunnel-wall" style="--x:41.322307;--y:-7.221051;--width:7.366712;--angle:78.587239deg;--light:86.9532%"></div></div></div><div class="tunnel-haze"></div></div>
-<header><div class="wrap header-inner"><h1>ACE COMBAT 3: ELECTROSPHERE (JP) 100% GUIDE</h1><span class="sr-only" id="count" aria-label="Completed actions" aria-live="polite">0 / 67</span><div class="toolbar"><div class="tools" role="group" aria-label="Checklist controls"><button id="export" class="menu-button" aria-label="Save" title="Save progress to a JSON file"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Save</span></button><button id="import" class="menu-button" aria-label="Load" title="Load progress from a JSON file"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Load</span></button><a id="feedback" class="menu-button" href="https://github.com/tsnl/ac3-guide/issues/new" aria-label="Feedback" title="Create a GitHub issue"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Feedback</span></a><a id="credits" class="menu-button" href="ranks.html#credits" aria-label="Credits" title="Sources and credits"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Credits</span></a><input type="file" id="import-file" accept=".json,application/json" hidden></div><div class="toolbar-side"><button id="motion" aria-pressed="false" hidden>Pause background</button><span id="storage-status">Saves in this browser</span></div></div></div><div class="progress-track"><div id="progress"></div></div></header>
+<header><div class="wrap header-inner"><h1>ACE COMBAT 3: ELECTROSPHERE (JP) 100% GUIDE</h1><span class="sr-only" id="count" aria-label="Completed actions" aria-live="polite">0 / 67</span><div class="toolbar"><div class="tools" role="group" aria-label="Checklist controls"><button id="export" class="menu-button" aria-label="Save" title="Save progress to a JSON file"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Save</span></button><button id="import" class="menu-button" aria-label="Load" title="Load progress from a JSON file"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Load</span></button><a id="feedback" class="menu-button" href="https://github.com/tsnl/ac3-guide/issues/new" aria-label="Feedback" title="Create a GitHub issue"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Feedback</span></a><a id="credits" class="menu-button" href="ranks.html#credits" aria-label="Credits" title="Sources and credits"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#10140e" stroke="#bfc6ad" stroke-width="3"/><circle cx="50" cy="50" r="40" fill="none" stroke="#bfc6ad" stroke-width="3" pathLength="100" stroke-dasharray="88 12" transform="rotate(-28 50 50)"/><circle class="menu-face" cx="50" cy="50" r="34" stroke="#080c08" stroke-width="2"/></svg><span>Credits</span></a><input type="file" id="import-file" accept=".json,application/json" hidden></div><div class="toolbar-side"><span id="storage-status">Saves in this browser</span></div></div></div><div class="progress-track"><div id="progress"></div></div></header>
 <main class="wrap"><p class="intro">Check after saving. Jumping ahead asks for confirmation and includes earlier actions; unchecking clears that action and everything after it. Time alone does not guarantee A—open a mission name for its full rank requirements.</p><p class="save-key" aria-label="Save slot legend"><span><i class="fresh-key" aria-hidden="true">+</i>Fresh</span><span><i class="overwrite-key" aria-hidden="true">↻</i>Overwrite</span><span><i class="unused-key" aria-hidden="true"></i>Unused</span></p><div id="storage-warning" class="warning hidden" role="alert"></div><noscript><p>Enable JavaScript to use the checklist and save progress.</p></noscript><ol class="checklist" id="checklist" aria-label="Campaign actions in play order"></ol><footer><a href="ranks.html">A-rank requirements</a><a href="ranks.html#credits">Credits</a><a href="https://github.com/tsnl/ac3-guide">Source code</a><span>Save after every mission to the numbered slot. All five ending saves are kept.</span><button id="reset">Reset progress</button></footer></main>
 <div id="toast" class="toast hidden" role="status"></div>
 <script>
@@ -368,37 +363,6 @@ $('reset').addEventListener('click',()=>{if(confirm('Clear the checklist? Use Sa
 renderActions();refresh();
 if(state.updatedAt)$('storage-status').textContent=storageOK?'Progress restored':'Use Save for a backup';
 window.AC3Tracker=Object.freeze({getState:()=>JSON.parse(JSON.stringify(state)),getData:()=>JSON.parse(JSON.stringify(DATA)),exportJSON:exportText,validate:clean});
-</script>
-<script>// The tunnel is drawn and animated entirely in CSS. JS only manages preferences.
-(() => {
-  'use strict';
-  const tunnel = document.getElementById('electrosphere');
-  const toggle = document.getElementById('motion');
-  if (!tunnel) return;
-  const preference = window.matchMedia?.('(prefers-reduced-motion: reduce)');
-  const storageKey = 'ac3-jp-background-motion';
-  let paused = preference?.matches || false;
-  try { paused ||= localStorage.getItem(storageKey) === 'paused'; } catch (_) {}
-
-  function sync() {
-    tunnel.dataset.motion = paused ? 'paused' : 'running';
-    tunnel.dataset.hidden = String(document.hidden);
-    if (toggle) {
-      toggle.hidden = false;
-      toggle.textContent = paused ? 'Play background' : 'Pause background';
-      toggle.setAttribute('aria-pressed', String(paused));
-    }
-  }
-
-  toggle?.addEventListener('click', () => {
-    paused = !paused;
-    try { localStorage.setItem(storageKey, paused ? 'paused' : 'running'); } catch (_) {}
-    sync();
-  });
-  preference?.addEventListener('change', event => { paused = event.matches; sync(); });
-  document.addEventListener('visibilitychange', sync);
-  sync();
-})();
 </script>
 </body>
 </html>

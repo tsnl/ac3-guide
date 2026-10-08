@@ -54,9 +54,6 @@ body { margin: 0; background: var(--bg); color: var(--ink); line-height: 1.5; is
 /* Four bays repeat over 50px. Moving at 75px/s preserves the 7.5-unit/s flight speed. */
 @keyframes tunnel-flight { from { transform: translateZ(0); } to { transform: translateZ(50px); } }
 @media (prefers-reduced-motion: no-preference) { .tunnel-flight { animation-play-state: running; } }
-#electrosphere[data-motion="running"] .tunnel-flight { animation-play-state: running; }
-#electrosphere[data-motion="paused"] .tunnel-flight,
-#electrosphere[data-hidden="true"] .tunnel-flight { animation-play-state: paused; }
 a { color: inherit; text-underline-offset: 3px; }
 button, input { font: inherit; }
 button, a, input { touch-action: manipulation; }
@@ -105,7 +102,6 @@ h1 { font-size: 34px; font-weight: 900; letter-spacing: -.045em; line-height: 1.
 .menu-button#export .menu-face { fill: var(--amber); }
 .menu-button#export:hover .menu-face { fill: #ffc854; }
 .toolbar-side { display: grid; gap: 9px; justify-items: end; }
-.toolbar-side button { min-height: 28px; padding: 0; border: 0; box-shadow: none; background: transparent; color: #bec7b3; font-size: 10px; }
 #storage-status { font: 10px var(--mono); color: #bec7b3; }
 .intro { margin: 24px 0 22px; padding-left: 12px; border-left: 3px solid var(--ink); font-size: 12px; color: #525b49; max-width: 710px; }
 .progress-track { height: 3px; background: transparent; margin-right: 64px; overflow: hidden; }
@@ -237,7 +233,6 @@ footer button:hover { color: #764d00; }
   .tools { --menu-size: 64px; }
   .menu-button span { font-size: 10px; }
   .menu-button#feedback span { font-size: 9px; }
-  .toolbar-side button { font-size: 9px; }
   button { padding: 7px 10px; font-size: 10px; }
   .intro { font-size: 12px; }
   .checklist { gap: 13px; }
@@ -322,37 +317,6 @@ footer button:hover { color: #764d00; }
 <p><b>Dialogue and save behavior.</b> The <a href="https://w.atwiki.jp/acacac/pages/4.html">Ace Combat dialogue archive contributors</a> supplied the Japanese dialogue reference for character choices. The <a href="https://retroachievements.org/forums/topic/17603">RetroAchievements author discussion</a> informed the shared system-data and rank-persistence guidance.</p>
 <p><b>Menu and animation references.</b> Namco’s original game UI, gameplay photographs and video supplied by this project’s maintainer, and the development interview in <a href="https://www.bandainamcoent.co.jp/corporate/bnours/nours/vol24/pdf/24_32-34.pdf"><i>NOURS</i>, volume 24, pages 32–34</a>. The menu controls and animated tunnel are recreated in code.</p>
 </section>
-<footer>Checked 6 October 2026. <a href="https://retroachievements.org/forums/topic/17603">Save/rank persistence</a> · <a href="#credits">Credits</a> · <a href="https://github.com/tsnl/ac3-guide/issues">Report a correction</a><button id="motion" aria-pressed="false" hidden>Pause background</button></footer></main>
-<script>// The tunnel is drawn and animated entirely in CSS. JS only manages preferences.
-(() => {
-  'use strict';
-  const tunnel = document.getElementById('electrosphere');
-  const toggle = document.getElementById('motion');
-  if (!tunnel) return;
-  const preference = window.matchMedia?.('(prefers-reduced-motion: reduce)');
-  const storageKey = 'ac3-jp-background-motion';
-  let paused = preference?.matches || false;
-  try { paused ||= localStorage.getItem(storageKey) === 'paused'; } catch (_) {}
-
-  function sync() {
-    tunnel.dataset.motion = paused ? 'paused' : 'running';
-    tunnel.dataset.hidden = String(document.hidden);
-    if (toggle) {
-      toggle.hidden = false;
-      toggle.textContent = paused ? 'Play background' : 'Pause background';
-      toggle.setAttribute('aria-pressed', String(paused));
-    }
-  }
-
-  toggle?.addEventListener('click', () => {
-    paused = !paused;
-    try { localStorage.setItem(storageKey, paused ? 'paused' : 'running'); } catch (_) {}
-    sync();
-  });
-  preference?.addEventListener('change', event => { paused = event.matches; sync(); });
-  document.addEventListener('visibilitychange', sync);
-  sync();
-})();
-</script>
+<footer>Checked 6 October 2026. <a href="https://retroachievements.org/forums/topic/17603">Save/rank persistence</a> · <a href="#credits">Credits</a> · <a href="https://github.com/tsnl/ac3-guide/issues">Report a correction</a></footer></main>
 </body>
 </html>
