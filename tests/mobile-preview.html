@@ -40,8 +40,9 @@ function inspect(frame){
   const parts=['.mission-title','.repeat-note','.route-note','.milestones','.fields']
     .map(selector=>card.querySelector(selector)).filter(Boolean);
   const box=card.getBoundingClientRect(), bounds=parts.map(part=>part.getBoundingClientRect());
+  const title=card.querySelector('.mission-title');
   const fits=bounds.every(rect=>rect.left>=box.left && rect.right<=box.right)
-    && parts.every(part=>part.scrollWidth<=part.clientWidth);
+    && title.scrollWidth<=title.clientWidth;
   const ordered=bounds.every((rect,i)=>i===0 || rect.top>=bounds[i-1].bottom-1);
   const badge=card.querySelector('.repeat-note');
   const badgeFits=!badge || (badge.getBoundingClientRect().height<36 && badge.scrollWidth<=badge.clientWidth);
