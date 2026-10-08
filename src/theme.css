@@ -103,6 +103,7 @@ h1 { font-size: 34px; font-weight: 900; letter-spacing: -.045em; line-height: 1.
 .milestones tbody th, .milestones td { padding: 9px 0; border-bottom: 1px solid #c6ceb9; text-align: left; vertical-align: top; }
 .milestones tbody th { font-weight: 700; }
 .milestones th small { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; font-weight: 400; line-height: 1.4; }
+.milestones .provisional { display: block; margin-top: 3px; color: #676d63; font-size: 11px; font-style: italic; }
 .locked .milestones thead th, .locked .milestones tbody th, .locked .milestones td { border-color: #bdc5b3; }
 .fields { margin: 0; display: grid; gap: 7px; font-size: 13px; }
 .field { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 8px; }

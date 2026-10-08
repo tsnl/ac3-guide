@@ -69,7 +69,7 @@ function toast(message){clearTimeout(toastTimer);$('toast').textContent=message;
 function nextAction(){return ACTIONS.find(a=>!state.done[a.id]);}
 function commit(fn){fn();persist();refresh();}
 function milestoneTable(a,m){
- return `<table class="milestones" aria-label="${esc(m.title)} time and objectives"><thead><tr><th scope="col">Time</th><th scope="col">Requirements</th></tr></thead><tbody>${a.milestones.map(s=>`<tr><th scope="row"><span>${esc(s.time)}</span>${s.clock?`<small>${esc(s.clock)}</small>`:''}</th><td>${esc(s.requirements)}</td></tr>`).join('')}</tbody></table>`;
+ return `<table class="milestones" aria-label="${esc(m.title)} time and objectives"><thead><tr><th scope="col">Time</th><th scope="col">Requirements</th></tr></thead><tbody>${a.milestones.map(s=>`<tr><th scope="row"><span>${esc(s.time)}</span>${s.clock?`<small>${esc(s.clock)}</small>`:''}</th><td>${esc(s.requirements)}${s.provisional?`<small class="provisional" title="Player-reported; exact count unverified.">${esc(s.provisional)}</small>`:''}</td></tr>`).join('')}</tbody></table>`;
 }
 function saveSlots(a){
  return `<div class="save-slots" role="group" aria-label="Save slots after this mission">${a.save.slots.map((mission,i)=>{

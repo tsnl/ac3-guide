@@ -54,7 +54,7 @@ rows = [
  (45,'Counterrevolution','23+ enemies and complete the mission.','','Kill based','Collect optional fighter kills before finishing the final main target.'),
  (46,'Pursuit','Inflict the required damage and finish the mission.','3:00','Whole mission','Complete the damage objective in under three minutes.'),
  (47,'Self Awareness','Complete the mission.','5:30','Whole mission','Finish under five minutes thirty seconds, including the generator phase.'),
- (48,'Resistance','17+ enemies and destroy all four carrier target points quickly.','1:30','From carrier mission update','Complete the four Sphyrna points within 90 seconds of the update to open Radio Silence. A late finish skips it and gives D.'),
+ (48,'Resistance','17+ kills across both phases and all four carrier target points within 90 seconds of the update.','1:30','From carrier mission update','Extra fighters may be needed to meet the total kill requirement before destroying the carrier’s final target point. Finishing the four Sphyrna points within 90 seconds opens Radio Silence; a late finish skips it and gives D.'),
  (49,'Radio Silence','Complete the mission.','4:00','Whole mission','Finish under four minutes.'),
  (50,'Revenge','Destroy all eleven enemies and complete the mission.','','Kill based','Clear the optional aircraft before the carrier’s last target point.'),
  (51,'Tunnel Vision','Reach the end of the tunnel.','4:00','Whole mission','Complete the tunnel flight within four minutes. There are no hostile targets to farm.'),

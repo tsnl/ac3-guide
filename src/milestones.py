@@ -7,8 +7,11 @@ no separate cutoff is cited.
 """
 
 
-def step(time, clock, requirements):
-    return dict(time=time, clock=clock, requirements=requirements)
+def step(time, clock, requirements, provisional=''):
+    milestone = dict(time=time, clock=clock, requirements=requirements)
+    if provisional:
+        milestone['provisional'] = provisional
+    return milestone
 
 
 def complete(requirements='All required targets'):
@@ -119,7 +122,8 @@ MILESTONES = {
     47: [step('< 5:30', 'from mission start', 'All required targets, including the generator')],
     48: [
         step('Before update', '', 'All initial required fighters'),
-        step('<+90s', 'from carrier update', 'All 4 Sphyrna target points'),
+        step('<+90s', 'from carrier update', 'All 4 Sphyrna target points',
+             provisional='+ 2–3 enemy fighters?'),
     ],
     49: [step('< 4:00', 'from mission start', 'All required targets')],
     50: [complete('All required carrier targets')],
