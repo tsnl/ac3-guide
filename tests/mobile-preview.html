@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>AC3 mobile layout checks</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 20px; background: #10140e; color: #fafbed; font: 14px/1.5 Arial, sans-serif; }
+  h1 { margin: 0; font-size: 22px; }
+  label { display: block; margin: 12px 0; }
+  select { padding: 6px; font: inherit; }
+  .previews { display: flex; align-items: start; gap: 18px; overflow-x: auto; }
+  section { flex: none; }
+  h2 { font-size: 14px; margin: 10px 0; }
+  iframe { display: block; height: 660px; border: 0; background: #e5e7dc; }
+  output { display: block; color: #b6d9c9; margin-top: 8px; font-size: 12px; }
+  output.fail { color: #ffb590; }
+</style>
+<h1>AC3 mobile layout checks</h1>
+<label>Mission <select id="mission">
+  <option value="mission-43-2">Utopian Dreams — repeat, no A</option>
+  <option value="mission-39-2">Power for Life — repeat, expected D</option>
+  <option value="mission-24-2">Stratosphere — repeat, A required</option>
+  <option value="mission-01-1">Awakening — first visit</option>
+</select></label>
+<div class="previews">
+  <section><h2>320 px</h2><iframe title="320 px guide" width="320" src="../index.html"></iframe><output>Loading…</output></section>
+  <section><h2>375 px</h2><iframe title="375 px guide" width="375" src="../index.html"></iframe><output>Loading…</output></section>
+  <section><h2>430 px</h2><iframe title="430 px guide" width="430" src="../index.html"></iframe><output>Loading…</output></section>
+</div>
+<script>
+const picker=document.getElementById('mission');
+const frames=[...document.querySelectorAll('iframe')];
+function inspect(frame){
+  const doc=frame.contentDocument, card=doc?.getElementById(picker.value);
+  if(!card)return;
+  card.scrollIntoView({block:'start'});
+  const parts=['.mission-title','.repeat-note','.route-note','.milestones','.fields']
+    .map(selector=>card.querySelector(selector)).filter(Boolean);
+  const box=card.getBoundingClientRect(), bounds=parts.map(part=>part.getBoundingClientRect());
+  const fits=bounds.every(rect=>rect.left>=box.left && rect.right<=box.right);
+  const ordered=bounds.every((rect,i)=>i===0 || rect.top>=bounds[i-1].bottom-1);
+  const badge=card.querySelector('.repeat-note');
+  const badgeFits=!badge || (badge.getBoundingClientRect().height<36 && badge.scrollWidth<=badge.clientWidth);
+  const viewportFits=doc.documentElement.scrollWidth<=Number(frame.width);
+  const output=frame.parentElement.querySelector('output');
+  const pass=fits&&ordered&&badgeFits&&viewportFits;
+  output.className=pass?'pass':'fail';
+  output.textContent=pass?'PASS — ordered rows; no overflow':
+    `FAIL — fits:${fits} order:${ordered} badge:${badgeFits} viewport:${viewportFits}`;
+}
+for(const frame of frames)frame.addEventListener('load',()=>inspect(frame));
+picker.addEventListener('change',()=>frames.forEach(inspect));
+</script>
+</html>

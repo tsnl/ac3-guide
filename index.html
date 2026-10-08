@@ -227,9 +227,11 @@ footer button:hover { color: #764d00; }
   .action:not(.load) .mission-title { grid-column: 3; grid-row: 1; align-self: center; }
   .action:not(.load) .mission-map { grid-column: 2; grid-row: 1; }
   .action:not(.load) input { grid-column: 1; grid-row: 1; }
-  .milestones { grid-column: 1 / -1; grid-row: 2; margin: 2px 0 3px; font-size: 12px; }
+  .repeat-note, .route-note { grid-column: 1 / -1; margin: 0; }
+  .repeat-note { justify-self: start; }
+  .milestones { grid-column: 1 / -1; margin: 2px 0 3px; font-size: 12px; }
   .milestones th:first-child { width: 94px; padding-right: 10px; }
-  .action:not(.load) .fields { grid-column: 1 / -1; grid-row: 3; }
+  .action:not(.load) .fields { grid-column: 1 / -1; }
   .mission-map { width: 56px; height: 56px; border-radius: 0 9px 0 0; }
   .mission-title { font-size: 15px; margin-bottom: 10px; }
   .next .mission-title { padding: 6px 10px; }
