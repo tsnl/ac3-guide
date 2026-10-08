@@ -145,7 +145,7 @@ ROUTE_MILESTONES = {
 # the only extra instructions needed to reach the intended branch on those visits.
 ROUTE_NOTES = {
     (3, 7): 'Return to base.',
-    (5, 39): 'Leave 1 oil tank or radar intact (D route).',
+    (5, 39): 'Leave 1 oil tank or radar intact. Expected rank: D.',
     (8, 20): 'Finish the initial targets before 3:30.',
     (9, 24): 'Shoot down the R-311 pursuing Keith (D route).',
     (12, 34): 'Leave 1 escaping target alive for >+90s after the helicopter update.',
