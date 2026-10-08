@@ -23,6 +23,7 @@
   <option value="mission-39-2">Power for Life — repeat, expected D</option>
   <option value="mission-24-2">Stratosphere — repeat, A required</option>
   <option value="mission-01-1">Awakening — first visit</option>
+  <option value="mission-45-1">Counterrevolution — long title</option>
 </select></label>
 <div class="previews">
   <section><h2>320 px</h2><iframe title="320 px guide" width="320" src="../index.html"></iframe><output>Loading…</output></section>
@@ -39,7 +40,8 @@ function inspect(frame){
   const parts=['.mission-title','.repeat-note','.route-note','.milestones','.fields']
     .map(selector=>card.querySelector(selector)).filter(Boolean);
   const box=card.getBoundingClientRect(), bounds=parts.map(part=>part.getBoundingClientRect());
-  const fits=bounds.every(rect=>rect.left>=box.left && rect.right<=box.right);
+  const fits=bounds.every(rect=>rect.left>=box.left && rect.right<=box.right)
+    && parts.every(part=>part.scrollWidth<=part.clientWidth);
   const ordered=bounds.every((rect,i)=>i===0 || rect.top>=bounds[i-1].bottom-1);
   const badge=card.querySelector('.repeat-note');
   const badgeFits=!badge || (badge.getBoundingClientRect().height<36 && badge.scrollWidth<=badge.clientWidth);
