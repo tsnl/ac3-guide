@@ -171,6 +171,7 @@ route_targets = {
 }
 actions=[]
 visits={}
+planned_a_clears=set()
 lookup={m['id']:m for m in M}
 for leg, group in enumerate(groups):
     if leg in reloads:
@@ -183,6 +184,14 @@ for leg, group in enumerate(groups):
         target=time_targets.get(n, f'Under {m["timer"]} · whole mission' if m['timer'] else '—')
         target=route_targets.get((leg,n),target)
         rank='D' if n in P[leg]['lower'] else 'any' if (leg,n)==(8,20) else 'A'
+        # A needs to be earned once per mission. Replays still obey their
+        # route conditions, including deliberate D clears. Stratosphere's
+        # first visit is D, so its second visit must retain the A requirement.
+        if rank=='A':
+            if n in planned_a_clears:
+                rank='any'
+            else:
+                planned_a_clears.add(n)
         save=dict(slot=P[leg]['slot'],after=n,label=f'After {n:02d} {m["title"]}',ending=False)
         if n==group[-1]:
             save=dict(slot=P[leg]['slot'],after=n,label=P[leg]['saveLabel'],ending=bool(m['ending']))

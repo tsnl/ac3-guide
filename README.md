@@ -2,6 +2,7 @@
 
 A linear Ace Combat 3: Electrosphere (Japanese / fan-translated release) campaign checklist. Covers all 52 missions and all five endings, using six normal in-game save slots. The checklist focuses on timing and route objectives; the separate rank reference covers the extra requirements for all A ranks.
 
+- Top-level Instructions explain mission order, A-rank exceptions, route choices, post-mission saves, checkboxes, and load steps
 - One checkbox for each of 61 mission attempts, plus six separate load-save boxes labeled with the next mission's name, matching the game's load menu
 - The next unfinished action is highlighted; later actions stay muted and clickable
 - Checking a later action asks for confirmation before checking everything before it; unchecking clears that action and everything after it, including load actions
@@ -25,16 +26,18 @@ From an A-rank clear of mission 02, **59 mission entries remain**, assuming miss
 | 1 | A-rank 01–03 | Fresh S1 after 01, then overwrite S1 | — |
 | 2 | 04 stay UPEO; A-rank 05–06 and destroy the secret base | Fresh S2 after 04, then overwrite S2 | — |
 | 3 | 07 follow Rena and A-rank combat; 09 stay UPEO; A-rank 09–18 | Fresh S3 after 07, then overwrite S3; keep ending | S2 · No Clearance |
-| 4 | 07 return to base; A-rank 08 and 09; protect Fiona in 09 | Overwrite S2 | — |
+| 4 | 07 return to base; A-rank 08; replay 09 and protect Fiona | Overwrite S2 | — |
 | 5 | A-rank 39, 40, 42, 43; stay Fiona; A-rank 48–52, including 49 | Fresh S4 after 39, then overwrite S4; keep ending | S2 · Power for Life |
-| 6 | 39 leave an oil tank or radar intact; A-rank 41 and 43; follow Cynthia; A-rank 44–47 | Overwrite S2; keep ending | S1 · Paper Tiger |
+| 6 | 39 leave an oil tank or radar intact; A-rank 41; replay 43 and follow Cynthia; A-rank 44–47 | Overwrite S2; keep ending | S1 · Paper Tiger |
 | 7 | Replay 04 and follow Dision; A-rank 19 | Overwrite S1 | — |
 | 8 | 20 wait for the hydrofoil and sink it in time; A-rank 20 and 21 | Fresh S5 after 20, then overwrite S5 | S1 · Megafloat |
 | 9 | 20 finish early (or let the boat escape); A-rank 22 and 23 | Overwrite S1 | — |
 | 10 | 24 save Keith; A-rank 25, 27, 28; stay Keith; A-rank 29–33, including 31 | Overwrite S5; keep ending | S1 · Stratosphere |
-| 11 | A-rank 24 and 26; A-rank 28 and follow Dision | Overwrite S1 | — |
+| 11 | A-rank 24 and 26; Replay 28 and follow Dision | Overwrite S1 | — |
 | 12 | A-rank 34; save without playing 36 yet | Fresh S6 after 34 | S1 · The Orientation |
 | 13 | 34 let an escaping target survive the timer; A-rank 35–38 | Overwrite S1; keep ending | — |
+
+Repeat visits carry a compact label: **Repeat · A not needed** when an earlier visit already called for A, or **Repeat · Get A this time** for Stratosphere’s second visit, because its first visit deliberately takes the D route. These labels assume the earlier A was actually earned; timed route conditions and decisions still apply.
 
 07, 24, 34, and 39 require a lower-grade route visit as well as an A clear. Each replay has its own checkbox and visit-specific instructions; completing a lower-grade replay does not replace the earlier A-clear checkbox. Only narrative choices use the Decision highlight. Timed route requirements and ordinary objectives such as following the spy plane appear in the milestone table. Each row gives a timing goal and a short essential objective. Optional-kill totals and score requirements are kept on the linked A-rank reference page; meeting a time alone does not guarantee A. Deliberate lower-grade visits retain their distinct route requirements. Checkboxes only update this browser log; make the actual saves and loads in the game.
 
