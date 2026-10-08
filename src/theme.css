@@ -14,7 +14,41 @@
 * { box-sizing: border-box; }
 html { background: var(--banner); }
 body { margin: 0; background: var(--bg); color: var(--ink); line-height: 1.5; isolation: isolate; }
-#electrosphere { position: fixed; inset: 0; width: 100%; height: 100vh; height: 100lvh; z-index: -1; pointer-events: none; opacity: .8; }
+#electrosphere {
+  --tunnel-unit: 1vmin;
+  --tunnel-unit: min(1vw, 1lvh);
+  position: fixed; inset: 0; width: 100%; height: 100vh; height: 100lvh;
+  z-index: -1; pointer-events: none; opacity: .8; overflow: hidden;
+}
+.tunnel-camera { position: absolute; inset: 0; perspective: 100px; perspective-origin: 56% 48%; }
+.tunnel-flight {
+  position: absolute; inset: 0; transform-style: preserve-3d;
+  animation: tunnel-flight .666666667s linear infinite paused;
+}
+.tunnel-wall {
+  position: absolute; left: 56%; top: 48%;
+  width: calc(var(--tunnel-unit) * var(--width)); height: 600px;
+  transform-origin: 0 0; backface-visibility: hidden;
+  transform: translate3d(calc(var(--tunnel-unit) * var(--x)), calc(var(--tunnel-unit) * var(--y)), 110px)
+    rotateZ(var(--angle)) rotateX(-90deg);
+  border-left: .2px solid rgb(100 108 64 / .12);
+  background:
+    repeating-linear-gradient(to bottom, rgb(100 108 64 / .13) 0 .2px, transparent .2px 12.5px),
+    repeating-linear-gradient(to bottom, rgb(80 86 53 / .018) 0 12.5px, transparent 12.5px 50px),
+    hsl(62 24% var(--light));
+}
+.tunnel-haze {
+  position: absolute; left: 56%; top: 48%;
+  width: calc(var(--tunnel-unit) * 25); height: calc(var(--tunnel-unit) * 16.3);
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse, #bdc6a2 0 40%, #cdd3bb 60%, #dce0d0 70%, transparent 100%);
+}
+/* Four bays repeat over 50px. Moving at 75px/s preserves the 7.5-unit/s flight speed. */
+@keyframes tunnel-flight { from { transform: translateZ(0); } to { transform: translateZ(50px); } }
+@media (prefers-reduced-motion: no-preference) { .tunnel-flight { animation-play-state: running; } }
+#electrosphere[data-motion="running"] .tunnel-flight { animation-play-state: running; }
+#electrosphere[data-motion="paused"] .tunnel-flight,
+#electrosphere[data-hidden="true"] .tunnel-flight { animation-play-state: paused; }
 a { color: inherit; text-underline-offset: 3px; }
 button, input { font: inherit; }
 button, a, input { touch-action: manipulation; }

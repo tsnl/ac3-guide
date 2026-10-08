@@ -2,6 +2,7 @@ import json
 from html import escape
 from pathlib import Path
 from milestones import MILESTONES, ROUTE_MILESTONES
+from tunnel import markup as tunnel_markup
 
 ROOT = Path(__file__).parent
 # Rank requirements are paraphrased from the linked Japanese-version mission articles.
@@ -211,7 +212,8 @@ data=dict(missions=M,edges=E,actions=actions,sequence=[1,2]+sequence,
 theme=(ROOT/'theme.css').read_text()
 background=(ROOT/'background.js').read_text()
 def themed(name):
-    return (ROOT/name).read_text().replace('/*__THEME__*/',theme).replace('/*__BACKGROUND__*/',background)
+    return ((ROOT/name).read_text().replace('/*__THEME__*/',theme)
+            .replace('/*__BACKGROUND__*/',background).replace('<!--__TUNNEL__-->',tunnel_markup()))
 template=themed('template.html')
 out=ROOT.parent/'index.html'
 out.write_text(template.replace('/*__DATA__*/', 'const DATA='+json.dumps(data,ensure_ascii=False,separators=(',',':'))+';'))

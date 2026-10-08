@@ -22,7 +22,41 @@
 * { box-sizing: border-box; }
 html { background: var(--banner); }
 body { margin: 0; background: var(--bg); color: var(--ink); line-height: 1.5; isolation: isolate; }
-#electrosphere { position: fixed; inset: 0; width: 100%; height: 100vh; height: 100lvh; z-index: -1; pointer-events: none; opacity: .8; }
+#electrosphere {
+  --tunnel-unit: 1vmin;
+  --tunnel-unit: min(1vw, 1lvh);
+  position: fixed; inset: 0; width: 100%; height: 100vh; height: 100lvh;
+  z-index: -1; pointer-events: none; opacity: .8; overflow: hidden;
+}
+.tunnel-camera { position: absolute; inset: 0; perspective: 100px; perspective-origin: 56% 48%; }
+.tunnel-flight {
+  position: absolute; inset: 0; transform-style: preserve-3d;
+  animation: tunnel-flight .666666667s linear infinite paused;
+}
+.tunnel-wall {
+  position: absolute; left: 56%; top: 48%;
+  width: calc(var(--tunnel-unit) * var(--width)); height: 600px;
+  transform-origin: 0 0; backface-visibility: hidden;
+  transform: translate3d(calc(var(--tunnel-unit) * var(--x)), calc(var(--tunnel-unit) * var(--y)), 110px)
+    rotateZ(var(--angle)) rotateX(-90deg);
+  border-left: .2px solid rgb(100 108 64 / .12);
+  background:
+    repeating-linear-gradient(to bottom, rgb(100 108 64 / .13) 0 .2px, transparent .2px 12.5px),
+    repeating-linear-gradient(to bottom, rgb(80 86 53 / .018) 0 12.5px, transparent 12.5px 50px),
+    hsl(62 24% var(--light));
+}
+.tunnel-haze {
+  position: absolute; left: 56%; top: 48%;
+  width: calc(var(--tunnel-unit) * 25); height: calc(var(--tunnel-unit) * 16.3);
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse, #bdc6a2 0 40%, #cdd3bb 60%, #dce0d0 70%, transparent 100%);
+}
+/* Four bays repeat over 50px. Moving at 75px/s preserves the 7.5-unit/s flight speed. */
+@keyframes tunnel-flight { from { transform: translateZ(0); } to { transform: translateZ(50px); } }
+@media (prefers-reduced-motion: no-preference) { .tunnel-flight { animation-play-state: running; } }
+#electrosphere[data-motion="running"] .tunnel-flight { animation-play-state: running; }
+#electrosphere[data-motion="paused"] .tunnel-flight,
+#electrosphere[data-hidden="true"] .tunnel-flight { animation-play-state: paused; }
 a { color: inherit; text-underline-offset: 3px; }
 button, input { font: inherit; }
 button, a, input { touch-action: manipulation; }
@@ -224,7 +258,7 @@ footer button:hover { color: #764d00; }
 </style>
 </head>
 <body>
-<canvas id="electrosphere" aria-hidden="true"></canvas>
+<div id="electrosphere" aria-hidden="true"><div class="tunnel-camera"><div class="tunnel-flight"><div class="tunnel-wall" style="--x:42.780000;--y:0.000000;--width:7.366712;--angle:101.412761deg;--light:87.4760%"></div><div class="tunnel-wall" style="--x:41.322307;--y:7.221051;--width:7.971424;--angle:122.420752deg;--light:87.8301%"></div><div class="tunnel-wall" style="--x:37.048567;--y:13.950000;--width:8.922367;--angle:139.637806deg;--light:87.9912%"></div><div class="tunnel-wall" style="--x:30.250028;--y:19.728279;--width:9.907519;--angle:153.415213deg;--light:87.9486%"></div><div class="tunnel-wall" style="--x:21.390000;--y:24.162109;--width:10.687562;--angle:164.882987deg;--light:87.7050%"></div><div class="tunnel-wall" style="--x:11.072279;--y:26.949331;--width:11.113016;--angle:175.092601deg;--light:87.2770%"></div><div class="tunnel-wall" style="--x:0.000000;--y:27.900000;--width:11.113016;--angle:-175.092601deg;--light:86.6939%"></div><div class="tunnel-wall" style="--x:-11.072279;--y:26.949331;--width:10.687562;--angle:-164.882987deg;--light:85.9954%"></div><div class="tunnel-wall" style="--x:-21.390000;--y:24.162109;--width:9.907519;--angle:-153.415213deg;--light:85.2290%"></div><div class="tunnel-wall" style="--x:-30.250028;--y:19.728279;--width:8.922367;--angle:-139.637806deg;--light:84.4470%"></div><div class="tunnel-wall" style="--x:-37.048567;--y:13.950000;--width:7.971424;--angle:-122.420752deg;--light:83.7027%"></div><div class="tunnel-wall" style="--x:-41.322307;--y:7.221051;--width:7.366712;--angle:-101.412761deg;--light:83.0468%"></div><div class="tunnel-wall" style="--x:-42.780000;--y:0.000000;--width:7.366712;--angle:-78.587239deg;--light:82.5240%"></div><div class="tunnel-wall" style="--x:-41.322307;--y:-7.221051;--width:7.971424;--angle:-57.579248deg;--light:82.1699%"></div><div class="tunnel-wall" style="--x:-37.048567;--y:-13.950000;--width:8.922367;--angle:-40.362194deg;--light:82.0088%"></div><div class="tunnel-wall" style="--x:-30.250028;--y:-19.728279;--width:9.907519;--angle:-26.584787deg;--light:82.0514%"></div><div class="tunnel-wall" style="--x:-21.390000;--y:-24.162109;--width:10.687562;--angle:-15.117013deg;--light:82.2950%"></div><div class="tunnel-wall" style="--x:-11.072279;--y:-26.949331;--width:11.113016;--angle:-4.907399deg;--light:82.7230%"></div><div class="tunnel-wall" style="--x:-0.000000;--y:-27.900000;--width:11.113016;--angle:4.907399deg;--light:83.3061%"></div><div class="tunnel-wall" style="--x:11.072279;--y:-26.949331;--width:10.687562;--angle:15.117013deg;--light:84.0046%"></div><div class="tunnel-wall" style="--x:21.390000;--y:-24.162109;--width:9.907519;--angle:26.584787deg;--light:84.7710%"></div><div class="tunnel-wall" style="--x:30.250028;--y:-19.728279;--width:8.922367;--angle:40.362194deg;--light:85.5530%"></div><div class="tunnel-wall" style="--x:37.048567;--y:-13.950000;--width:7.971424;--angle:57.579248deg;--light:86.2973%"></div><div class="tunnel-wall" style="--x:41.322307;--y:-7.221051;--width:7.366712;--angle:78.587239deg;--light:86.9532%"></div></div></div><div class="tunnel-haze"></div></div>
 <header><div class="wrap header-inner"><h1>A-rank reference</h1><a class="back-link" href="index.html">← Campaign checklist</a></div></header>
 <main class="wrap"><p class="reference-intro">Japanese version. Times are elapsed and phase-specific; aim below the threshold. A missing time means no separate cutoff was published, not an unlimited mission timer.</p>
 <section class="reference-section" id="mission-1"><h2>01 · Awakening</h2><p><b>A rank:</b> 10+ aircraft; unlock and complete the second wave.</p><p><b>Clock:</b> 3:00 · Initial targets</p><p>Finish the four R-501 targets before 3:00 to trigger reinforcements. Take optional kills before the last red target.</p><p class="sources"><a href="https://acecombat.wiki.gg/wiki/Awakening" rel="noopener">JP mission guide</a></p></section>
@@ -289,114 +323,25 @@ footer button:hover { color: #764d00; }
 <p><b>Menu and animation references.</b> Namco’s original game UI, gameplay photographs and video supplied by this project’s maintainer, and the development interview in <a href="https://www.bandainamcoent.co.jp/corporate/bnours/nours/vol24/pdf/24_32-34.pdf"><i>NOURS</i>, volume 24, pages 32–34</a>. The menu controls and animated tunnel are recreated in code.</p>
 </section>
 <footer>Checked 6 October 2026. <a href="https://retroachievements.org/forums/topic/17603">Save/rank persistence</a> · <a href="#credits">Credits</a> · <a href="https://github.com/tsnl/ac3-guide/issues">Report a correction</a><button id="motion" aria-pressed="false" hidden>Pause background</button></footer></main>
-<script>// A procedural Data Swallow-inspired network tunnel; no game footage or assets.
+<script>// The tunnel is drawn and animated entirely in CSS. JS only manages preferences.
 (() => {
   'use strict';
-  const canvas = document.getElementById('electrosphere');
+  const tunnel = document.getElementById('electrosphere');
   const toggle = document.getElementById('motion');
-  if (!canvas || !window.CanvasRenderingContext2D) return;
-  const ctx = canvas.getContext('2d', {alpha: false});
-  if (!ctx) return;
-  const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (!tunnel) return;
+  const preference = window.matchMedia?.('(prefers-reduced-motion: reduce)');
   const storageKey = 'ac3-jp-background-motion';
-  let paused = preference.matches;
+  let paused = preference?.matches || false;
   try { paused ||= localStorage.getItem(storageKey) === 'paused'; } catch (_) {}
-  let width = 0, height = 0, ratio = 0, elapsed = 0, request = 0;
-  let previous = null, lastDraw = 0;
-  const sides = 24, depth = 34, spacing = 1.25, speed = 7.5;
-
-  function ring(z) {
-    const scale = Math.min(width, height) * .93 / (z + .8);
-    return Array.from({length: sides}, (_, i) => {
-      const angle = i * Math.PI * 2 / sides;
-      return [width * .56 + Math.cos(angle) * 4.6 * scale,
-              height * .48 + Math.sin(angle) * 3 * scale];
-    });
-  }
-
-  function draw() {
-    ctx.fillStyle = '#e5e7dc';
-    ctx.fillRect(0, 0, width, height);
-    // The recording shows a soft olive oval at the far end of the tube.
-    const endScale = Math.min(width, height) * .93 / (depth * spacing + .8);
-    ctx.save();
-    ctx.translate(width * .56, height * .48);
-    ctx.scale(4.6 * endScale, 3 * endScale);
-    const haze = ctx.createRadialGradient(0, 0, .1, 0, 0, 1.7);
-    haze.addColorStop(0, '#b4bd91');
-    haze.addColorStop(.65, '#c6cdb0');
-    haze.addColorStop(1, '#e5e7dc');
-    ctx.fillStyle = haze;
-    ctx.fillRect(-1.7, -1.7, 3.4, 3.4);
-    ctx.restore();
-    // Fixed world-space rings approach a fixed camera at constant velocity.
-    // Neither the projection nor the clock depends on document scroll position.
-    const travel = elapsed * speed, phase = travel % spacing;
-    let far = ring(depth * spacing - phase);
-    for (let j = depth-1; j >= 0; j--) {
-      const z = j * spacing - phase;
-      if (z < .15) continue;
-      const near = ring(z);
-      for (let i = 0; i < sides; i++) {
-        const k = (i+1) % sides;
-        const points = [near[i], near[k], far[k], far[i]];
-        if (points.every(p => p[0] < 0) || points.every(p => p[0] > width) ||
-            points.every(p => p[1] < 0) || points.every(p => p[1] > height)) continue;
-        const band = (j + Math.floor(travel/spacing)) % 4 === 0 ? -1.6 : 0;
-        const light = 85 + Math.cos(i * Math.PI * 2 / sides - .6) * 3 + z/(depth*spacing) * 3 + band;
-        ctx.beginPath();
-        points.forEach((p, index) => index ? ctx.lineTo(...p) : ctx.moveTo(...p));
-        ctx.closePath();
-        ctx.fillStyle = `hsl(62 24% ${light}%)`;
-        ctx.fill();
-        ctx.strokeStyle = 'rgba(100,108,64,.12)';
-        ctx.lineWidth = .7;
-        ctx.stroke();
-      }
-      far = near;
-    }
-  }
-
-  function frame(stamp) {
-    request = 0;
-    if (paused || document.hidden) return;
-    // Integrate every elapsed millisecond, even when a render frame is skipped.
-    // Capping draw frequency must not change the flight speed.
-    if (previous !== null) elapsed += (stamp-previous)/1000;
-    previous = stamp;
-    if (stamp-lastDraw >= 1000/30) {
-      lastDraw = stamp;
-      draw();
-    }
-    request = requestAnimationFrame(frame);
-  }
 
   function sync() {
-    cancelAnimationFrame(request);
-    previous = null;
-    lastDraw = 0;
-    canvas.dataset.motion = paused ? 'paused' : 'running';
+    tunnel.dataset.motion = paused ? 'paused' : 'running';
+    tunnel.dataset.hidden = String(document.hidden);
     if (toggle) {
       toggle.hidden = false;
       toggle.textContent = paused ? 'Play background' : 'Pause background';
       toggle.setAttribute('aria-pressed', String(paused));
     }
-    if (!paused && !document.hidden) request = requestAnimationFrame(frame);
-  }
-
-  function resize() {
-    // The canvas uses the large viewport height, which stays stable while
-    // mobile browser toolbars expand/collapse during scrolling.
-    const nextWidth = canvas.clientWidth, nextHeight = canvas.clientHeight;
-    const nextRatio = Math.min(window.devicePixelRatio || 1, 1.5);
-    if (nextWidth === width && nextHeight === height && nextRatio === ratio) return;
-    width = nextWidth;
-    height = nextHeight;
-    ratio = nextRatio;
-    canvas.width = Math.round(width * ratio);
-    canvas.height = Math.round(height * ratio);
-    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-    draw();
   }
 
   toggle?.addEventListener('click', () => {
@@ -404,10 +349,8 @@ footer button:hover { color: #764d00; }
     try { localStorage.setItem(storageKey, paused ? 'paused' : 'running'); } catch (_) {}
     sync();
   });
-  preference.addEventListener('change', event => { paused = event.matches; sync(); });
+  preference?.addEventListener('change', event => { paused = event.matches; sync(); });
   document.addEventListener('visibilitychange', sync);
-  window.addEventListener('resize', resize, {passive: true});
-  resize();
   sync();
 })();
 </script>
